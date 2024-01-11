@@ -1,0 +1,1 @@
+ALTER TABLE m_card ADD barcode VARCHAR(100) NOT NULL UNIQUE AFTER image;
