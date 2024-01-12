@@ -12,7 +12,12 @@ try{
     echo "接続に失敗しました。";
   }else{
     # プレースホルダーの利用
-    $SQL = "SELECT * FROM m_card ORDER BY RAND() LIMIT 15;";
+    $SQL = "SELECT * FROM m_card
+    LEFT JOIN m_name on m_card.name_id = m_name.name_id
+    LEFT JOIN m_type on m_card.type_id = m_type.type_id
+    LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
+    LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
+    ORDER BY RAND() LIMIT 15;";
 
     # プリペアードステートメント
     $stmt = $dbh->prepare($SQL);
@@ -24,7 +29,19 @@ try{
     if($stmt->execute()){
       while($row = $stmt->fetch()){
         // 表の内容を代入
-        $contents .= "<img src='{$row["image"]}' width='18%' hspace='5' vspace='5'>";
+        $contents .= "<form action='show.php' method='get'>";
+        $contents .= "<input type='hidden' name='card_id' value='{$row["card_id"]}'>";
+        $contents .= "<input type='hidden' name='image' value='{$row["image"]}'>";
+        $contents .= "<input type='hidden' name='barcode' value='{$row["barcode"]}'>";
+        $contents .= "<input type='hidden' name='name' value='{$row["name"]}'>";
+        $contents .= "<input type='hidden' name='form' value='{$row["form"]}'>";
+        $contents .= "<input type='hidden' name='skill' value='{$row["skill"]}'>";
+        $contents .= "<input type='hidden' name='climax' value='{$row["climax"]}'>";
+        $contents .= "<input type='hidden' name='type' value='{$row["type"]}'>";
+        $contents .= "<input type='hidden' name='prog' value='{$row["prog"]}'>";
+        $contents .= "<input type='hidden' name='rare' value='{$row["rare"]}'>";
+        $contents .= "<input type ='image' name='submit' src='{$row["image"]}' width='18%' hspace='5' vspace='5'>";
+        $contents .= "</form>";
       }
     }
   }
