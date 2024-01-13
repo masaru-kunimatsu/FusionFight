@@ -32,8 +32,27 @@ try{
       LEFT JOIN m_type on m_card.type_id = m_type.type_id
       LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
       LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
-      WHERE m_card.prog_id = 24
-      ORDER BY m_card.card_id;";
+      WHERE 1 = 1"; // これは常に真となる条件を追加;
+
+      // 条件が指定されている場合にのみ追加
+      if ($_GET["name"] != null) {
+        $SQL .= " AND m_card.name_id = {$_GET["name"]}";
+      }
+      if ($_GET["form"] != null) {
+        $SQL .= " AND m_card.form = '{$_GET["form"]}'";
+      }
+      if ($_GET["type"] != null) {
+        $SQL .= " AND m_card.type_id = {$_GET["type"]}";
+      }
+      if ($_GET["prog"] != null) {
+        $SQL .= " AND m_card.prog_id = {$_GET["prog"]}";
+      }
+      if ($_GET["rare"] != null) {
+        $SQL .= " AND m_card.rare_id = {$_GET["rare"]}";
+      }
+
+      // ORDER BY 句の追加
+      $SQL .= " ORDER BY m_card.card_id";
       $stmt = $dbh->prepare($SQL);
     }
 
