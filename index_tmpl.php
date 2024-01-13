@@ -51,17 +51,39 @@
 
 	<aside id="sidebar">
        
-		<h3 class="heading">革新的な技術</h3>
-    <article>
-			<ul>
-				<li><a href="subpage.html">環境への取り組みについての説明ページです</a></li>
-				<li><a href="subpage.html">ecoキャンペーン開催中です</a></li>
-				<li><a href="subpage.html">オフィスの移転に関して</a></li>
-				<li><a href="subpage.html">最新商品のご紹介</a></li>
-				<li><a href="subpage.html">新規サービスを開始しました</a></li>
-				<li><a href="subpage.html">環境賞受賞に関してはこちらをご確認ください</a></li>
-			</ul>
-    </article>
+		<h3 class="heading">検索条件を指定</h3>
+    <form>
+			<p>キャラクター</p>
+			<select name="name">
+				<option value="">選択してください</option>
+				★名前リスト★
+			</select>
+			<p>形態</p>
+			<select name="form">
+				<option value="">選択してください</option>
+				★形態リスト★
+			</select>
+			<p>技</p>
+			<select name="climax">
+				<option value="">選択してください</option>
+				<option value=1>クライマックス技</option>
+			</select>
+			<p>分類</p>
+			<select name="type">
+				<option value="">選択してください</option>
+				★分類リスト★
+			</select>
+			<p>作品</p>
+			<select name="prog">
+				<option value="">選択してください</option>
+				★作品リスト★
+			</select>
+			<p>レアリティ</p>
+			<select name="rare">
+				<option value="">選択してください</option>
+				★レアリティリスト★
+			</select>
+		</form>
 
     
 	</aside>
