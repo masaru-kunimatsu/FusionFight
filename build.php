@@ -40,58 +40,39 @@
 	</nav>
 	<!-- / メインナビゲーション -->
 </header>
-	<div id="wrapper">
-  
-  <!-- コンテンツ -->
-	<section id="main">
-		<h1>CHECK!!</h1>
 
-		★検索結果★
+<!-- メインコンテンツ -->
+<div>
+  <form action='confirm.php' method='get'>
+    <p>１枚目</p>
+    <?php
+    $_GET["image"] = str_replace("●" , "/" , $_GET["image"]);
+    $_GET["barcode"] = str_replace("●" , "/" , $_GET["barcode"]);
+    echo $_GET["card_id"];
+    echo "<br>";
+    echo "<img src='{$_GET["image"]}' width='20%'>";
+    echo "<br>";
+    echo "<img src='{$_GET["barcode"]}' width='20%'>";
+    echo "<br>";
+    echo $_GET["name"];
+    echo "<br>";
+    echo $_GET["form"];
+    echo "<br>";
+    echo $_GET["skill"];
+    echo "<br>";
+    if ($_GET["climax"]==1)echo 'クライマックス';
+    echo "<br>";
+    echo $_GET["type"];
+    echo "<br>";
+    echo $_GET["prog"];
+    echo "<br>";
+    echo $_GET["rare"];
+    ?>
+  </form>
 
-	</section>
-	<!-- / コンテンツ -->
-
-	<aside id="sidebar">
-       
-		<h3 class="heading">検索条件を指定</h3>
-    <form action="index.php" method="get">
-			<p>キャラクター</p>
-			<select name="name">
-				<option value="">選択してください</option>
-				★名前リスト★
-			</select>
-			<p>形態</p>
-			<select name="form">
-				<option value="">選択してください</option>
-				★形態リスト★
-			</select>
-			<p>技</p>
-			<select name="climax">
-				<option value="">選択してください</option>
-				<option value="1">クライマックス技</option>
-			</select>
-			<p>分類</p>
-			<select name="type">
-				<option value="">選択してください</option>
-				★分類リスト★
-			</select>
-			<p>作品</p>
-			<select name="prog">
-				<option value="">選択してください</option>
-				★作品リスト★
-			</select>
-			<p>レアリティ</p>
-			<select name="rare">
-				<option value="">選択してください</option>
-				★レアリティリスト★
-			</select>
-			<input type="text" name="text" placeholder="フリーワード検索" size="30">
-			<br><button type='submit'>検索する</button>
-		</form>
-	</aside>
- 
 </div>
- 
+<!-- /メインコンテンツ -->
+
 <footer id="footer">
 	<div class="inner">
   	<a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
@@ -102,3 +83,4 @@
 
 </body>
 </html>
+

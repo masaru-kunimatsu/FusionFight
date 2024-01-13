@@ -1,7 +1,5 @@
 <?php
 
-var_dump($_GET);
-
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -35,19 +33,22 @@ try{
       WHERE 1 = 1"; // これは常に真となる条件を追加;
 
       // 条件が指定されている場合にのみ追加
-      if ($_GET["name"] != null) {
+      if ($_GET["name"] != "") {
         $SQL .= " AND m_card.name_id = {$_GET["name"]}";
       }
-      if ($_GET["form"] != null) {
+      if ($_GET["form"] != "") {
         $SQL .= " AND m_card.form = '{$_GET["form"]}'";
       }
-      if ($_GET["type"] != null) {
+      if ($_GET["climax"] == 1) {
+        $SQL .= " AND m_card.climax = 1";
+      }
+      if ($_GET["type"] != "") {
         $SQL .= " AND m_card.type_id = {$_GET["type"]}";
       }
-      if ($_GET["prog"] != null) {
+      if ($_GET["prog"] != "") {
         $SQL .= " AND m_card.prog_id = {$_GET["prog"]}";
       }
-      if ($_GET["rare"] != null) {
+      if ($_GET["rare"] != "") {
         $SQL .= " AND m_card.rare_id = {$_GET["rare"]}";
       }
 
@@ -73,7 +74,7 @@ try{
     if($stmt->execute()){
       while($row = $stmt->fetch()){
         // デッキページにリンクする画像ボタンを作成
-        $contents .= "<form action='show.php' method='get'>";
+        $contents .= " <form action='build.php' method='get'><br>";
         $contents .= " <img src='{$row["image"]}' width='20%'><br>";
         $contents .= " <img src='{$row["barcode"]}' width='20%'><br>";
         $contents .= " {$row["name"]}<br>";
@@ -93,9 +94,9 @@ try{
         $contents .= "<input type='hidden' name='type' value='{$row["type"]}'>";
         $contents .= "<input type='hidden' name='prog' value='{$row["prog"]}'>";
         $contents .= "<input type='hidden' name='rare' value='{$row["rare"]}'>";
-        $contents .= "<input type='submit' name='sub' value='デッキに追加する'>";
+        $contents .= "<input type='submit' name='sub' value='デッキに追加する'><br>";
         $contents .= "</form>";
-
+        
         // リスト用に重複を排除して変数に代入
         if (!in_array($row["name_id"], $names)) {
           $name_list .= "<option value={$row["name_id"]}>{$row["name"]}</option>";
@@ -133,6 +134,16 @@ $tmpl = fread($file, $size);
 fclose($file);
 
 // 文字列置き換え
+if ($_GET != null){
+  $name_list = str_replace("<option value={$_GET["name"]}>", "<option value={$_GET["name"]} selected>", $name_list);
+  $form_list = str_replace("<option value={$_GET["form"]}>", "<option value={$_GET["form"]} selected>", $form_list);
+  $type_list = str_replace("<option value={$_GET["type"]}>", "<option value={$_GET["type"]} selected>", $type_list);
+  $prog_list = str_replace("<option value={$_GET["prog"]}>", "<option value={$_GET["prog"]} selected>", $prog_list);
+  $rare_list = str_replace("<option value={$_GET["rare"]}>", "<option value={$_GET["rare"]} selected>", $rare_list);
+  if ($_GET["climax"]==1){
+    $tmpl = str_replace(">クライマックス技</option>", " selected>クライマックス技</option>", $tmpl);
+  }
+}
 $tmpl = str_replace("★検索結果★", $contents, $tmpl);
 $tmpl = str_replace("●", "/", $tmpl);
 $tmpl = str_replace("★名前リスト★", $name_list, $tmpl);
@@ -140,6 +151,7 @@ $tmpl = str_replace("★形態リスト★", $form_list, $tmpl);
 $tmpl = str_replace("★分類リスト★", $type_list, $tmpl);
 $tmpl = str_replace("★作品リスト★", $prog_list, $tmpl);
 $tmpl = str_replace("★レアリティリスト★", $rare_list, $tmpl);
+
 
 
 // 画面に出力
