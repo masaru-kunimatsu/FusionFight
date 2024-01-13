@@ -52,7 +52,7 @@
 	<aside id="sidebar">
        
 		<h3 class="heading">検索条件を指定</h3>
-    <form>
+    <form action="index.php" method="get">
 			<p>キャラクター</p>
 			<select name="name">
 				<option value="">選択してください</option>
@@ -83,9 +83,9 @@
 				<option value="">選択してください</option>
 				★レアリティリスト★
 			</select>
+			<input type="text" name="text" placeholder="フリーワード検索" size="30">
+			<br><button type='submit'>検索する</button>
 		</form>
-
-    
 	</aside>
  
 </div>

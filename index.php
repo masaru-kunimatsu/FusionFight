@@ -1,5 +1,7 @@
 <?php
 
+var_dump($_GET);
+
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -11,14 +13,29 @@ try{
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{
-    # プレースホルダーの利用
-    $SQL = "SELECT * FROM m_card
-    LEFT JOIN m_name on m_card.name_id = m_name.name_id
-    LEFT JOIN m_type on m_card.type_id = m_type.type_id
-    LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
-    LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
-    ORDER BY m_card.card_id;";
-    $stmt = $dbh->prepare($SQL);
+    
+    if ($_GET== null){
+      # 検索条件の指定がない場合は全件表示
+      # プレースホルダーの利用
+      $SQL = "SELECT * FROM m_card
+      LEFT JOIN m_name on m_card.name_id = m_name.name_id
+      LEFT JOIN m_type on m_card.type_id = m_type.type_id
+      LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
+      LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
+      ORDER BY m_card.card_id;";
+      $stmt = $dbh->prepare($SQL);
+    }else{
+      # 検索条件の指定がある場合はしぼりこみ表示
+      # プレースホルダーの利用
+      $SQL = "SELECT * FROM m_card
+      LEFT JOIN m_name on m_card.name_id = m_name.name_id
+      LEFT JOIN m_type on m_card.type_id = m_type.type_id
+      LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
+      LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
+      WHERE m_card.prog_id = 24
+      ORDER BY m_card.card_id;";
+      $stmt = $dbh->prepare($SQL);
+    }
 
     // 表示持つ列を代入する変数を用意
     $contents = "";  //カード画像の表示
@@ -70,15 +87,15 @@ try{
           $forms[] = $row["form"]; // 配列に追加
         }
         if (!in_array($row["type"], $types)) {
-          $type_list .= "<option value={$row["type"]}>{$row["type"]}</option>";
+          $type_list .= "<option value={$row["type_id"]}>{$row["type"]}</option>";
           $types[] = $row["type"]; // 配列に追加
         }
         if (!in_array($row["prog"], $progs)) {
-          $prog_list .= "<option value={$row["prog"]}>{$row["prog"]}</option>";
+          $prog_list .= "<option value={$row["prog_id"]}>{$row["prog"]}</option>";
           $progs[] = $row["prog"]; // 配列に追加
         }
         if (!in_array($row["rare"], $rares)) {
-          $rare_list .= "<option value={$row["rare"]}>{$row["rare"]}</option>";
+          $rare_list .= "<option value={$row["rare_id"]}>{$row["rare"]}</option>";
           $rares[] = $row["rare"]; // 配列に追加
         }
       }
