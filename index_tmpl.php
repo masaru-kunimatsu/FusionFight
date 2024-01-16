@@ -85,8 +85,10 @@
 				<option value="">選択してください</option>
 				★レアリティリスト★
 			</select>
-			<input type="text" name="text" placeholder="フリーワード検索" size="30">
-			<br><button type='submit'>検索する</button>
+			<p>フリーワード検索</p>
+			<input type="text" name="text" placeholder="キーワードを入力してください" size="30">
+			<br>
+			<button type='submit'>検索する</button>
 		</form>
 	</aside>
  

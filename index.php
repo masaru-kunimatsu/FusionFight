@@ -51,6 +51,15 @@ try{
       if ($_GET["rare"] != "") {
         $SQL .= " AND m_card.rare_id = {$_GET["rare"]}";
       }
+      if ($_GET["text"] != "") {
+        $SQL .= " AND  (m_name.name LIKE '%{$_GET["text"]}%' 
+                  OR   m_card.form LIKE '%{$_GET["text"]}%' 
+                  OR   m_card.skill LIKE '%{$_GET["text"]}%' 
+                  OR   m_type.type LIKE '%{$_GET["text"]}%' 
+                  OR   m_prog.prog LIKE '%{$_GET["text"]}%' 
+                  OR   m_rare.rare LIKE '%{$_GET["text"]}%')";
+      }
+
 
       // ORDER BY 句の追加
       $SQL .= " ORDER BY m_card.card_id";
