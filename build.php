@@ -1,86 +1,110 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="ja">
+<?php
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
-  <title>ウルトラマン フュージョンファイト！ ウルトラファイル 専用サイト</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <link rel="stylesheet" href="style.css" type="text/css" media="screen">
-  <!--[if lt IE 9]>
-  <script src="js/html5.js"></script>
-  <script src="js/css3-mediaqueries.js"></script>
-  <![endif]-->
-  <script src="js/jquery1.7.2.min.js"></script>
-  <script src="js/script.js"></script>
-</head>
+// テンプレート読み込み
+$file = fopen("build_tmpl.php", "r") or die("build_tmpl.php ファイルを開けませんでした。");
+$size = filesize("build_tmpl.php");
+$tmpl = fread($file, $size);
+fclose($file);
 
-<body>
+session_start();
+if ($_GET != NULL){
+  if (empty($_SESSION['card1'])){
+    $_SESSION['card1'] = array(
+      'image' => str_replace("●" , "/" , $_GET["image"]),
+      'barcode' => str_replace("●" , "/" , $_GET["barcode"]),
+      'card_id' => $_GET["card_id"],
+      'name' => $_GET["name"],
+      'form' => $_GET["form"],
+      'skill' => $_GET["skill"],
+      'climax' => $_GET["climax"],
+      'type' => $_GET["type"],
+      'prog' => $_GET["prog"],
+      'rare' => $_GET["rare"]);
+      $tmpl = str_replace("★注意★", "", $tmpl);
+    }elseif(empty($_SESSION['card2'])){
+    $_SESSION['card2'] = array(
+      'image' => str_replace("●" , "/" , $_GET["image"]),
+      'barcode' => str_replace("●" , "/" , $_GET["barcode"]),
+      'card_id' => $_GET["card_id"],
+      'name' => $_GET["name"],
+      'form' => $_GET["form"],
+      'skill' => $_GET["skill"],
+      'climax' => $_GET["climax"],
+      'type' => $_GET["type"],
+      'prog' => $_GET["prog"],
+      'rare' => $_GET["rare"]);
+      $tmpl = str_replace("★注意★", "", $tmpl);
+    }else{
+      $tmpl = str_replace("★注意★", "登録できません", $tmpl);
+    }
+  }else{
+    $tmpl = str_replace("★注意★", "", $tmpl);
+  }
 
-<header id="header">
-  <!-- ロゴ -->
-	<div class="logo">
-		<a href="index.php"><img src="bnr_ultrafile.png" width="20%"><span>専用サイト</span></a>
-	</div>
-	<!-- / ロゴ -->
-	<!-- メインナビゲーション -->
-	<nav id="mainNav">
-		<div class="inner">
-			<a class="menu" id="menu"><span>MENU</span></a>
-			<div class="panel">   
-				<ul>
-					<li class="active"><a href="index.php"><strong>カード検索</strong></a></li>
-					<li><a href="build.php"><strong>デッキ作成</strong></a></li>
-					<li><a href="view.php"><strong>デッキ確認</strong></a></li>
-					<li class="last"><a href="account.php"><strong>ログイン</strong></a></li>
-				</ul>   
-			</div>
-		</div> 
-	</nav>
-	<!-- / メインナビゲーション -->
-</header>
+  if ($_SESSION['card1'] != NULL){
+    $card1 = "";
+    $card1 .= $_SESSION['card1']["card_id"];
+    $card1 .= "<br>";
+    $card1 .= "<img src='{$_SESSION["card1"]["image"]}' width='20%'>";
+    $card1 .= "<br>";
+    $card1 .= "<img src='{$_SESSION["card1"]["barcode"]}' width='20%'>";
+    $card1 .= "<br>";
+    $card1 .= $_SESSION["card1"]["name"];
+    $card1 .= "<br>";
+    $card1 .= $_SESSION["card1"]["form"];
+    $card1 .= "<br>";
+    $card1 .= $_SESSION["card1"]["skill"];
+    $card1 .= "<br>";
+    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? 'クライマックス' : '';
+    $card1 .= "<br>";
+    $card1 .= $_SESSION["card1"]["type"];
+    $card1 .= "<br>";
+    $card1 .= $_SESSION["card1"]["prog"];
+    $card1 .= "<br>";
+    $card1 .= $_SESSION["card1"]["rare"];
+    $card1 .= "<form action='mode1.php' method='get'><button type='submit'>カードを削除する</button></form>";
+  }else{
+    $card1 = "カードを登録しよう！";
+    $card1 .= "<form action='index.php' method='get'><button type='submit'>カードを選択する</button></form>";
+  }
 
-<!-- メインコンテンツ -->
-<div>
-  <form action='confirm.php' method='get'>
-    <p>１枚目</p>
-    <?php
-    $_GET["image"] = str_replace("●" , "/" , $_GET["image"]);
-    $_GET["barcode"] = str_replace("●" , "/" , $_GET["barcode"]);
-    echo $_GET["card_id"];
-    echo "<br>";
-    echo "<img src='{$_GET["image"]}' width='20%'>";
-    echo "<br>";
-    echo "<img src='{$_GET["barcode"]}' width='20%'>";
-    echo "<br>";
-    echo $_GET["name"];
-    echo "<br>";
-    echo $_GET["form"];
-    echo "<br>";
-    echo $_GET["skill"];
-    echo "<br>";
-    if ($_GET["climax"]==1)echo 'クライマックス';
-    echo "<br>";
-    echo $_GET["type"];
-    echo "<br>";
-    echo $_GET["prog"];
-    echo "<br>";
-    echo $_GET["rare"];
-    ?>
-  </form>
+  if ($_SESSION['card2'] != NULL){
+    $card2 = "";
+    $card2 .= $_SESSION['card2']["card_id"];
+    $card2 .= "<br>";
+    $card2 .= "<img src='{$_SESSION["card2"]["image"]}' width='20%'>";
+    $card2 .= "<br>";
+    $card2 .= "<img src='{$_SESSION["card2"]["barcode"]}' width='20%'>";
+    $card2 .= "<br>";
+    $card2 .= $_SESSION["card2"]["name"];
+    $card2 .= "<br>";
+    $card2 .= $_SESSION["card2"]["form"];
+    $card2 .= "<br>";
+    $card2 .= $_SESSION["card2"]["skill"];
+    $card2 .= "<br>";
+    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? 'クライマックス' : '';
+    $card2 .= "<br>";
+    $card2 .= $_SESSION["card2"]["type"];
+    $card2 .= "<br>";
+    $card2 .= $_SESSION["card2"]["prog"];
+    $card2 .= "<br>";
+    $card2 .= $_SESSION["card2"]["rare"];
+    $card2 .= "<form action='mode2.php' method='get'><button type='submit'>カードを削除する</button></form>";
+  }else{
+    $card2 = "カードを登録しよう！";
+    $card2 .= "<form action='index.php' method='get'><button type='submit'>カードを選択する</button></form>";
+  }
 
-</div>
-<!-- /メインコンテンツ -->
 
-<footer id="footer">
-	<div class="inner">
-  	<a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
-		<a href="https://play.google.com/store/apps/details?id=com.bandai.ultramanbinder&hl=en_US"><img src="img_apri.png" width="20%"></a>
-		<a href="https://imagination.m-78.jp/"><img src="img_ti.jpg" width="20%"></a>
-	</div>
-</footer>
+// 文字列置き換え
+$tmpl = str_replace("★1枚目★", $card1, $tmpl);
+$tmpl = str_replace("★2枚目★", $card2, $tmpl);
 
-</body>
-</html>
 
+
+// 画面に出力
+echo $tmpl;
+
+var_dump($_SESSION['card1']);
+
+?>
