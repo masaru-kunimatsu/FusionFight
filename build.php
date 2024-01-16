@@ -6,6 +6,43 @@ $size = filesize("build_tmpl.php");
 $tmpl = fread($file, $size);
 fclose($file);
 
+# データベースに接続
+$dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
+$user = 'testuser';
+$pass = 'testpass';
+
+try{
+  $dbh = new PDO($dsn, $user, $pass);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  if ($dbh == null){
+    echo "接続に失敗しました。";
+  }else{
+    #BGMテーブルの取得
+    $sql = "SELECT * FROM bgm ORDER BY bgm DESC";
+
+    # プリペアードステートメント
+    $stmt = $dbh->prepare($sql);
+
+    #INSERTの実行
+    $stmt->execute();
+  }
+}catch (PDOException $e){
+  echo('エラー内容：'.$e->getMessage());
+  die();
+}
+$dbh = null;
+
+$bgm_list="";
+if($stmt->execute()){
+  while($row = $stmt->fetch()){
+    $bgm_list .= "<option value={$row["bgm_id"]}>{$row["bgm"]}</option>";
+  }
+}
+   
+
+
+
+
 session_start();
 if ($_GET != NULL){
   if (empty($_SESSION['card1'])){
@@ -99,12 +136,10 @@ if ($_GET != NULL){
 // 文字列置き換え
 $tmpl = str_replace("★1枚目★", $card1, $tmpl);
 $tmpl = str_replace("★2枚目★", $card2, $tmpl);
-
+$tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
 
 
 // 画面に出力
 echo $tmpl;
-
-var_dump($_SESSION['card1']);
 
 ?>

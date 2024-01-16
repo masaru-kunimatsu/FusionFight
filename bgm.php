@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
-  <title>ウルトラマン フュージョンファイト！ ウルトラファイル 専用サイト</title>
+  <title>BGM追加</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
   <link rel="stylesheet" href="style.css" type="text/css" media="screen">
@@ -38,44 +38,18 @@
 			</div>
 		</div> 
 	</nav>
-	<!-- / メインナビゲーション -->
 </header>
 
-<!-- メインコンテンツ -->
+<!-- / メインナビゲーション -->
 <div>
-  ★注意★
-</div>
-<div>
-  １枚目のカード
-  <br>
-  ★1枚目★
-  <br>
-</div>
-<div>
-  <form action='change.php' method='get'>
-    <button type='submit'>入れ替える</button>
+  <form action="bgm_comp.php" method="get">
+    <p>BGMを追加する</p>
+    <input type="text" name="text" placeholder="登録するBGM名を入力してください" size="30">
+		<br>
+		<button type='submit'>登録する</button>
   </form>
 </div>
-<div>
-  ２枚目のカード
-  <br>
-  ★2枚目★
-  <br>
-</div>
-<div>
-  <form action='confirm.php' method='get'>
-    <p><input type="text" name="deck_name" placeholder="デッキ名を入力してください" size="30"></p>
-    <select name="name">
-		  <option value="">BGMを選んでください</option>
-      ★bgmリスト★
-		</select>
-    <p><a href="bgm.php">BGM登録ページへ</a></p>
-    <br>
-    <button type='submit'>デッキを保存する</button>
-  </form>
-</div>
-<!-- /メインコンテンツ -->
-
+ 
 <footer id="footer">
 	<div class="inner">
   	<a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
@@ -86,4 +60,3 @@
 
 </body>
 </html>
-
