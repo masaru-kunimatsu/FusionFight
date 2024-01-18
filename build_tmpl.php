@@ -22,6 +22,7 @@
   <!-- ロゴ -->
 	<div class="logo">
 		<a href="index.php"><img src="bnr_ultrafile.png" width="20%"><span>専用サイト</span></a>
+    <p>★ユーザー名★</p>
 	</div>
 	<!-- / ロゴ -->
 	<!-- メインナビゲーション -->
@@ -65,7 +66,7 @@
 <div>
   <form action='confirm.php' method='get'>
     <p><input type="text" name="deck_name" placeholder="デッキ名を入力してください" size="30"></p>
-    <select name="name">
+    <select name="bgm">
 		  <option value="">BGMを選んでください</option>
       ★bgmリスト★
 		</select>

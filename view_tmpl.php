@@ -22,7 +22,7 @@
   <!-- ロゴ -->
 	<div class="logo">
 		<a href="index.php"><img src="bnr_ultrafile.png" width="20%"><span>専用サイト</span></a>
-		<p>★ユーザー名★</p>
+    <p>★ユーザー名★</p>
 	</div>
 	<!-- / ロゴ -->
 	<!-- メインナビゲーション -->
@@ -41,60 +41,13 @@
 	</nav>
 	<!-- / メインナビゲーション -->
 </header>
-	<div id="wrapper">
-  
-  <!-- コンテンツ -->
-	<section id="main">
-		<h1>CHECK!!</h1>
 
-		★検索結果★
-
-	</section>
-	<!-- / コンテンツ -->
-
-	<aside id="sidebar">
-       
-		<h3 class="heading">検索条件を指定</h3>
-    <form action="index.php" method="get">
-			<p>キャラクター</p>
-			<select name="name">
-				<option value="">選択してください</option>
-				★名前リスト★
-			</select>
-			<p>形態</p>
-			<select name="form">
-				<option value="">選択してください</option>
-				★形態リスト★
-			</select>
-			<p>技</p>
-			<select name="climax">
-				<option value="">選択してください</option>
-				<option value="1">クライマックス技</option>
-			</select>
-			<p>分類</p>
-			<select name="type">
-				<option value="">選択してください</option>
-				★分類リスト★
-			</select>
-			<p>作品</p>
-			<select name="prog">
-				<option value="">選択してください</option>
-				★作品リスト★
-			</select>
-			<p>レアリティ</p>
-			<select name="rare">
-				<option value="">選択してください</option>
-				★レアリティリスト★
-			</select>
-			<p>フリーワード検索</p>
-			<input type="text" name="text" placeholder="キーワードを入力してください" size="30">
-			<br>
-			<button type='submit'>検索する</button>
-		</form>
-	</aside>
- 
+<!-- メインコンテンツ -->
+<div>
+  ★入れ替え★
 </div>
- 
+<!-- /メインコンテンツ -->
+
 <footer id="footer">
 	<div class="inner">
   	<a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
@@ -105,3 +58,4 @@
 
 </body>
 </html>
+

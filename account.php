@@ -1,3 +1,6 @@
+<?php
+
+$tmpl1 = <<<_aaa_
 <!DOCTYPE html>
 <html dir="ltr" lang="ja">
 
@@ -15,14 +18,15 @@
   <script src="js/jquery1.7.2.min.js"></script>
   <script src="js/script.js"></script>
 </head>
+_aaa_;
 
+$tmpl2 = <<<_bbb_
 <body>
-
 <header id="header">
   <!-- ロゴ -->
 	<div class="logo">
 		<a href="index.php"><img src="bnr_ultrafile.png" width="20%"><span>専用サイト</span></a>
-		<p>★ユーザー名★</p>
+    <p>★ユーザー名★</p>
 	</div>
 	<!-- / ロゴ -->
 	<!-- メインナビゲーション -->
@@ -41,60 +45,33 @@
 	</nav>
 	<!-- / メインナビゲーション -->
 </header>
-	<div id="wrapper">
-  
-  <!-- コンテンツ -->
-	<section id="main">
-		<h1>CHECK!!</h1>
+_bbb_;
 
-		★検索結果★
-
-	</section>
-	<!-- / コンテンツ -->
-
-	<aside id="sidebar">
-       
-		<h3 class="heading">検索条件を指定</h3>
-    <form action="index.php" method="get">
-			<p>キャラクター</p>
-			<select name="name">
-				<option value="">選択してください</option>
-				★名前リスト★
-			</select>
-			<p>形態</p>
-			<select name="form">
-				<option value="">選択してください</option>
-				★形態リスト★
-			</select>
-			<p>技</p>
-			<select name="climax">
-				<option value="">選択してください</option>
-				<option value="1">クライマックス技</option>
-			</select>
-			<p>分類</p>
-			<select name="type">
-				<option value="">選択してください</option>
-				★分類リスト★
-			</select>
-			<p>作品</p>
-			<select name="prog">
-				<option value="">選択してください</option>
-				★作品リスト★
-			</select>
-			<p>レアリティ</p>
-			<select name="rare">
-				<option value="">選択してください</option>
-				★レアリティリスト★
-			</select>
-			<p>フリーワード検索</p>
-			<input type="text" name="text" placeholder="キーワードを入力してください" size="30">
-			<br>
-			<button type='submit'>検索する</button>
-		</form>
-	</aside>
- 
+$tmpl3 = <<<_ccc_
+<!-- メインコンテンツ -->
+<div class="signin">
+    <form action="login.php" method="POST">
+        <label for="signin-id">メールアドレス</label>
+        <input id="signin-id" name="email" type="text" placeholder="メールアドレスを入力">
+        <br>
+        <label for="signin-pass">パスワード</label>
+        <input id="signin-pass" name="pass" type="text" placeholder="パスワードを入力">
+        <br>
+        <button name="login" type="submit">ログインする</button>
+    </form>
 </div>
- 
+<!-- /メインコンテンツ -->
+_ccc_;
+
+$tmpl4 = <<<_ddd_
+<!-- メインコンテンツ -->
+<div class="signout">
+    <p><a href="logout.php">ログアウトする</a></p>
+</div>
+<!-- /メインコンテンツ -->
+_ddd_;
+
+$tmpl5 = <<<_eee_
 <footer id="footer">
 	<div class="inner">
   	<a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
@@ -102,6 +79,26 @@
 		<a href="https://imagination.m-78.jp/"><img src="img_ti.jpg" width="20%"></a>
 	</div>
 </footer>
-
 </body>
 </html>
+_eee_;
+
+session_start();
+echo $tmpl1;
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+  $tmpl2 = str_replace("★ユーザー名★", "ようこそ、{$user_name}さん!", $tmpl2);
+  echo $tmpl2;
+  echo $tmpl4;
+} else {
+  $tmpl2 = str_replace("★ユーザー名★", "ようこそ、ゲストさん!", $tmpl2);
+  echo $tmpl2;
+  echo $tmpl3;
+}
+echo $tmpl5;
+// 画面に出力
+
+exit();
+
+?>

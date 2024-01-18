@@ -178,7 +178,14 @@ $tmpl = str_replace("★分類リスト★", $type_list, $tmpl);
 $tmpl = str_replace("★作品リスト★", $prog_list, $tmpl);
 $tmpl = str_replace("★レアリティリスト★", $rare_list, $tmpl);
 
-
+session_start();
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+    $user_name = $_SESSION['user_name'];
+    $tmpl = str_replace("★ユーザー名★", "ようこそ、{$user_name}さん!", $tmpl);
+} else {
+    $tmpl = str_replace("★ユーザー名★", "ようこそ、ゲストさん!", $tmpl);
+}
 
 // 画面に出力
 echo $tmpl;

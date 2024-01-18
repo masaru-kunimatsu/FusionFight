@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+// セッションにユーザー名が保存されているか確認
+if (!isset($_SESSION['user_name'])) {
+    header('Location: account.php');
+}
+
 // テンプレート読み込み
 $file = fopen("build_tmpl.php", "r") or die("build_tmpl.php ファイルを開けませんでした。");
 $size = filesize("build_tmpl.php");
@@ -23,7 +30,7 @@ try{
     # プリペアードステートメント
     $stmt = $dbh->prepare($sql);
 
-    #INSERTの実行
+    #SQLの実行
     $stmt->execute();
   }
 }catch (PDOException $e){
@@ -40,10 +47,6 @@ if($stmt->execute()){
 }
    
 
-
-
-
-session_start();
 if ($_GET != NULL){
   if (empty($_SESSION['card1'])){
     $_SESSION['card1'] = array(
@@ -78,7 +81,7 @@ if ($_GET != NULL){
     $tmpl = str_replace("★注意★", "", $tmpl);
   }
 
-  if ($_SESSION['card1'] != NULL){
+  if (isset($_SESSION['card1']) && !empty($_SESSION['card1'])) {
     $card1 = "";
     $card1 .= $_SESSION['card1']["card_id"];
     $card1 .= "<br>";
@@ -105,7 +108,7 @@ if ($_GET != NULL){
     $card1 .= "<form action='index.php' method='get'><button type='submit'>カードを選択する</button></form>";
   }
 
-  if ($_SESSION['card2'] != NULL){
+  if (isset($_SESSION['card2']) && !empty($_SESSION['card2'])) {
     $card2 = "";
     $card2 .= $_SESSION['card2']["card_id"];
     $card2 .= "<br>";
@@ -137,6 +140,15 @@ if ($_GET != NULL){
 $tmpl = str_replace("★1枚目★", $card1, $tmpl);
 $tmpl = str_replace("★2枚目★", $card2, $tmpl);
 $tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
+
+
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+    $user_name = $_SESSION['user_name'];
+    $tmpl = str_replace("★ユーザー名★", "ようこそ、{$user_name}さん!", $tmpl);
+} else {
+    $tmpl = str_replace("★ユーザー名★", "ようこそ、ゲストさん!", $tmpl);
+}
 
 
 // 画面に出力
