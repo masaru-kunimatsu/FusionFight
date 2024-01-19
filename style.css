@@ -60,6 +60,11 @@ table {
     padding: 2% 0%;
 }
 
+.logo_image a:hover img {
+    transform: scale(1.1); /* ホバー時に画像を拡大 */
+    transition: transform 0.3s ease-in-out; /* ホバー時のトランジションを追加 */
+  }
+
 .username {
     width: 100%; 
     display: flex; 
@@ -98,6 +103,7 @@ table {
 #mainNav a {
     text-decoration: none;
     color: #fff;
+    font-size:large;
     padding: 5px 10px;
     display: block;
     text-align: center; /* テキストを中央寄せ */
@@ -105,6 +111,7 @@ table {
 
 #mainNav a:hover {
     background-color: #6149ce;
+    margin: 0 10%;
 }
 
 
@@ -126,4 +133,45 @@ table {
 
   #footer img {
     margin: 0 1%; /* 画像間の余白を設定 */
+    transition: transform 0.3s ease-in-out; /* ホバー時のトランジションを追加 */
+  }
+
+  #footer img:hover {
+    transform: scale(1.2); /* ホバー時に画像を拡大 */
+  }
+
+  #sidebar {
+    background: linear-gradient(to bottom, #620080a9, #9d15c76b); /* 紫色の垂直方向グラデーション */
+    padding: 10px; /* 全方位に10pxのパディングを追加 */
+    margin: 10px 10px 10px 0px;
+  }
+
+  #sidebar h3 {
+    color: white;
+    font-size: large;
+    text-align: center; /* テキストを中央揃えにする */
+    border: 2px solid white; /* 白い線で囲む */
+    padding: 10px; /* 内側の余白を追加 */
+    display: block; /* ブロック要素にする */
+    margin: 0 auto; /* 左右に自動的にマージンを追加して中央揃えにする */
+  }
+
+  #sidebar form p {
+    margin-top: 10px; /* 上の余白を5px追加 */
+    color: #fff;
+  }
+
+  #searchButton {
+    width: 50%; /* ボタンを親要素の50%に変更 */
+    cursor: pointer; /* カーソルをポインタに変更 */
+    transition: transform 0.3s ease-in-out; /* ホバー時のトランジションを追加 */
+    display: block; /* ブロック要素にする */
+    margin: 0 auto; /* 左右に自動的にマージンを追加して中央揃えにする */
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    bottom: 0; /* 下部に配置 */
+  }
+
+  #searchButton:hover {
+    transform: scale(1.2); /* ホバー時に画像を拡大 */
   }

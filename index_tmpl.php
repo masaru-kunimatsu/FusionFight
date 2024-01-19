@@ -14,24 +14,9 @@
   <![endif]-->
   <script src="js/jquery1.7.2.min.js"></script>
   <script src="js/script.js"></script>
-	<style>
-    body {
-      /* margin: 0; /* ブラウザのデフォルトのmarginを削除 */
-      padding: 0; /* ブラウザのデフォルトのpaddingを削除 */
-      background-image: url('space.png'); /* 画像のファイルパスを指定 */
-      background-size: cover; /* 画像をカバーするように調整 */
-      background-position: center; /* 画像を中央に配置 */
-      background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
-      height: 100vh; /* 画面の高さいっぱいに広げる */
-			background-attachment: fixed; /* 背景画像を固定する */
-      display: flex;
-      flex-direction: column; */
-    }
-  </style>
 </head>
 
 <body>
-
 <header id="header">
   <div>
     <!-- ロゴ -->
@@ -58,7 +43,7 @@
   </div>
 </header>
 
-	<div id="wrapper" style="display: flex; justify-content;">
+<div id="wrapper" style="display: flex; justify-content;">
 	<div>
 		<aside id="sidebar">
 			<h3 class="heading">検索条件を指定</h3>
@@ -117,6 +102,5 @@
 		<a href="https://imagination.m-78.jp/"><img src="img_ti.jpg" width="50%"></a>
 	</div>
 </footer>
-
 </body>
 </html>

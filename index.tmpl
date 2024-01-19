@@ -1,0 +1,51 @@
+	<div id="wrapper" style="display: flex; justify-content;">
+	<div>
+		<aside id="sidebar">
+			<h3 class="heading">検索条件を指定</h3>
+			<form action="index.php" method="get">
+				<p>キャラクター</p>
+				<select name="name">
+					<option value="">選択してください</option>
+					★名前リスト★
+				</select>
+				<p>形態</p>
+				<select name="form">
+					<option value="">選択してください</option>
+					★形態リスト★
+				</select>
+				<p>技</p>
+				<select name="climax">
+					<option value="">選択してください</option>
+					<option value="1">クライマックス技</option>
+				</select>
+				<p>分類</p>
+				<select name="type">
+					<option value="">選択してください</option>
+					★分類リスト★
+				</select>
+				<p>作品</p>
+				<select name="prog">
+					<option value="">選択してください</option>
+					★作品リスト★
+				</select>
+				<p>レアリティ</p>
+				<select name="rare">
+					<option value="">選択してください</option>
+					★レアリティリスト★
+				</select>
+				<p>フリーワード検索</p>
+				<input type="text" name="text" placeholder="キーワードを入力してください" size="40">
+				<br>
+				<input type="image" src="card_search.png" alt="検索する" id="searchButton">
+			</form>
+		</aside>
+	</div>
+	<div>
+		<!-- コンテンツ -->
+		<section id="main">
+			<h1>CHECK!!</h1>
+			★検索結果★
+		</section>
+		<!-- / コンテンツ -->
+	</div>
+</div>

@@ -154,9 +154,32 @@ try{
 $dbh = null;
 
 // テンプレート読み込み
-$file = fopen("index_tmpl.php", "r") or die("index_tmpl.php ファイルを開けませんでした。");
-$size = filesize("index_tmpl.php");
+// $file = fopen("index_tmpl.php", "r") or die("index_tmpl.php ファイルを開けませんでした。");
+// $size = filesize("index_tmpl.php");
+// $tmpl = fread($file, $size);
+// fclose($file);
+
+$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
+$size = filesize("head.tmpl");
 $tmpl = fread($file, $size);
+fclose($file);
+
+$file = fopen("headr.tmpl", "r") or die("headr.tmpl ファイルを開けませんでした。");
+$size = filesize("headr.tmpl");
+$tmpl2 = fread($file, $size);
+$tmpl .= $tmpl2;
+fclose($file);
+
+$file = fopen("index.tmpl", "r") or die("index.tmpl ファイルを開けませんでした。");
+$size = filesize("index.tmpl");
+$tmpl3 = fread($file, $size);
+$tmpl .= $tmpl3;
+fclose($file);
+
+$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
+$size = filesize("footer.tmpl");
+$tmpl4 = fread($file, $size);
+$tmpl .= $tmpl4;
 fclose($file);
 
 // 文字列置き換え
