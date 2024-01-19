@@ -14,6 +14,7 @@
   <![endif]-->
   <script src="js/jquery1.7.2.min.js"></script>
   <script src="js/script.js"></script>
+  <script src="https://kit.fontawesome.com/73d230a992.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -45,7 +46,7 @@
 
 <div id="wrapper" style="display: flex; justify-content;">
 	<div>
-		<aside id="sidebar">
+    <aside id="sidebar">
 			<h3 class="heading">検索条件を指定</h3>
 			<form action="index.php" method="get">
 				<p>キャラクター</p>
@@ -79,18 +80,66 @@
 					★レアリティリスト★
 				</select>
 				<p>フリーワード検索</p>
-				<input type="text" name="text" placeholder="キーワードを入力してください" size="30">
+				<input type="text" name="text" placeholder="キーワードを入力してください" size="40">
 				<br>
-				<button type='submit'>検索する</button>
+				<input type="image" src="card_search.png" alt="検索する" id="searchButton">
 			</form>
 		</aside>
 	</div>
 	<div>
 		<!-- コンテンツ -->
-		<section id="main">
-			<h1>CHECK!!</h1>
-			★検索結果★
-		</section>
+    <section id="main_sheet">
+      <form action='build.php' method='get'>
+        <div class="sheet">
+          <div class="leftsheet">
+            <img src='{$row["image"]}' height=70%;>
+          </div>
+          <div class="rightsheet">
+            <div class="rightsheet_name">{$row["name"]}</div>
+            <div class="rightsheet_tit">タイプ:<span class="rightsheet_form"><br>{$row["form"]}</span></div>
+            <div class="rightsheet_tit">必殺技:<span class="rightsheet_form"><br>{$row["skill"]}</span><img src='CMlogo.png'></div>
+            <div class="rightuppersheet">
+              <img src='type●$row["type"].png' >
+              <img src='rare●{$row["rare"]}.png' >
+              <img src='logo●{$row["prog"]}.webp' >
+            </div>
+            <div class="rightbottomsheet">
+              <img src='{$row["barcode"]}'>
+              <button class='rightbottomsheet_button' type='submit' name='sub'>
+                デッキに追加する
+                <i class="fa-solid fa-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+    <section id="main_sheet">
+      <form action='build.php' method='get'>
+        <div class="sheet">
+          <div class="leftsheet">
+            <img src='{$row["image"]}' height=70%;>
+          </div>
+          <div class="rightsheet">
+            <div class="rightsheet_name">{$row["name"]}</div>
+            <div class="rightsheet_tit">タイプ:<span class="rightsheet_form"><br>{$row["form"]}</span></div>
+            <div class="rightsheet_tit">必殺技:<span class="rightsheet_form"><br>{$row["skill"]}</span><img src='CMlogo.png'></div>
+            <div class="rightuppersheet">
+              <img src='type●$row["type"].png' >
+              <img src='rare●{$row["rare"]}.png' >
+              <img src='logo●{$row["prog"]}.webp' >
+            </div>
+            <div class="rightbottomsheet">
+              <img src='{$row["barcode"]}'>
+              <button class='rightbottomsheet_button' type='submit' name='sub'>
+                デッキに追加する
+                <i class="fa-solid fa-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
 		<!-- / コンテンツ -->
 	</div>
 </div>

@@ -100,16 +100,25 @@ try{
     if($stmt->execute()){
       while($row = $stmt->fetch()){
         // デッキページにリンクする画像ボタンを作成
-        $contents .= " <form action='build.php' method='get'><br>";
-        $contents .= " <img src='{$row["image"]}' width='20%'><br>";
-        $contents .= " <img src='{$row["barcode"]}' width='20%'><br>";
-        $contents .= " {$row["name"]}<br>";
-        $contents .= " {$row["form"]}<br>";
-        $contents .= " {$row["skill"]}<br>";
-        if ($row["climax"]==1) {$contents .= "<img src='CMlogo.png' width='5%'><br>";};
-        $contents .= "<img src='type●{$row["type"]}.png' height='15px'><br>";
-        $contents .= "<img src='logo●{$row["prog"]}.webp' width='15%'><br>";
-        $contents .= "<img src='rare●{$row["rare"]}.png' height='20px'><br>";
+        $contents .= "<section id='main_sheet'><form action='build.php' method='get'>";
+        $contents .= "<div class='sheet'>";
+        $contents .= "<div class='leftsheet'>";
+        $contents .= "<img src='{$row["image"]}' height=70%;></div>";
+        $contents .= "<div class='rightsheet'>";
+        $contents .= "<div class='rightsheet_name'>{$row['name']}</div>";
+        $contents .= "<div class='rightsheet_tit'>タイプ:<span class='rightsheet_form'><br>{$row['form']}</span></div>";
+        $contents .= "<div class='rightsheet_tit'>必殺技:<span class='rightsheet_form'><br>{$row['skill']}</span>";
+        $contents .= ($row["climax"] == 1) ? "<img src='CMlogo.png'><br>" : '';
+        $contents .= "</div>";
+        $contents .= "<div class='rightuppersheet'>";
+        $contents .= "<img src='type●{$row['type']}.png' >";
+        $contents .= "<img src='rare●{$row['rare']}.png' >";
+        $contents .= "<img src='logo●{$row['prog']}.webp' ></div>";
+        $contents .= "<div class='rightbottomsheet'>";
+        $contents .= "<img src='{$row['barcode']}'>";
+        $contents .= "<button class='rightbottomsheet_button' type='submit' name='sub'>";
+        $contents .= "デッキに追加する <i class='fa-solid fa-forward'></i></button>";
+        $contents .= "</div></div></div>";
         $contents .= "<input type='hidden' name='card_id' value='{$row["card_id"]}'>";
         $contents .= "<input type='hidden' name='image' value='{$row["image"]}'>";
         $contents .= "<input type='hidden' name='barcode' value='{$row["barcode"]}'>";
@@ -120,8 +129,7 @@ try{
         $contents .= "<input type='hidden' name='type' value='{$row["type"]}'>";
         $contents .= "<input type='hidden' name='prog' value='{$row["prog"]}'>";
         $contents .= "<input type='hidden' name='rare' value='{$row["rare"]}'>";
-        $contents .= "<input type='submit' name='sub' value='デッキに追加する'><br>";
-        $contents .= "</form>";
+        $contents .= "</form></section>";
         
         // リスト用に重複を排除して変数に代入
         if (!in_array($row["name_id"], $names)) {

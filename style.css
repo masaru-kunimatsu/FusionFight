@@ -142,8 +142,8 @@ table {
 
   #sidebar {
     background: linear-gradient(to bottom, #620080a9, #9d15c76b); /* 紫色の垂直方向グラデーション */
-    padding: 10px; /* 全方位に10pxのパディングを追加 */
-    margin: 10px 10px 10px 0px;
+    padding: 20px 10px 10px 10px; /* 全方位に10pxのパディングを追加 */
+    margin: 20px 10px 10px 0px;
   }
 
   #sidebar h3 {
@@ -175,3 +175,118 @@ table {
   #searchButton:hover {
     transform: scale(1.2); /* ホバー時に画像を拡大 */
   }
+
+  .serchresult {
+    background: linear-gradient(to bottom, #000680ac, #1556c76b); /* 紫色の垂直方向グラデーション */
+    color: white; /* テキストを白色に設定 */
+    padding: 20px 20px 10px 20px;
+    margin: 20px 0px 10px 10px;
+    width: 100%;
+  }
+
+
+
+  .sheet {
+    display: flex;
+    background-image: url('sheet.jpeg');
+    background-size: cover; /* 画像を全体に広げる */
+    background-position: center; /* 画像を中央に配置 */
+    color: white; /* テキストを白色に設定（背景が画像の場合、見やすい色を選ぶと良い） */
+    height: 280px;
+    width: 100%;
+    margin: 0px 0px 20px 0px;
+  }
+
+  .leftsheet {
+    flex: 3; /* 左側の領域を伸縮可能にする */
+    padding: 10px; /* 適切な余白を追加 */
+    justify-content: center; /* 左右中央に配置 */
+  }
+
+  .leftsheet img{
+    height: 100%; /* 画像の高さを100%に */
+    width: auto; /* 幅を自動調整 */
+    max-width: 100%; /* 幅が親要素を超えないように */
+    margin: 0 auto; /* 左右の余白を自動調整し、親要素の中央に配置 */
+    display: block; /* 追加：余白を自動調整するために必要 */
+  }
+
+  .rightsheet {
+    flex: 7; /* 右側の領域を伸縮可能にする */
+    padding: 15px; /* 適切な余白を追加 */
+  }
+
+  .rightsheet_name {
+    font-size: large; /* フォントサイズをlargeに設定 */
+    background: linear-gradient(to right, #0080FF , #00ffff80); /* 水色のグラデーション */
+    display: inline; /* デフォルトはブロック要素なので、行内要素に変更 */
+    padding: 5px; /* 適切な余白を追加 */
+    font-weight: bold;
+    height: 40px;
+  }
+
+  .rightsheet_tit {
+    color: rgba(0, 0, 0, 0.493);
+    padding-top: 5px;
+    font-size:small;
+    display: flex;
+    align-items: center; /* 子要素を垂直方向に中央揃え */
+    height: 50px;
+  }
+
+  .rightsheet_form {
+    font-size: large;
+    font-weight: bold;
+    background: linear-gradient(to right, #0080FF , #00ffff); /* 文字色に近いグラデーション */
+    -webkit-background-clip: text; /* テキストにのみ背景を適用する */
+    color: transparent; /* テキストの色を透明にする */
+    margin-left: 5px;
+  }
+
+  .rightsheet_tit img {
+    width: auto; /* ロゴの幅を調整 */
+    margin-left: 10px; /* ロゴと文字列の間に余白を追加 */
+    height: 100%; /* img要素の高さを親要素に合わせる */
+  }
+
+  .rightuppersheet {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    margin-top: 15px;
+  }
+
+  .rightuppersheet img {
+    height: 100%; /* 親要素と同じ高さに設定 */
+    margin-right: 40px; /* 画像の右に余白を追加 */
+  }
+
+  .rightbottomsheet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    height: 50px;
+    margin: 15px 15px 0px 0px;
+  }
+
+  .rightbottomsheet img {
+    height: 100%; /* 親要素と同じ高さに設定 */
+    margin-right: 60px; /* 画像の右に余白を追加 */
+  }
+
+  
+  .rightbottomsheet_button {
+    background: linear-gradient(to right, #FFD700, #FFA500); /* 黄色のグラデーション */
+    color: white; /* 文字色を白に設定 */
+    font-weight: bold;
+    border-color: #FFA500;
+    padding: 5px 10px; /* 適切なパディングを設定 */
+    font-size: large; /* フォントサイズを大きく設定 */
+    cursor: pointer; /* カーソルをポインターに設定 */
+    border-radius: 5px; /* 角丸を設定 */
+    transition: transform 0.3s ease; /* transformのアニメーションを追加 */
+  }
+
+  .rightbottomsheet_button:hover {
+    transform: scale(1.1); /* カーソルが合ったときに1.1倍に拡大 */
+}
