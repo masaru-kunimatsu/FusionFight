@@ -200,7 +200,7 @@ table {
 
   .leftsheet {
     flex: 3; /* 左側の領域を伸縮可能にする */
-    padding: 10px; /* 適切な余白を追加 */
+    padding: 10px 0px; /* 適切な余白を追加 */
     justify-content: center; /* 左右中央に配置 */
   }
 
@@ -214,7 +214,7 @@ table {
 
   .rightsheet {
     flex: 7; /* 右側の領域を伸縮可能にする */
-    padding: 15px; /* 適切な余白を追加 */
+    padding: 15px 0px 15px 0px; /* 適切な余白を追加 */
   }
 
   .rightsheet_name {
@@ -233,6 +233,7 @@ table {
     display: flex;
     align-items: center; /* 子要素を垂直方向に中央揃え */
     height: 50px;
+    letter-spacing: -0.2em;
   }
 
   .rightsheet_form {
@@ -242,6 +243,7 @@ table {
     -webkit-background-clip: text; /* テキストにのみ背景を適用する */
     color: transparent; /* テキストの色を透明にする */
     margin-left: 5px;
+    letter-spacing: -0.1em;
   }
 
   .rightsheet_tit img {
@@ -254,7 +256,7 @@ table {
     display: flex;
     align-items: center;
     height: 35px;
-    margin-top: 15px;
+    margin: 15px 0px 0px 20px;
   }
 
   .rightuppersheet img {

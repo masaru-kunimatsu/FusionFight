@@ -106,8 +106,8 @@ try{
         $contents .= "<img src='{$row["image"]}' height=70%;></div>";
         $contents .= "<div class='rightsheet'>";
         $contents .= "<div class='rightsheet_name'>{$row['name']}</div>";
-        $contents .= "<div class='rightsheet_tit'>タイプ:<span class='rightsheet_form'><br>{$row['form']}</span></div>";
-        $contents .= "<div class='rightsheet_tit'>必殺技:<span class='rightsheet_form'><br>{$row['skill']}</span>";
+        $contents .= "<div class='rightsheet_tit'>タイプ<span class='rightsheet_form'><br>{$row['form']}</span></div>";
+        $contents .= "<div class='rightsheet_tit'>ワザ<span class='rightsheet_form'><br>{$row['skill']}</span>";
         $contents .= ($row["climax"] == 1) ? "<img src='CMlogo.png'><br>" : '';
         $contents .= "</div>";
         $contents .= "<div class='rightuppersheet'>";
