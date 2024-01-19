@@ -161,19 +161,13 @@ try{
 }
 $dbh = null;
 
-// テンプレート読み込み
-// $file = fopen("index_tmpl.php", "r") or die("index_tmpl.php ファイルを開けませんでした。");
-// $size = filesize("index_tmpl.php");
-// $tmpl = fread($file, $size);
-// fclose($file);
-
 $file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
 $size = filesize("head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
-$file = fopen("headr.tmpl", "r") or die("headr.tmpl ファイルを開けませんでした。");
-$size = filesize("headr.tmpl");
+$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
+$size = filesize("header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);

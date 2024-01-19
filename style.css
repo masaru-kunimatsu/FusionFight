@@ -37,6 +37,7 @@ body {
     flex-direction: column;
     width: 80%;
     margin: 0 auto; /* ページを中央に寄せる */
+    color: white;
 }
 ol, ul {
     list-style: none;
@@ -280,7 +281,7 @@ table {
     color: white; /* 文字色を白に設定 */
     font-weight: bold;
     border-color: #FFA500;
-    padding: 5px 10px; /* 適切なパディングを設定 */
+    padding: 5px 5px; /* 適切なパディングを設定 */
     font-size: large; /* フォントサイズを大きく設定 */
     cursor: pointer; /* カーソルをポインターに設定 */
     border-radius: 5px; /* 角丸を設定 */
@@ -289,4 +290,56 @@ table {
 
   .rightbottomsheet_button:hover {
     transform: scale(1.1); /* カーソルが合ったときに1.1倍に拡大 */
+}
+
+.account {
+  background: linear-gradient(to bottom, #ffffffdd, #ffffff86); /* 白色の垂直方向グラデーション */
+  color: rgb(108, 107, 107); 
+  margin: 20px 0px 20px 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 上下方向の中央寄せ */
+  align-items: center; /* 左右方向の中央寄せ */
+  height: 100vh; /* 画面の高さいっぱいに広がるように設定 */
+}
+
+.account_box {
+  width: 50%; /* 適切なサイズに設定 */
+  height: 100%; /* 適切なサイズに設定 */
+  display: flex;
+  align-items: center; /* 上下方向の中央寄せ */
+  justify-content: center; /* 左右方向の中央寄せ */
+}
+
+.form_tittle {
+  text-align: center; /* テキストの中央寄せ */
+  font-size: xx-large;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  text-align: left;
+  margin: 10px 0px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  margin: 10px 0px;
+}
+
+.login_button {
+  text-align: center; /* テキストの中央寄せ */
+  margin: 20px auto;
+}
+
+.logout {
+  text-align: center; /* テキストの中央寄せ */
+  font-size: x-large;
+  width: 100%;
 }

@@ -7,10 +7,27 @@ if (!isset($_SESSION['user_name'])) {
     header('Location: account.php');
 }
 
-// テンプレート読み込み
-$file = fopen("build_tmpl.php", "r") or die("build_tmpl.php ファイルを開けませんでした。");
-$size = filesize("build_tmpl.php");
+$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
+$size = filesize("head.tmpl");
 $tmpl = fread($file, $size);
+fclose($file);
+
+$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
+$size = filesize("header.tmpl");
+$tmpl2 = fread($file, $size);
+$tmpl .= $tmpl2;
+fclose($file);
+
+$file = fopen("index.tmpl", "r") or die("index.tmpl ファイルを開けませんでした。");
+$size = filesize("index.tmpl");
+$tmpl3 = fread($file, $size);
+$tmpl .= $tmpl3;
+fclose($file);
+
+$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
+$size = filesize("footer.tmpl");
+$tmpl4 = fread($file, $size);
+$tmpl .= $tmpl4;
 fclose($file);
 
 # データベースに接続
@@ -45,7 +62,6 @@ if($stmt->execute()){
     $bgm_list .= "<option value={$row["bgm_id"]}>{$row["bgm"]}</option>";
   }
 }
-   
 
 if ($_GET != NULL){
   if (empty($_SESSION['card1'])){
@@ -134,7 +150,6 @@ if ($_GET != NULL){
     $card2 = "カードを登録しよう！";
     $card2 .= "<form action='index.php' method='get'><button type='submit'>カードを選択する</button></form>";
   }
-
 
 // 文字列置き換え
 $tmpl = str_replace("★1枚目★", $card1, $tmpl);
