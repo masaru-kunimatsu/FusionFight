@@ -49,13 +49,13 @@ $dbh = null;
     $card1 .= "<br>";
     $card1 .= $_SESSION["card1"]["skill"];
     $card1 .= "<br>";
-    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? 'クライマックス' : '';
+    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
     $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["type"];
+    $card1 .= "<img src='type●{$_SESSION["card1"]["type"]}.png' height='15px'>";
     $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["prog"];
+    $card1 .= "<img src='logo●{$_SESSION["card1"]["prog"]}.webp' width='15%'>";
     $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["rare"];
+    $card1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png' height='20px'>";
 
     $card2 = "";
     $card2 .= $_SESSION['card2']["card_id"];
@@ -70,13 +70,13 @@ $dbh = null;
     $card2 .= "<br>";
     $card2 .= $_SESSION["card2"]["skill"];
     $card2 .= "<br>";
-    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? 'クライマックス' : '';
+    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
     $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["type"];
+    $card2 .= "<img src='type●{$_SESSION["card2"]["type"]}.png' height='15px'>";
     $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["prog"];
+    $card2 .= "<img src='logo●{$_SESSION["card2"]["prog"]}.webp' width='15%'>";
     $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["rare"];
+    $card2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png' height='20px'>";
 
     if (isset($_GET["deck_name"]) && $_GET["deck_name"] != "") {
         // テキスト入力内容を$aにコピー
@@ -196,6 +196,7 @@ $tmpl = str_replace("★1枚目★", $card1, $tmpl);
 $tmpl = str_replace("★2枚目★", $card2, $tmpl);
 $tmpl = str_replace("★デッキ名★", $deck_name, $tmpl);
 $tmpl = str_replace("★BGM★", $bgmValue, $tmpl);
+$tmpl = str_replace("●" , "/" , $tmpl);
 
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {

@@ -50,8 +50,8 @@ if($stmt->execute()){
 if ($_GET != NULL){
   if (empty($_SESSION['card1'])){
     $_SESSION['card1'] = array(
-      'image' => str_replace("●" , "/" , $_GET["image"]),
-      'barcode' => str_replace("●" , "/" , $_GET["barcode"]),
+      'image' => $_GET["image"],
+      'barcode' => $_GET["barcode"],
       'card_id' => $_GET["card_id"],
       'name' => $_GET["name"],
       'form' => $_GET["form"],
@@ -61,7 +61,7 @@ if ($_GET != NULL){
       'prog' => $_GET["prog"],
       'rare' => $_GET["rare"]);
       $tmpl = str_replace("★注意★", "", $tmpl);
-    }elseif(empty($_SESSION['card2'])){
+    }elseif(empty($_SESSION['card2']) && ($_SESSION['card1']["card_id"] != $_GET["card_id"])){
     $_SESSION['card2'] = array(
       'image' => str_replace("●" , "/" , $_GET["image"]),
       'barcode' => str_replace("●" , "/" , $_GET["barcode"]),
@@ -95,13 +95,13 @@ if ($_GET != NULL){
     $card1 .= "<br>";
     $card1 .= $_SESSION["card1"]["skill"];
     $card1 .= "<br>";
-    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? 'クライマックス' : '';
+    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
     $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["type"];
+    $card1 .= "<img src='type●{$_SESSION["card1"]["type"]}.png' height='15px'>";
     $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["prog"];
+    $card1 .= "<img src='logo●{$_SESSION["card1"]["prog"]}.webp' width='15%'>";
     $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["rare"];
+    $card1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png' height='20px'>";
     $card1 .= "<form action='mode1.php' method='get'><button type='submit'>カードを削除する</button></form>";
   }else{
     $card1 = "カードを登録しよう！";
@@ -122,13 +122,13 @@ if ($_GET != NULL){
     $card2 .= "<br>";
     $card2 .= $_SESSION["card2"]["skill"];
     $card2 .= "<br>";
-    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? 'クライマックス' : '';
+    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
     $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["type"];
+    $card2 .= "<img src='type●{$_SESSION["card2"]["type"]}.png' height='15px'>";
     $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["prog"];
+    $card2 .= "<img src='logo●{$_SESSION["card2"]["prog"]}.webp' width='15%'>";
     $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["rare"];
+    $card2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png' height='20px'>";
     $card2 .= "<form action='mode2.php' method='get'><button type='submit'>カードを削除する</button></form>";
   }else{
     $card2 = "カードを登録しよう！";
@@ -140,6 +140,7 @@ if ($_GET != NULL){
 $tmpl = str_replace("★1枚目★", $card1, $tmpl);
 $tmpl = str_replace("★2枚目★", $card2, $tmpl);
 $tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
+$tmpl = str_replace("●" , "/" , $tmpl);
 
 
 // セッションにユーザー名が保存されているか確認

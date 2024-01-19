@@ -106,10 +106,10 @@ try{
         $contents .= " {$row["name"]}<br>";
         $contents .= " {$row["form"]}<br>";
         $contents .= " {$row["skill"]}<br>";
-        if ($row["climax"]==1) {$contents .= "クライマックス<br>";};
-        $contents .= " {$row["type"]}<br>";
-        $contents .= " {$row["prog"]}<br>";
-        $contents .= " {$row["rare"]}<br>";
+        if ($row["climax"]==1) {$contents .= "<img src='CMlogo.png' width='5%'><br>";};
+        $contents .= "<img src='type●{$row["type"]}.png' height='15px'><br>";
+        $contents .= "<img src='logo●{$row["prog"]}.webp' width='15%'><br>";
+        $contents .= "<img src='rare●{$row["rare"]}.png' height='20px'><br>";
         $contents .= "<input type='hidden' name='card_id' value='{$row["card_id"]}'>";
         $contents .= "<input type='hidden' name='image' value='{$row["image"]}'>";
         $contents .= "<input type='hidden' name='barcode' value='{$row["barcode"]}'>";

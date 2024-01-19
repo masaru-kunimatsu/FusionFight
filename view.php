@@ -70,10 +70,10 @@ try{
         $contents .= " {$row["van_name"]}<br>";
         $contents .= " {$row["van_form"]}<br>";
         $contents .= " {$row["van_skill"]}<br>";
-        if ($row["van_climax"]==1) {$contents .= "クライマックス<br>";};
-        $contents .= " {$row["van_type"]}<br>";
-        $contents .= " {$row["van_prog"]}<br>";
-        $contents .= " {$row["van_rare"]}<br>";
+        if ($row["van_climax"]==1) {$contents .= "<img src='CMlogo.png' width='5%'><br>";};
+        $contents .= "<img src='type●{$row["van_type"]}.png' height='15px'>";
+        $contents .= "<img src='logo●{$row["van_prog"]}.webp' width='15%'><br>";
+        $contents .= "<img src='rare●{$row["van_rare"]}.png' height='20px'><br>";
         
         // デッキページにリンクする画像ボタンを作成
         $contents .= " <img src='{$row["rear_image"]}' width='20%'><br>";
@@ -81,10 +81,10 @@ try{
         $contents .= " {$row["rear_name"]}<br>";
         $contents .= " {$row["rear_form"]}<br>";
         $contents .= " {$row["rear_skill"]}<br>";
-        if ($row["rear_climax"]==1) {$contents .= "クライマックス<br>";};
-        $contents .= " {$row["rear_type"]}<br>";
-        $contents .= " {$row["rear_prog"]}<br>";
-        $contents .= " {$row["rear_rare"]}<br>";
+        if ($row["rear_climax"]==1) {$contents .= "<img src='CMlogo.png' width='5%'><br>";};
+        $contents .= "<img src='type●{$row["rear_type"]}.png' height='15px'>";
+        $contents .= "<img src='logo●{$row["rear_prog"]}.webp' width='15%'><br>";
+        $contents .= "<img src='rare●{$row["rear_rare"]}.png' height='20px'><br>";
       }
     }
 }catch (PDOException $e){
