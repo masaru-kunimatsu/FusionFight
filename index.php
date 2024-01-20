@@ -11,26 +11,24 @@ try{
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{
+    $SQL = "SELECT * FROM m_card
+    LEFT JOIN m_name on m_card.name_id = m_name.name_id
+    LEFT JOIN m_type on m_card.type_id = m_type.type_id
+    LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
+    LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id ";
 
     if ($_GET== null){
       # 検索条件の指定がない場合は全件表示
       # プレースホルダーの利用
-      $SQL = "SELECT * FROM m_card
-      LEFT JOIN m_name on m_card.name_id = m_name.name_id
-      LEFT JOIN m_type on m_card.type_id = m_type.type_id
-      LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
-      LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
-      ORDER BY m_card.card_id;";
+      $SQL .= "ORDER BY m_card.card_id;";
       $stmt = $dbh->prepare($SQL);
+      $stmtlist = $stmt;
     }else{
+      $SQLlist = $SQL;
+      $SQLlist .= " ORDER BY m_card.card_id";
       # 検索条件の指定がある場合はしぼりこみ表示
       # プレースホルダーの利用
-      $SQL = "SELECT * FROM m_card
-      LEFT JOIN m_name on m_card.name_id = m_name.name_id
-      LEFT JOIN m_type on m_card.type_id = m_type.type_id
-      LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
-      LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
-      WHERE 1 = 1"; // これは常に真となる条件を追加;
+      $SQL .= "WHERE 1 = 1"; // これは常に真となる条件を追加;
 
       // 条件が指定されている場合にのみ追加
       if ($_GET["name"] != "") {
@@ -81,6 +79,7 @@ try{
       // ORDER BY 句の追加
       $SQL .= " ORDER BY m_card.card_id";
       $stmt = $dbh->prepare($SQL);
+      $stmtlist = $dbh->prepare($SQLlist);
     }
 
     // 表示持つ列を代入する変数を用意
@@ -130,7 +129,11 @@ try{
         $contents .= "<input type='hidden' name='prog' value='{$row["prog"]}'>";
         $contents .= "<input type='hidden' name='rare' value='{$row["rare"]}'>";
         $contents .= "</form></section>";
-        
+      }
+    }
+    # リスト用SQL文の実行
+    if($stmtlist->execute()){
+      while($row = $stmtlist->fetch()){
         // リスト用に重複を排除して変数に代入
         if (!in_array($row["name_id"], $names)) {
           $name_list .= "<option value={$row["name_id"]}>{$row["name"]}</option>";

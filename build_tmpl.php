@@ -68,7 +68,7 @@
     <p><input type="text" name="deck_name" placeholder="デッキ名を入力してください" size="30"></p>
     <select name="bgm">
 		  <option value="">BGMを選んでください</option>
-      ★bgmリスト★
+      <option value=5>blackstar</option>
 		</select>
     <p><a href="bgm.php">BGM登録ページへ</a></p>
     <br>

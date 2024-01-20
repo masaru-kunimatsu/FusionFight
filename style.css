@@ -185,8 +185,6 @@ table {
     width: 100%;
   }
 
-
-
   .sheet {
     display: flex;
     background-image: url('sheet.jpeg');
@@ -219,7 +217,7 @@ table {
 
   .rightsheet_name {
     font-size: large; /* フォントサイズをlargeに設定 */
-    background: linear-gradient(to right, #0080FF , #00ffff80); /* 水色のグラデーション */
+    background: linear-gradient(to right, #0080FF , #00bbff80); /* 水色のグラデーション */
     display: inline; /* デフォルトはブロック要素なので、行内要素に変更 */
     padding: 5px; /* 適切な余白を追加 */
     font-weight: bold;
@@ -239,7 +237,7 @@ table {
   .rightsheet_form {
     font-size: large;
     font-weight: bold;
-    background: linear-gradient(to right, #0080FF , #00ffff); /* 文字色に近いグラデーション */
+    background: linear-gradient(to right, #0080FF , #00bbff80); /* 文字色に近いグラデーション */
     -webkit-background-clip: text; /* テキストにのみ背景を適用する */
     color: transparent; /* テキストの色を透明にする */
     margin-left: 5px;
@@ -284,6 +282,7 @@ table {
     font-weight: bold;
     border-color: #FFA500;
     padding: 5px 5px; /* 適切なパディングを設定 */
+    margin-right: 20px;
     font-size: large; /* フォントサイズを大きく設定 */
     cursor: pointer; /* カーソルをポインターに設定 */
     border-radius: 5px; /* 角丸を設定 */
@@ -344,4 +343,170 @@ table {
   text-align: center; /* テキストの中央寄せ */
   font-size: x-large;
   width: 100%;
+}
+
+.build {
+  background: linear-gradient(to bottom, #0041f3bb, #0563f090); /* 白色の垂直方向グラデーション */
+  color: rgb(108, 107, 107); 
+  margin: 20px 0px 20px 0px;
+  padding: 10px;
+  width: calc(100% -20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 上下方向の中央寄せ */
+  align-items: center; /* 左右方向の中央寄せ */
+  height: 100vh; /* 画面の高さいっぱいに広がるように設定 */
+}
+
+.deckindex {
+  font-weight: bold;
+  font-size: x-large;
+  color: white;
+  margin-left: 10px;
+}
+
+.decksheet {
+  display: flex;
+  background-image: url('sheet.jpeg');
+  background-size: cover; 
+  background-position: center; 
+  color: white; /* テキストを白色に設定（背景が画像の場合、見やすい色を選ぶと良い） */
+  height: 200px;
+  margin: 0px 10px 10px 10px;
+  color: white;
+}
+
+.deckleftsheet {
+  flex: 3; /* 左側の領域を伸縮可能にする */
+  padding: 10px; /* 適切な余白を追加 */
+  justify-content: center; /* 左右中央に配置 */
+}
+
+.deckleftsheet img{
+  height: auto;
+  width: 100%;
+  max-height: 100%;
+  margin: auto; /* 左右の余白を自動調整し、親要素の中央に配置 */
+  display: block; /* 追加：余白を自動調整するために必要 */
+}
+
+.deckrightsheet {
+  flex: 9; /* 右側の領域を伸縮可能にする */
+  padding: 15px 0px 10px 0px; /* 適切な余白を追加 */
+}
+
+.deckrightsheet_name {
+  font-size: large; /* フォントサイズをlargeに設定 */
+  background: linear-gradient(to right, #0080FF , #00bbff80); /* 水色のグラデーション */
+  display: inline; /* デフォルトはブロック要素なので、行内要素に変更 */
+  padding: 5px; /* 適切な余白を追加 */
+  font-weight: bold;
+  height: 40px;
+  letter-spacing: -0.1em;
+}
+
+.deckrightsheet_tit {
+  color: rgba(0, 0, 0, 0.493);
+  padding: 12px 0px 5px 0px;
+  font-size:small;
+  display: flex;
+  align-items: center; /* 子要素を垂直方向に中央揃え */
+  height: 10px;
+}
+
+.deckrightsheet_form {
+  font-size:medium;
+  font-weight: bold;
+  background: linear-gradient(to right, #0080FF , #00bbff80); /* 文字色に近いグラデーション */
+  -webkit-background-clip: text; /* テキストにのみ背景を適用する */
+  color: transparent; /* テキストの色を透明にする */
+  margin-left: 5px;
+  height: 20px;
+  letter-spacing: -0.2em;
+  display: flex;
+  align-items: center;
+  }
+
+.deckrightsheet_form img {
+  /* width: auto; ロゴの幅を調整 */
+  margin-left: 10px; /* ロゴと文字列の間に余白を追加 */
+  height: 170%; /* img要素の高さを親要素に合わせる */
+}
+
+.deckrightsheet_bottom {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 10px 0px 0px 30px;
+}
+
+.deckrightsheet_bottom img {
+  height: 100%; /* 親要素と同じ高さに設定 */
+  margin-right: 40px; /* 画像の右に余白を追加 */
+}
+
+.exchange_button {
+  background: linear-gradient(to right, #00ffff56, #00ffffaf); /* 黄色のグラデーション */
+  color: white; /* 文字色を白に設定 */
+  font-weight: bold;
+  border-color: #00ffffb1;
+  padding: 5px 5px; /* 適切なパディングを設定 */
+  margin: 5px 0px;
+  font-size:medium; /* フォントサイズを大きく設定 */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  border-radius: 5px; /* 角丸を設定 */
+  transition: background-color 0.3s ease; /* トランジション効果を追加 */
+  &:hover {
+    background-color: whitesmoke; /* マウスホバー時の背景色を白に変更 */
+    color: #000000ae; /* マウスホバー時の文字色を黒に変更 */
+  }
+}
+
+.form_area {
+  display: flex;
+  flex-direction: column; /* 子要素を縦方向に配置 */
+  align-items: center; /* 子要素を中央に揃える */
+  color: white; /* フォントカラーを白に設定 */
+  align-items: center;
+  text-align: center;
+}
+
+.form_area form {
+  font-size: large; /* フォントサイズをlargeに設定 */
+  margin-top: 20px;
+}
+
+.form_area a {
+  color: white; /* リンクの文字色を白に設定 */
+  font-size: medium;
+  padding: 5px 0px 0px 110px; 
+  transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */
+}
+
+.form_area a:hover {
+  font-weight: bold; /* カーソルを合わせたときにフォントウェイトを太くする */
+}
+
+.bgm_area {
+  margin: 20px 50px 0px 0px;
+  display: flex;
+  justify-content: center; /* 子要素を横方向に中央に揃える */
+  align-items: center; /* 子要素を縦方向に中央に揃える */
+}
+
+.decksave_button {
+  background: linear-gradient(to right, #FFD700, #FFA500); /* 黄色のグラデーション */
+  color: white; /* 文字色を白に設定 */
+  font-weight: bold;
+  border-color: #FFA500;
+  padding: 10px; /* 適切なパディングを設定 */
+  margin: 30px 0px;
+  font-size:medium; /* フォントサイズを大きく設定 */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  border-radius: 5px; /* 角丸を設定 */
+  transition: all 0.3s;
+}
+
+.decksave_button:hover {
+  transform: scale(1.1);
 }
