@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -23,11 +25,9 @@ try{
 
     //ログイン認証ができたときの処理
     if ($result[0] != 0){
-      session_start();
       $_SESSION['user_id'] = $result['user_id'];
       $_SESSION['user_name'] = $result['name'];
       header('Location: index.php');
-      exit;   
     //アカウント情報が間違っていたときの処理
     }else{
     $err_msg = "アカウント情報が間違っています。";
@@ -38,3 +38,5 @@ try{
   die();
 }
 $dbh = null;
+
+exit;

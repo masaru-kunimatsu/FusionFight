@@ -1,62 +1,20 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="ja">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
-  <title>BGM追加</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <link rel="stylesheet" href="style.css" type="text/css" media="screen">
-  <!--[if lt IE 9]>
-  <script src="js/html5.js"></script>
-  <script src="js/css3-mediaqueries.js"></script>
-  <![endif]-->
-  <script src="js/jquery1.7.2.min.js"></script>
-  <script src="js/script.js"></script>
-</head>
-
-<body>
-
-<header id="header">
-  <!-- ロゴ -->
-	<div class="logo">
-		<a href="index.php"><img src="bnr_ultrafile.png" width="20%"><span>専用サイト</span></a>
-	</div>
-	<!-- / ロゴ -->
-	<!-- メインナビゲーション -->
-	<nav id="mainNav">
-		<div class="inner">
-			<a class="menu" id="menu"><span>MENU</span></a>
-			<div class="panel">   
-				<ul>
-					<li class="active"><a href="index.php"><strong>カード検索</strong></a></li>
-					<li><a href="build.php"><strong>デッキ作成</strong></a></li>
-					<li><a href="view.php"><strong>デッキ確認</strong></a></li>
-					<li class="last"><a href="account.php"><strong>ログイン</strong></a></li>
-				</ul>   
-			</div>
-		</div> 
-	</nav>
-</header>
+<?php include 'head.tmpl'; ?>
+<?php include 'header.tmpl'; ?>
 
 <!-- / メインナビゲーション -->
-<div>
-  <form action="bgm_comp.php" method="get">
-    <p>BGMを追加する</p>
-    <input type="text" name="text" placeholder="登録するBGM名を入力してください" size="30">
-		<br>
-		<button type='submit'>登録する</button>
-  </form>
-</div>
- 
-<footer id="footer">
-	<div class="inner">
-  	<a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
-		<a href="https://play.google.com/store/apps/details?id=com.bandai.ultramanbinder&hl=en_US"><img src="img_apri.png" width="20%"></a>
-		<a href="https://imagination.m-78.jp/"><img src="img_ti.jpg" width="20%"></a>
-	</div>
-</footer>
+<div class="account">
+  <div class="account_box">
+    <form action="bgm_comp.php" method="get" class="login-form">
+      <h1 class='form_tittle' >BGM登録</h1>
 
-</body>
-</html>
+      <p class="form-label">BGM入力</p>
+      <input id="signin-id" name="text" type="text" placeholder="登録するBGMを入力してください" size = 30>
+      <br>
+
+      <button name="login" type="submit" class="login_button">登録する</button>
+    </form>
+  </div>
+</div>
+<!-- / メインナビゲーション -->
+
+<?php include 'footer.tmpl'; ?>

@@ -1,5 +1,18 @@
 <?php
 
+session_start();
+
+$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
+$size = filesize("head.tmpl");
+$tmpl = fread($file, $size);
+fclose($file);
+
+$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
+$size = filesize("header.tmpl");
+$tmpl2 = fread($file, $size);
+$tmpl .= $tmpl2;
+fclose($file);
+
 # データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -12,12 +25,13 @@ try{
     echo "接続に失敗しました。";
   }else{
     #INSERT文の定義
-    $sql = "INSERT INTO bgm (bgm) VALUES (:text)";
+    $sql = "INSERT INTO bgm (bgm,user_id) VALUES (:text,:user)";
     # プリペアードステートメント
     $stmt = $dbh->prepare($sql);
 
     #bindParamによるパラメータ－と変数の紐付け
     $stmt -> bindParam(':text',$_GET["text"]);
+    $stmt -> bindParam(':user',$_SESSION['user_id']);
 
     #INSERTの実行
     $stmt->execute();
@@ -31,20 +45,25 @@ $dbh = null;
 
 // HTMLの土台を用意
 $html = <<<_aaa_
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>BGMの追加</title>
-</head>
-<body>
-    <h1>完了画面</h1>
-    <p>登録完了しました！</p>
-    <p><a href="index.php">一覧ページへ</a></p>
-</body>
-</html>
+<div class="white_bg">
+  <div class="white_bg_box">
+    <h1 class='white_tittle' >登録が完了しました</h1>
+    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="build.php"  class = 'white_link'> デッキ作成ページに戻る</a></p>
+  </div>
+</div>
 _aaa_;
 
+$tmpl .= $html;
+
+$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
+$size = filesize("footer.tmpl");
+$tmpl3 = fread($file, $size);
+$tmpl .= $tmpl3;
+fclose($file);
+
+
 // 画面に出力
-echo $html;
+echo $tmpl;
+
+exit;
 ?>

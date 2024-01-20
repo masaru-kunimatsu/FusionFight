@@ -44,7 +44,8 @@ try{
     echo "接続に失敗しました。";
   }else{
     #BGMテーブルの取得
-    $sql = "SELECT * FROM bgm ORDER BY bgm DESC";
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT * FROM bgm WHERE user_id = $user_id ORDER BY bgm DESC";
 
     # プリペアードステートメント
     $stmt = $dbh->prepare($sql);

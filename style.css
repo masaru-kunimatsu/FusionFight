@@ -61,19 +61,25 @@ table {
     padding: 2% 0%;
 }
 
+.logo_image{
+  flex: 3; 
+}
+
+
 .logo_image a:hover img {
     transform: scale(1.1); /* ホバー時に画像を拡大 */
     transition: transform 0.3s ease-in-out; /* ホバー時のトランジションを追加 */
   }
 
 .username {
+    flex: 2; 
     width: 100%; 
     display: flex; 
     flex-direction: column; 
     justify-content: flex-end; 
     align-items: center; 
     font-size: 20px; 
-    padding-bottom: 30px; 
+    padding-bottom: 10px; 
     color: white; 
     font-weight: bold;"
 }
@@ -571,4 +577,44 @@ table {
 
 .decksave_button:hover {
   transform: scale(1.1);
+}
+
+.white_bg{
+  background: linear-gradient(to bottom, #ffffffdd, #ffffff86); /* 白色の垂直方向グラデーション */
+  color: rgb(108, 107, 107); 
+  margin: 20px 0px 20px 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 上下方向の中央寄せ */
+  align-items: center; /* 左右方向の中央寄せ */
+  height: 100vh; /* 画面の高さいっぱいに広がるように設定 */
+}
+
+.white_bg_box {
+  width: 50%; /* 適切なサイズに設定 */
+  height: 100%; /* 適切なサイズに設定 */
+  text-align: center;
+}
+
+.white_tittle {
+  font-size: xx-large;
+  width: 100%;
+  margin: auto;
+  margin: 120px 0px;
+}
+
+.white_link {
+  font-size: large;
+  transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */
+  color: transparent;
+  color: rgb(108, 107, 107);
+  text-decoration: none; /* リンクの下線を消す */
+  font-weight: normal; /* 初期は通常の太さ */
+  /* 変化のアニメーションを追加 */
+  transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+}
+
+.white_link:hover {
+  font-weight: bold; /* カーソルを合わせた際に太字に */
 }
