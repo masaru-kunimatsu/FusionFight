@@ -1,5 +1,18 @@
 <?php
 
+// テンプレート読み込み
+$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
+$size = filesize("head.tmpl");
+$tmpl = fread($file, $size);
+fclose($file);
+
+// テンプレート読み込み
+$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
+$size = filesize("header.tmpl");
+$tmpl2 = fread($file, $size);
+$tmpl .= $tmpl2;
+fclose($file);
+
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -94,9 +107,16 @@ try{
 $dbh = null;
 
 // テンプレート読み込み
-$file = fopen("view_tmpl.php", "r") or die("view_tmpl.php ファイルを開けませんでした。");
-$size = filesize("view_tmpl.php");
-$tmpl = fread($file, $size);
+$file = fopen("view.tmpl", "r") or die("view.tmpl ファイルを開けませんでした。");
+$size = filesize("view.tmpl");
+$tmpl3 = fread($file, $size);
+$tmpl .= $tmpl3;
+fclose($file);
+
+$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
+$size = filesize("footer.tmpl");
+$tmpl4 = fread($file, $size);
+$tmpl .= $tmpl4;
 fclose($file);
 
 // 文字列置き換え
@@ -107,9 +127,9 @@ session_start();
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
     $user_name = $_SESSION['user_name'];
-    $tmpl = str_replace("★ユーザー名★", "ようこそ、{$user_name}さん!", $tmpl);
+    $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
 } else {
-    $tmpl = str_replace("★ユーザー名★", "ようこそ、ゲストさん!", $tmpl);
+    $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
 }
 
 // 画面に出力

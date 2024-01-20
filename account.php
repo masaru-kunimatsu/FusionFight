@@ -20,14 +20,14 @@ if (isset($_SESSION['user_name'])) {
   $tmpl .= $tmpl3;
   fclose($file);
   $user_name = $_SESSION['user_name'];
-  $tmpl = str_replace("★ユーザー名★", "ようこそ、{$user_name}さん!", $tmpl);
+  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
 } else {
   $file = fopen("account_in.tmpl", "r") or die("account_in.tmpl ファイルを開けませんでした。");
   $size = filesize("account_in.tmpl");
   $tmpl4 = fread($file, $size);
   $tmpl .= $tmpl4;
   fclose($file);
-  $tmpl = str_replace("★ユーザー名★", "ようこそ、ゲストさん!", $tmpl);
+  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
 }
 
 $file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");

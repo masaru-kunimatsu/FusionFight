@@ -163,9 +163,9 @@ $tmpl = str_replace("●" , "/" , $tmpl);
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
     $user_name = $_SESSION['user_name'];
-    $tmpl = str_replace("★ユーザー名★", "ようこそ、{$user_name}さん!", $tmpl);
+    $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
 } else {
-    $tmpl = str_replace("★ユーザー名★", "ようこそ、ゲストさん!", $tmpl);
+    $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
 }
 
 

@@ -563,7 +563,7 @@ table {
 }
 
 .decksave_button {
-  background: linear-gradient(to right, #FFD700, #FFA500); /* 黄色のグラデーション */
+  background: linear-gradient(to right, #ffd90072, #FFA500); /* 黄色のグラデーション */
   color: white; /* 文字色を白に設定 */
   font-weight: bold;
   border-color: #FFA500;
