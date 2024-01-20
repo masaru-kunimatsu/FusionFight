@@ -18,8 +18,8 @@ $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
-$file = fopen("index.tmpl", "r") or die("index.tmpl ファイルを開けませんでした。");
-$size = filesize("index.tmpl");
+$file = fopen("build.tmpl", "r") or die("build.tmpl ファイルを開けませんでした。");
+$size = filesize("build.tmpl");
 $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);
@@ -29,6 +29,8 @@ $size = filesize("footer.tmpl");
 $tmpl4 = fread($file, $size);
 $tmpl .= $tmpl4;
 fclose($file);
+
+
 
 # データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -79,8 +81,8 @@ if ($_GET != NULL){
       $tmpl = str_replace("★注意★", "", $tmpl);
     }elseif(empty($_SESSION['card2']) && ($_SESSION['card1']["card_id"] != $_GET["card_id"])){
     $_SESSION['card2'] = array(
-      'image' => str_replace("●" , "/" , $_GET["image"]),
-      'barcode' => str_replace("●" , "/" , $_GET["barcode"]),
+      'image' => $_GET["image"],
+      'barcode' => $_GET["barcode"],
       'card_id' => $_GET["card_id"],
       'name' => $_GET["name"],
       'form' => $_GET["form"],
@@ -91,69 +93,68 @@ if ($_GET != NULL){
       'rare' => $_GET["rare"]);
       $tmpl = str_replace("★注意★", "", $tmpl);
     }else{
-      $tmpl = str_replace("★注意★", "登録できません", $tmpl);
+      $tmpl = str_replace("★注意★", "<i class='fa-solid fa-exclamation'></i> カードは2枚以上登録できません <i class='fa-solid fa-exclamation'></i>", $tmpl);
     }
   }else{
     $tmpl = str_replace("★注意★", "", $tmpl);
   }
 
+  $contents1="";
+  $contents2="";
+
   if (isset($_SESSION['card1']) && !empty($_SESSION['card1'])) {
-    $card1 = "";
-    $card1 .= $_SESSION['card1']["card_id"];
-    $card1 .= "<br>";
-    $card1 .= "<img src='{$_SESSION["card1"]["image"]}' width='20%'>";
-    $card1 .= "<br>";
-    $card1 .= "<img src='{$_SESSION["card1"]["barcode"]}' width='20%'>";
-    $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["name"];
-    $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["form"];
-    $card1 .= "<br>";
-    $card1 .= $_SESSION["card1"]["skill"];
-    $card1 .= "<br>";
-    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
-    $card1 .= "<br>";
-    $card1 .= "<img src='type●{$_SESSION["card1"]["type"]}.png' height='15px'>";
-    $card1 .= "<br>";
-    $card1 .= "<img src='logo●{$_SESSION["card1"]["prog"]}.webp' width='15%'>";
-    $card1 .= "<br>";
-    $card1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png' height='20px'>";
-    $card1 .= "<form action='mode1.php' method='get'><button type='submit'>カードを削除する</button></form>";
+    $contents1 .= "<div class='decksheet'>";
+    $contents1 .= "<div class='deckleftsheet'><img src='{$_SESSION["card1"]["image"]}'></div>";
+    $contents1 .= "<div class='deckrightsheet'>";
+    $contents1 .= "<div class='deckrightsheet_name'>{$_SESSION["card1"]["name"]}</div>";
+    $contents1 .= "<div class='deckrightsheet_tit'>タイプ</div>";
+    $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1"]["form"]}</div>";
+    $contents1 .= "<div class='deckrightsheet_tit'>ワザ</div>";
+    $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1"]["skill"]}";
+    $contents1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='CMlogo.png'>" : '';
+    $contents1 .= "</div>";
+    $contents1 .= "<div class='deckrightsheet_bottom'>";
+    $contents1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png'>";
+    $contents1 .= "<img src='{$_SESSION["card1"]["barcode"]}'>";
+    $contents1 .= "</div></div></div>";
   }else{
-    $card1 = "カードを登録しよう！";
-    $card1 .= "<form action='index.php' method='get'><button type='submit'>カードを選択する</button></form>";
+    $contents1 .= "<div class='decksheet_none'>";
+    $contents1 .= "<div class='decksheet_none_text'>カードを登録しよう！";
+    $contents1 .= "<form action='index.php' method='get'>";
+    $contents1 .= "<button type='submit' class='decknone_button'><i class='fa-solid fa-angles-left'></i> カードを選択する</button>";
+    $contents1 .= "</form></div></div>";
   }
 
   if (isset($_SESSION['card2']) && !empty($_SESSION['card2'])) {
-    $card2 = "";
-    $card2 .= $_SESSION['card2']["card_id"];
-    $card2 .= "<br>";
-    $card2 .= "<img src='{$_SESSION["card2"]["image"]}' width='20%'>";
-    $card2 .= "<br>";
-    $card2 .= "<img src='{$_SESSION["card2"]["barcode"]}' width='20%'>";
-    $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["name"];
-    $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["form"];
-    $card2 .= "<br>";
-    $card2 .= $_SESSION["card2"]["skill"];
-    $card2 .= "<br>";
-    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
-    $card2 .= "<br>";
-    $card2 .= "<img src='type●{$_SESSION["card2"]["type"]}.png' height='15px'>";
-    $card2 .= "<br>";
-    $card2 .= "<img src='logo●{$_SESSION["card2"]["prog"]}.webp' width='15%'>";
-    $card2 .= "<br>";
-    $card2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png' height='20px'>";
-    $card2 .= "<form action='mode2.php' method='get'><button type='submit'>カードを削除する</button></form>";
+    $contents2 .= "<div class='decksheet'>";
+    $contents2 .= "<div class='deckleftsheet'><img src='{$_SESSION["card2"]["image"]}'></div>";
+    $contents2 .= "<div class='deckrightsheet'>";
+    $contents2 .= "<div class='deckrightsheet_name'>{$_SESSION["card2"]["name"]}</div>";
+    $contents2 .= "<div class='deckrightsheet_tit'>タイプ</div>";
+    $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2"]["form"]}</div>";
+    $contents2 .= "<div class='deckrightsheet_tit'>ワザ</div>";
+    $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2"]["skill"]}";
+    $contents2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='CMlogo.png'>" : '';
+    $contents2 .= "</div>";
+    $contents2 .= "<div class='deckrightsheet_bottom'>";
+    $contents2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png'>";
+    $contents2 .= "<img src='{$_SESSION["card2"]["barcode"]}'>";
+    $contents2 .= "</div></div></div>";
   }else{
-    $card2 = "カードを登録しよう！";
-    $card2 .= "<form action='index.php' method='get'><button type='submit'>カードを選択する</button></form>";
+    $contents2 .= "<div class='decksheet_none'>";
+    $contents2 .= "<div class='decksheet_none_text'>カードを登録しよう！";
+    $contents2 .= "<form action='index.php' method='get'>";
+    $contents2 .= "<button type='submit' class='decknone_button'><i class='fa-solid fa-angles-left'></i> カードを選択する</button>";
+    $contents2 .= "</form></div></div>";
   }
 
+
+
+
+
 // 文字列置き換え
-$tmpl = str_replace("★1枚目★", $card1, $tmpl);
-$tmpl = str_replace("★2枚目★", $card2, $tmpl);
+$tmpl = str_replace("★1枚目★", $contents1, $tmpl);
+$tmpl = str_replace("★2枚目★", $contents2, $tmpl);
 $tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
 $tmpl = str_replace("●" , "/" , $tmpl);
 
@@ -169,5 +170,6 @@ if (isset($_SESSION['user_name'])) {
 
 // 画面に出力
 echo $tmpl;
+
 
 ?>
