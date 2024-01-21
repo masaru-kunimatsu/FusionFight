@@ -7,25 +7,25 @@ if (!isset($_SESSION['user_name'])) {
     header('Location: account.php');
 }
 
-$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
-$size = filesize("head.tmpl");
+$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
-$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
-$size = filesize("header.tmpl");
+$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
-$file = fopen("build.tmpl", "r") or die("build.tmpl ファイルを開けませんでした。");
-$size = filesize("build.tmpl");
+$file = fopen("tmpl/build.tmpl", "r") or die("tmpl/build.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/build.tmpl");
 $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);
 
-$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
-$size = filesize("footer.tmpl");
+$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/footer.tmpl");
 $tmpl4 = fread($file, $size);
 $tmpl .= $tmpl4;
 fclose($file);
@@ -112,7 +112,7 @@ if ($_GET != NULL){
     $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1"]["form"]}</div>";
     $contents1 .= "<div class='deckrightsheet_tit'>ワザ</div>";
     $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1"]["skill"]}";
-    $contents1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='CMlogo.png'>" : '';
+    $contents1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
     $contents1 .= "</div>";
     $contents1 .= "<div class='deckrightsheet_bottom'>";
     $contents1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png'>";
@@ -135,7 +135,7 @@ if ($_GET != NULL){
     $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2"]["form"]}</div>";
     $contents2 .= "<div class='deckrightsheet_tit'>ワザ</div>";
     $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2"]["skill"]}";
-    $contents2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='CMlogo.png'>" : '';
+    $contents2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
     $contents2 .= "</div>";
     $contents2 .= "<div class='deckrightsheet_bottom'>";
     $contents2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png'>";

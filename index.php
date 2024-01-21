@@ -107,7 +107,7 @@ try{
         $contents .= "<div class='rightsheet_name'>{$row['name']}</div>";
         $contents .= "<div class='rightsheet_tit'>タイプ<span class='rightsheet_form'><br>{$row['form']}</span></div>";
         $contents .= "<div class='rightsheet_tit'>ワザ<span class='rightsheet_form'><br>{$row['skill']}</span>";
-        $contents .= ($row["climax"] == 1) ? "<img src='CMlogo.png'><br>" : '';
+        $contents .= ($row["climax"] == 1) ? "<img src='material/CMlogo.png'><br>" : '';
         $contents .= "</div>";
         $contents .= "<div class='rightuppersheet'>";
         $contents .= "<img src='type●{$row['type']}.png' >";
@@ -164,25 +164,25 @@ try{
 }
 $dbh = null;
 
-$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
-$size = filesize("head.tmpl");
+$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
-$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
-$size = filesize("header.tmpl");
+$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
-$file = fopen("index.tmpl", "r") or die("index.tmpl ファイルを開けませんでした。");
-$size = filesize("index.tmpl");
+$file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/index.tmpl");
 $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);
 
-$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
-$size = filesize("footer.tmpl");
+$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/footer.tmpl");
 $tmpl4 = fread($file, $size);
 $tmpl .= $tmpl4;
 fclose($file);

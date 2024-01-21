@@ -27,7 +27,7 @@ footer, header, hgroup, menu, nav, section {
 body {
     margin: 0; /* ブラウザのデフォルトのmarginを削除 */
     padding: 0; /* ブラウザのデフォルトのpaddingを削除 */
-    background-image: url('space.png'); /* 画像のファイルパスを指定 */
+    background-image: url('material/space.png'); /* 画像のファイルパスを指定 */
     background-size: cover; /* 画像をカバーするように調整 */
     background-position: center; /* 画像を中央に配置 */
     background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
@@ -193,7 +193,7 @@ table {
 
   .sheet {
     display: flex;
-    background-image: url('sheet.jpeg');
+    background-image: url('material/sheet.jpeg');
     background-size: cover; /* 画像を全体に広げる */
     background-position: center; /* 画像を中央に配置 */
     color: white; /* テキストを白色に設定（背景が画像の場合、見やすい色を選ぶと良い） */
@@ -409,7 +409,7 @@ table {
 
 .decksheet {
   display: flex;
-  background-image: url('sheet.jpeg');
+  background-image: url('material/sheet.jpeg');
   background-size: cover; 
   background-position: center; 
   color: white; /* テキストを白色に設定（背景が画像の場合、見やすい色を選ぶと良い） */

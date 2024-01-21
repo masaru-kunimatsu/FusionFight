@@ -2,13 +2,13 @@
 
 session_start();
 
-$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
-$size = filesize("head.tmpl");
+$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
-$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
-$size = filesize("header.tmpl");
+$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
@@ -55,8 +55,8 @@ _aaa_;
 
 $tmpl .= $html;
 
-$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
-$size = filesize("footer.tmpl");
+$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/footer.tmpl");
 $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);

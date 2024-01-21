@@ -1,14 +1,14 @@
 <?php
 
 // テンプレート読み込み
-$file = fopen("head.tmpl", "r") or die("head.tmpl ファイルを開けませんでした。");
-$size = filesize("head.tmpl");
+$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
 // テンプレート読み込み
-$file = fopen("header.tmpl", "r") or die("header.tmpl ファイルを開けませんでした。");
-$size = filesize("header.tmpl");
+$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
@@ -83,7 +83,7 @@ try{
         $contents .= " {$row["van_name"]}<br>";
         $contents .= " {$row["van_form"]}<br>";
         $contents .= " {$row["van_skill"]}<br>";
-        if ($row["van_climax"]==1) {$contents .= "<img src='CMlogo.png' width='5%'><br>";};
+        if ($row["van_climax"]==1) {$contents .= "<img src='material/CMlogo.png' width='5%'><br>";};
         $contents .= "<img src='type●{$row["van_type"]}.png' height='15px'>";
         $contents .= "<img src='logo●{$row["van_prog"]}.webp' width='15%'><br>";
         $contents .= "<img src='rare●{$row["van_rare"]}.png' height='20px'><br>";
@@ -94,7 +94,7 @@ try{
         $contents .= " {$row["rear_name"]}<br>";
         $contents .= " {$row["rear_form"]}<br>";
         $contents .= " {$row["rear_skill"]}<br>";
-        if ($row["rear_climax"]==1) {$contents .= "<img src='CMlogo.png' width='5%'><br>";};
+        if ($row["rear_climax"]==1) {$contents .= "<img src='material/CMlogo.png' width='5%'><br>";};
         $contents .= "<img src='type●{$row["rear_type"]}.png' height='15px'>";
         $contents .= "<img src='logo●{$row["rear_prog"]}.webp' width='15%'><br>";
         $contents .= "<img src='rare●{$row["rear_rare"]}.png' height='20px'><br>";
@@ -107,14 +107,14 @@ try{
 $dbh = null;
 
 // テンプレート読み込み
-$file = fopen("view.tmpl", "r") or die("view.tmpl ファイルを開けませんでした。");
-$size = filesize("view.tmpl");
+$file = fopen("tmpl/view.tmpl", "r") or die("tmpl/view.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/view.tmpl");
 $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);
 
-$file = fopen("footer.tmpl", "r") or die("footer.tmpl ファイルを開けませんでした。");
-$size = filesize("footer.tmpl");
+$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/footer.tmpl");
 $tmpl4 = fread($file, $size);
 $tmpl .= $tmpl4;
 fclose($file);

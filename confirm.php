@@ -49,7 +49,7 @@ $dbh = null;
     $card1 .= "<br>";
     $card1 .= $_SESSION["card1"]["skill"];
     $card1 .= "<br>";
-    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
+    $card1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='material/CMlogo.png' width='5%'>" : '';
     $card1 .= "<br>";
     $card1 .= "<img src='type●{$_SESSION["card1"]["type"]}.png' height='15px'>";
     $card1 .= "<br>";
@@ -70,7 +70,7 @@ $dbh = null;
     $card2 .= "<br>";
     $card2 .= $_SESSION["card2"]["skill"];
     $card2 .= "<br>";
-    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='CMlogo.png' width='5%'>" : '';
+    $card2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='material/CMlogo.png' width='5%'>" : '';
     $card2 .= "<br>";
     $card2 .= "<img src='type●{$_SESSION["card2"]["type"]}.png' height='15px'>";
     $card2 .= "<br>";
@@ -182,9 +182,9 @@ $tmpl = <<<_aaa_
     <!-- /メインコンテンツ -->
     <footer id="footer">
       <div class="inner">
-        <a href="https://dcd-ultraman.com/"><img src="img_ogp.jpg" width="20%"></a>
-        <a href="https://play.google.com/store/apps/details?id=com.bandai.ultramanbinder&hl=en_US"><img src="img_apri.png" width="20%"></a>
-        <a href="https://imagination.m-78.jp/"><img src="img_ti.jpg" width="20%"></a>
+        <a href="https://dcd-ultraman.com/"><img src="material/img_ogp.jpg" width="20%"></a>
+        <a href="https://play.google.com/store/apps/details?id=com.bandai.ultramanbinder&hl=en_US"><img src="material/img_apri.png" width="20%"></a>
+        <a href="https://imagination.m-78.jp/"><img src="material/img_ti.jpg" width="20%"></a>
       </div>
     </footer>
 </body>

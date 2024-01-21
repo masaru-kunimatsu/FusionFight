@@ -1,5 +1,5 @@
-<?php include 'head.tmpl'; ?>
-<?php include 'header.tmpl'; ?>
+<?php include 'tmpl/head.tmpl'; ?>
+<?php include 'tmpl/header.tmpl'; ?>
 
 <!-- / メインナビゲーション -->
 <div class="account">
@@ -17,4 +17,4 @@
 </div>
 <!-- / メインナビゲーション -->
 
-<?php include 'footer.tmpl'; ?>
+<?php include 'tmpl/footer.tmpl'; ?>
