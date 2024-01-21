@@ -1,10 +1,6 @@
-<?php include 'tmpl/head.tmpl'; ?>
-<?php include 'tmpl/header.tmpl'; ?>
-
-<!-- / メインナビゲーション -->
 <div class='view_bg'>
   <div class='view_conf_bg'>
-    <div class='deckindex_bgm'>
+    <div class='deckindex_bgm' >
       <div class = 'deckindex'><i class='fa-solid fa-square-caret-right'></i> ★デッキ名★</div>
       <div class = 'deckbgm'><i class="fa-solid fa-music"></i> ★BGM名★</div>
     </div>
@@ -20,14 +16,14 @@
             <div class='deckrightsheet_form'>★ワザ1★</div>
             <div class='deckrightsheet_bottom'>
               <img src='rare/★レア1★.png'>
-              <img src='★コード1★.png'>
+              <img src='★コード1★'>
             </div>
           </div>
         </div>
       </div>
       <div class='cardsheet'>
         <div class='decksheet'>
-          <div class='deckleftsheet'><img src='★画像2'></div>
+          <div class='deckleftsheet'><img src='★画像2★'></div>
           <div class='deckrightsheet'>
             <div class='deckrightsheet_name'>★キャラ2★</div>
             <div class='deckrightsheet_tit'>タイプ</div>
@@ -36,29 +32,32 @@
             <div class='deckrightsheet_form'>★ワザ2★</div>
             <div class='deckrightsheet_bottom'>
               <img src='rare/★レア2★.png'>
-              <img src='★コード2★.png'>
+              <img src='★コード2★'>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class = 'command_bar'>
-      <form action='deck_edit.php' method='get'>
-        <button class='view_edit_button' type='submit' name='sub'>
-        編集する
-        <i class="fa-solid fa-pen-to-square"></i>
+  </div>
+    <div class='conf_form_area'>
+      <form action='comp.php' method='get'>
+        <button class='conf_save_button' type='submit' name='sub'>
+          デッキを保存する
+          <i class="fa-solid fa-database"></i>
         </button>
+          <input type='hidden' name='deck_name' value='★デッキ名★'>
+          <input type='hidden' name='bgm' value='★BGMid★'>
+          <input type='hidden' name='van_id' value='★id1★'>
+          <input type='hidden' name='rear_id' value='★id2★'>
+
+
+
       </form>
-      <form action='deck_delete.php' method='get'>
-        <button class='view_delete_button' type='submit' name='sub'>
-          削除する
-          <i class="fa-solid fa-trash-can"></i>
+      <form action='build.php' method='get'>
+        <button class='conf_back_button' type='submit' name='sub'>
+        <i class="fa-solid fa-circle-arrow-left"></i>
+        作成に戻る
         </button>
       </form>
     </div>
-  </div>
 </div>
-<!-- / メインナビゲーション -->
-
-<?php include 'tmpl/footer.tmpl'; ?>
-

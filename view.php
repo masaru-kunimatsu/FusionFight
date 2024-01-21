@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // テンプレート読み込み
 $file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/head.tmpl");
@@ -11,6 +13,13 @@ $file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを�
 $size = filesize("tmpl/header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
+fclose($file);
+
+$tmpl .= "<div class='view_bg'>";
+
+$file = fopen("tmpl/view.tmpl", "r") or die("tmpl/view.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/view.tmpl");
+$tmpl3 = fread($file, $size);
 fclose($file);
 
 #データベースに接続
@@ -65,39 +74,42 @@ try{
       $stmt = $dbh->prepare($SQL);
     }
 
-    // 表示持つ列を代入する変数を用意
-    $contents = "";  //カード画像の表示
     
     # SQL文の実行
     if($stmt->execute()){
       while($row = $stmt->fetch()){
 
-        $contents .= "<P>デッキ名</p>";
-        $contents .= " {$row["deck_name"]}<br>";
-        $contents .= "<P>BGM</p>";
-        $contents .= " {$row["bgm"]}<br>";
-
-        // デッキページにリンクする画像ボタンを作成
-        $contents .= " <img src='{$row["van_image"]}' width='20%'><br>";
-        $contents .= " <img src='{$row["van_barcode"]}' width='20%'><br>";
-        $contents .= " {$row["van_name"]}<br>";
-        $contents .= " {$row["van_form"]}<br>";
-        $contents .= " {$row["van_skill"]}<br>";
-        if ($row["van_climax"]==1) {$contents .= "<img src='material/CMlogo.png' width='5%'><br>";};
-        $contents .= "<img src='type●{$row["van_type"]}.png' height='15px'>";
-        $contents .= "<img src='logo●{$row["van_prog"]}.webp' width='15%'><br>";
-        $contents .= "<img src='rare●{$row["van_rare"]}.png' height='20px'><br>";
+        $tmpl_each = $tmpl3;
+        $tmpl_each = str_replace("★デッキ名★", $row["deck_name"], $tmpl_each);
+        $tmpl_each = str_replace("★BGM名★", $row["bgm"], $tmpl_each);
         
-        // デッキページにリンクする画像ボタンを作成
-        $contents .= " <img src='{$row["rear_image"]}' width='20%'><br>";
-        $contents .= " <img src='{$row["rear_barcode"]}' width='20%'><br>";
-        $contents .= " {$row["rear_name"]}<br>";
-        $contents .= " {$row["rear_form"]}<br>";
-        $contents .= " {$row["rear_skill"]}<br>";
-        if ($row["rear_climax"]==1) {$contents .= "<img src='material/CMlogo.png' width='5%'><br>";};
-        $contents .= "<img src='type●{$row["rear_type"]}.png' height='15px'>";
-        $contents .= "<img src='logo●{$row["rear_prog"]}.webp' width='15%'><br>";
-        $contents .= "<img src='rare●{$row["rear_rare"]}.png' height='20px'><br>";
+
+        $tmpl_each = str_replace("★画像1★", $row["van_image"], $tmpl_each);
+        $tmpl_each = str_replace("★キャラ1★", $row["van_name"], $tmpl_each);
+        $tmpl_each = str_replace("★形態1★", $row["van_form"], $tmpl_each);
+
+        $skillValue1 = $row["van_skill"];
+          if ($row["van_climax"] == 1) {
+            $skillValue1 .= "<img src='material/CMlogo.png'>";
+          }
+        $tmpl_each = str_replace("★ワザ1★", $skillValue1, $tmpl_each);
+        $tmpl_each = str_replace("★レア1★", $row["van_rare"], $tmpl_each);
+        $tmpl_each = str_replace("★コード1★", $row["van_barcode"], $tmpl_each);
+        
+
+        $tmpl_each = str_replace("★画像2★", $row["rear_image"], $tmpl_each);
+        $tmpl_each = str_replace("★キャラ2★", $row["rear_name"], $tmpl_each);
+        $tmpl_each = str_replace("★形態2★", $row["rear_form"], $tmpl_each);
+
+        $skillValue2 = $row["rear_skill"];
+          if ($row["rear_skill"] == 1) {
+            $skillValue2 .= "<img src='material/CMlogo.png'>";
+          }
+        $tmpl_each = str_replace("★ワザ2★", $skillValue2, $tmpl_each);
+        $tmpl_each = str_replace("★レア2★", $row["rear_rare"], $tmpl_each);
+        $tmpl_each = str_replace("★コード2★", $row["rear_barcode"], $tmpl_each);
+
+        $tmpl .= $tmpl_each;
       }
     }
 }catch (PDOException $e){
@@ -106,12 +118,9 @@ try{
 }
 $dbh = null;
 
-// テンプレート読み込み
-$file = fopen("tmpl/view.tmpl", "r") or die("tmpl/view.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/view.tmpl");
-$tmpl3 = fread($file, $size);
-$tmpl .= $tmpl3;
-fclose($file);
+
+
+$tmpl .="</div>";
 
 $file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/footer.tmpl");
@@ -120,10 +129,8 @@ $tmpl .= $tmpl4;
 fclose($file);
 
 // 文字列置き換え
-$tmpl = str_replace("★入れ替え★", $contents, $tmpl);
 $tmpl = str_replace("●", "/", $tmpl);
 
-session_start();
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
     $user_name = $_SESSION['user_name'];
