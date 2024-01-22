@@ -2,6 +2,11 @@
 
 session_start();
 
+// セッションにユーザー名が保存されているか確認
+if (!isset($_SESSION['user_name'])) {
+  header('Location: account.php');
+}
+
 // テンプレート読み込み
 $file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/head.tmpl");
@@ -14,6 +19,14 @@ $size = filesize("tmpl/header.tmpl");
 $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
+
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
+} else {
+  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
+}
 
 $tmpl .= "<div class='view_bg'>";
 
@@ -38,7 +51,9 @@ try{
       deck.deck_id AS deck_id, 
       deck.user_id AS user_id, 
       deck.deck_name AS deck_name, 
+      bgm.bgm_id AS bgm_id, 
       bgm.bgm AS bgm, 
+      van_card.card_id AS van_card_id, 
       van_card.image AS van_image, 
       van_card.barcode AS van_barcode, 
       van_name.name AS van_name, 
@@ -48,6 +63,7 @@ try{
       van_type.type AS van_type, 
       van_prog.prog AS van_prog, 
       van_rare.rare AS van_rare, 
+      rear_card.card_id AS rear_card_id, 
       rear_card.image AS rear_image, 
       rear_card.barcode AS rear_barcode, 
       rear_name.name AS rear_name, 
@@ -70,8 +86,12 @@ try{
       LEFT JOIN m_rare AS rear_rare ON rear_card.rare_id = rear_rare.rare_id
       LEFT JOIN m_type AS rear_type ON rear_card.type_id = rear_type.type_id
       LEFT JOIN bgm on deck.bgm_id = bgm.bgm_id
+      WHERE deck.user_id = :user
       ORDER BY deck.deck_id;";
+
       $stmt = $dbh->prepare($SQL);
+
+      $stmt -> bindParam(':user',$_SESSION['user_id']);
     }
 
     
@@ -80,13 +100,18 @@ try{
       while($row = $stmt->fetch()){
 
         $tmpl_each = $tmpl3;
+        $tmpl_each = str_replace("★デッキid★", $row["deck_id"], $tmpl_each);
         $tmpl_each = str_replace("★デッキ名★", $row["deck_name"], $tmpl_each);
         $tmpl_each = str_replace("★BGM名★", $row["bgm"], $tmpl_each);
+        $tmpl_each = str_replace("★BGMid★", $row["bgm_id"], $tmpl_each);
         
 
+        $tmpl_each = str_replace("★id1★", $row["van_card_id"], $tmpl_each);
         $tmpl_each = str_replace("★画像1★", $row["van_image"], $tmpl_each);
         $tmpl_each = str_replace("★キャラ1★", $row["van_name"], $tmpl_each);
         $tmpl_each = str_replace("★形態1★", $row["van_form"], $tmpl_each);
+        $tmpl_each = str_replace("★必殺1★", $row["van_skill"], $tmpl_each);
+        $tmpl_each = str_replace("★CM1★", $row["van_climax"], $tmpl_each);
 
         $skillValue1 = $row["van_skill"];
           if ($row["van_climax"] == 1) {
@@ -96,13 +121,15 @@ try{
         $tmpl_each = str_replace("★レア1★", $row["van_rare"], $tmpl_each);
         $tmpl_each = str_replace("★コード1★", $row["van_barcode"], $tmpl_each);
         
-
+        $tmpl_each = str_replace("★id2★", $row["rear_card_id"], $tmpl_each);
         $tmpl_each = str_replace("★画像2★", $row["rear_image"], $tmpl_each);
         $tmpl_each = str_replace("★キャラ2★", $row["rear_name"], $tmpl_each);
         $tmpl_each = str_replace("★形態2★", $row["rear_form"], $tmpl_each);
+        $tmpl_each = str_replace("★必殺2★", $row["rear_skill"], $tmpl_each);
+        $tmpl_each = str_replace("★CM2★", $row["rear_climax"], $tmpl_each);
 
         $skillValue2 = $row["rear_skill"];
-          if ($row["rear_skill"] == 1) {
+          if ($row["rear_climax"] == 1) {
             $skillValue2 .= "<img src='material/CMlogo.png'>";
           }
         $tmpl_each = str_replace("★ワザ2★", $skillValue2, $tmpl_each);
@@ -130,14 +157,6 @@ fclose($file);
 
 // 文字列置き換え
 $tmpl = str_replace("●", "/", $tmpl);
-
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-    $user_name = $_SESSION['user_name'];
-    $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-    $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
 
 // 画面に出力
 echo $tmpl;

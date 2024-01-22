@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -175,6 +176,14 @@ $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
+} else {
+  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
+}
+
 $file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/index.tmpl");
 $tmpl3 = fread($file, $size);
@@ -205,15 +214,6 @@ $tmpl = str_replace("★形態リスト★", $form_list, $tmpl);
 $tmpl = str_replace("★分類リスト★", $type_list, $tmpl);
 $tmpl = str_replace("★作品リスト★", $prog_list, $tmpl);
 $tmpl = str_replace("★レアリティリスト★", $rare_list, $tmpl);
-
-session_start();
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-    $user_name = $_SESSION['user_name'];
-    $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-    $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
 
 // 画面に出力
 echo $tmpl;

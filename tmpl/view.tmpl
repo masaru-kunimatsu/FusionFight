@@ -39,17 +39,68 @@
       </div>
     </div>
     <div class = 'command_bar'>
-      <form action='deck_edit.php' method='get'>
+      <form action='build.php' method='get'>
         <button class='view_edit_button' type='submit' name='sub'>
         編集する
         <i class="fa-solid fa-pen-to-square"></i>
         </button>
+
+        <input type="hidden" name="mode" value="edit">
+        
+        <input type='hidden' name='deck_id' value='★デッキid★'>
+        <input type='hidden' name='deck_name' value='★デッキ名★'>
+        <input type='hidden' name='bgm_id' value='★BGMid★'>
+        <input type='hidden' name='bgm' value='★BGM名★'>
+
+        <input type='hidden' name='van_card_id' value='★id1★'>
+        <input type='hidden' name='van_image' value='★画像1★'>
+        <input type='hidden' name='van_name' value='★キャラ1★'>
+        <input type='hidden' name='van_form' value='★形態1★'>
+        <input type='hidden' name='van_skill' value='★必殺1★'>
+        <input type='hidden' name='van_climax' value='★CM1★'>
+        <input type='hidden' name='van_rare' value='★レア1★'>
+        <input type='hidden' name='van_barcode' value='★コード1★'>
+
+        <input type='hidden' name='rear_card_id' value='★id2★'>
+        <input type='hidden' name='rear_image' value='★画像2★'>
+        <input type='hidden' name='rear_name' value='★キャラ2★'>
+        <input type='hidden' name='rear_form' value='★形態2★'>
+        <input type='hidden' name='rear_skill' value='★必殺2★'>
+        <input type='hidden' name='rear_climax' value='★CM2★'>
+        <input type='hidden' name='rear_rare' value='★レア2★'>
+        <input type='hidden' name='rear_barcode' value='★コード2★'>
+
       </form>
-      <form action='deck_delete.php' method='get'>
+      <form action='confirm.php' method='get'>
         <button class='view_delete_button' type='submit' name='sub'>
           削除する
           <i class="fa-solid fa-trash-can"></i>
         </button>
+
+        <input type="hidden" name="mode" value="delete">
+
+        <input type='hidden' name='deck_id' value='★デッキid★'>
+        <input type='hidden' name='deck_name' value='★デッキ名★'>
+        <input type='hidden' name='bgm' value='★BGMid★'>
+
+        <input type='hidden' name='van_card_id' value='★id1★'>
+        <input type='hidden' name='van_image' value='★画像1★'>
+        <input type='hidden' name='van_name' value='★キャラ1★'>
+        <input type='hidden' name='van_form' value='★形態1★'>
+        <input type='hidden' name='van_skill' value='★必殺1★'>
+        <input type='hidden' name='van_climax' value='★CM1★'>
+        <input type='hidden' name='van_rare' value='★レア1★'>
+        <input type='hidden' name='van_barcode' value='★コード1★'>
+
+        <input type='hidden' name='rear_card_id' value='★id2★'>
+        <input type='hidden' name='rear_image' value='★画像2★'>
+        <input type='hidden' name='rear_name' value='★キャラ2★'>
+        <input type='hidden' name='rear_form' value='★形態2★'>
+        <input type='hidden' name='rear_skill' value='★必殺2★'>
+        <input type='hidden' name='rear_climax' value='★CM2★'>
+        <input type='hidden' name='rear_rare' value='★レア2★'>
+        <input type='hidden' name='rear_barcode' value='★コード2★'>
+
       </form>
     </div>
   </div>

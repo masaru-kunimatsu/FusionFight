@@ -40,24 +40,22 @@
     </div>
   </div>
     <div class='conf_form_area'>
-      <form action='comp.php' method='get'>
-        <button class='conf_save_button' type='submit' name='sub'>
-          デッキを保存する
-          <i class="fa-solid fa-database"></i>
+      <form action='★アクション★' method='get'>
+        <button class='★クラス★' type='submit' name='sub'>
+          ★テキスト★
         </button>
-          <input type='hidden' name='deck_name' value='★デッキ名★'>
-          <input type='hidden' name='bgm' value='★BGMid★'>
-          <input type='hidden' name='van_id' value='★id1★'>
-          <input type='hidden' name='rear_id' value='★id2★'>
-
-
-
+        <input type='hidden' name='mode' value='★モード★'>
+        <input type='hidden' name='deck_id' value='★デッキid★'>
+        <input type='hidden' name='deck_name' value='★デッキ名★'>
+        <input type='hidden' name='bgm' value='★BGMid★'>
+        <input type='hidden' name='van_id' value='★id1★'>
+        <input type='hidden' name='rear_id' value='★id2★'>
       </form>
-      <form action='build.php' method='get'>
-        <button class='conf_back_button' type='submit' name='sub'>
-        <i class="fa-solid fa-circle-arrow-left"></i>
-        作成に戻る
-        </button>
-      </form>
+
+      <button class='conf_back_button' type='submit' name='sub' onclick="history.back()">
+        <i class="fa-solid fa-reply"></i>
+        戻る
+      </button>
+
     </div>
 </div>

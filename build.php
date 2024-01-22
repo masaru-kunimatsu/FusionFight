@@ -18,6 +18,14 @@ $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
+} else {
+  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
+}
+
 $file = fopen("tmpl/build.tmpl", "r") or die("tmpl/build.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/build.tmpl");
 $tmpl3 = fread($file, $size);
@@ -66,39 +74,68 @@ if($stmt->execute()){
   }
 }
 
-if ($_GET != NULL){
-  if (empty($_SESSION['card1'])){
-    $_SESSION['card1'] = array(
-      'image' => $_GET["image"],
-      'barcode' => $_GET["barcode"],
-      'card_id' => $_GET["card_id"],
-      'name' => $_GET["name"],
-      'form' => $_GET["form"],
-      'skill' => $_GET["skill"],
-      'climax' => $_GET["climax"],
-      'type' => $_GET["type"],
-      'prog' => $_GET["prog"],
-      'rare' => $_GET["rare"]);
+
+
+if ($_GET != NULL) {
+  if (isset($_GET['mode']) && $_GET['mode'] == 'edit'){
+      $_SESSION['card1'] = array(
+        'image' => $_GET["van_image"],
+        'barcode' => $_GET["van_barcode"],
+        'card_id' => $_GET["van_card_id"],
+        'name' => $_GET["van_name"],
+        'form' => $_GET["van_form"],
+        'skill' => $_GET["van_skill"],
+        'climax' => $_GET["van_climax"],
+        'rare' => $_GET["van_rare"]);
+      $_SESSION['card2'] = array(
+        'image' => $_GET["rear_image"],
+        'barcode' => $_GET["rear_barcode"],
+        'card_id' => $_GET["rear_card_id"],
+        'name' => $_GET["rear_name"],
+        'form' => $_GET["rear_form"],
+        'skill' => $_GET["rear_skill"],
+        'climax' => $_GET["rear_climax"],
+        'rare' => $_GET["rear_rare"]);
+      $_SESSION['deck_id'] = $_GET['deck_id'];
       $tmpl = str_replace("★注意★", "", $tmpl);
-    }elseif(empty($_SESSION['card2']) && ($_SESSION['card1']["card_id"] != $_GET["card_id"])){
-    $_SESSION['card2'] = array(
-      'image' => $_GET["image"],
-      'barcode' => $_GET["barcode"],
-      'card_id' => $_GET["card_id"],
-      'name' => $_GET["name"],
-      'form' => $_GET["form"],
-      'skill' => $_GET["skill"],
-      'climax' => $_GET["climax"],
-      'type' => $_GET["type"],
-      'prog' => $_GET["prog"],
-      'rare' => $_GET["rare"]);
-      $tmpl = str_replace("★注意★", "", $tmpl);
-    }else{
-      $tmpl = str_replace("★注意★", "<i class='fa-solid fa-exclamation'></i> カードは2枚以上登録できません <i class='fa-solid fa-exclamation'></i>", $tmpl);
-    }
+      $tmpl = str_replace("★デッキid★", $_SESSION['deck_id'], $tmpl);
+  }elseif (empty($_SESSION['card1'])){
+      $_SESSION['card1'] = array(
+        'image' => $_GET["image"],
+        'barcode' => $_GET["barcode"],
+        'card_id' => $_GET["card_id"],
+        'name' => $_GET["name"],
+        'form' => $_GET["form"],
+        'skill' => $_GET["skill"],
+        'climax' => $_GET["climax"],
+        'type' => $_GET["type"],
+        'prog' => $_GET["prog"],
+        'rare' => $_GET["rare"]);
+        $tmpl = str_replace("★注意★", "", $tmpl);
+        $tmpl = str_replace("★デッキid★", "", $tmpl);
+  }elseif(empty($_SESSION['card2']) && isset($_GET["card_id"]) && ($_SESSION['card1']["card_id"] != $_GET["card_id"])){
+      $_SESSION['card2'] = array(
+        'image' => $_GET["image"],
+        'barcode' => $_GET["barcode"],
+        'card_id' => $_GET["card_id"],
+        'name' => $_GET["name"],
+        'form' => $_GET["form"],
+        'skill' => $_GET["skill"],
+        'climax' => $_GET["climax"],
+        'type' => $_GET["type"],
+        'prog' => $_GET["prog"],
+        'rare' => $_GET["rare"]);
+        $tmpl = str_replace("★注意★", "", $tmpl);
+        $tmpl = str_replace("★デッキid★", "", $tmpl);
   }else{
-    $tmpl = str_replace("★注意★", "", $tmpl);
+        $tmpl = str_replace("★注意★", "<i class='fa-solid fa-exclamation'></i> カードは2枚以上登録できません <i class='fa-solid fa-exclamation'></i>", $tmpl);
+        $tmpl = str_replace("★デッキid★", "", $tmpl);
   }
+} else {
+  $tmpl = str_replace("★注意★", "", $tmpl);
+  $tmpl = str_replace("★デッキid★", "", $tmpl);
+}
+
 
   $contents1="";
   $contents2="";
@@ -156,17 +193,18 @@ if ($_GET != NULL){
 // 文字列置き換え
 $tmpl = str_replace("★1枚目★", $contents1, $tmpl);
 $tmpl = str_replace("★2枚目★", $contents2, $tmpl);
+
+
+if (isset($_GET['mode']) && $_GET['mode'] === 'edit') {
+  // 編集モードの処理を行う
+  $tmpl = str_replace("★初期値★", $_GET['deck_name'], $tmpl);
+  $bgm_list = str_replace("<option value={$_GET["bgm_id"]}>", "<option value={$_GET["bgm_id"]} selected>", $bgm_list);
+}else{
+  $tmpl = str_replace("★初期値★", "", $tmpl);
+}
+
 $tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
 $tmpl = str_replace("●" , "/" , $tmpl);
-
-
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-    $user_name = $_SESSION['user_name'];
-    $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-    $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
 
 
 // 画面に出力

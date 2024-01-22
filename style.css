@@ -680,6 +680,22 @@ table {
   transform: scale(1.1);
 }
 
+.conf_delete_button {
+  background: linear-gradient(to right, #ff000067, #ff00009e); /* 黄色のグラデーション */
+  color: white; /* 文字色を白に設定 */
+  font-weight: bold;
+  border-color: #ff00009e;
+  padding: 15px; /* 適切なパディングを設定 */
+  font-size:medium; /* フォントサイズを大きく設定 */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  border-radius: 5px; /* 角丸を設定 */
+  transition: all 0.3s;
+}
+
+.conf_delete_button:hover {
+  transform: scale(1.1);
+}
+
 .conf_back_button {
   background: linear-gradient(to right, #1ad3f867, #19afff9e); /* 黄色のグラデーション */
   color: white; /* 文字色を白に設定 */
