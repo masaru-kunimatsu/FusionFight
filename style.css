@@ -167,6 +167,24 @@ table {
     margin-top: 10px; /* 上の余白を5px追加 */
     color: #fff;
   }
+  .reset_condition {
+    text-align: right; /* 右寄せにするためのスタイル */
+}
+
+  .reset_condition_link {
+    font-size:smaller;
+    transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */
+    color: transparent;
+    color: white;
+    text-decoration: none; /* リンクの下線を消す */
+    font-weight: normal; /* 初期は通常の太さ */
+    /* 変化のアニメーションを追加 */
+    transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+  }
+  
+  .reset_condition_link:hover {
+    font-weight: bold; /* カーソルを合わせた際に太字に */
+  }
 
   #searchButton {
     width: 50%; /* ボタンを親要素の50%に変更 */
@@ -763,4 +781,27 @@ table {
     background-color: whitesmoke; /* マウスホバー時の背景色を白に変更 */
     color: #000000ae; /* マウスホバー時の文字色を黒に変更 */
   }
+}
+
+.none_text {
+  text-align: center; /* テキストの中央寄せ */
+  font-size: large;
+  width: 100%;
+  margin: auto;
+  color: white;
+}
+
+.none_link {
+  font-size: large;
+  transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */
+  color: transparent;
+  color: white;
+  text-decoration: none; /* リンクの下線を消す */
+  font-weight: normal; /* 初期は通常の太さ */
+  /* 変化のアニメーションを追加 */
+  transition: transform 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+}
+
+.none_link:hover {
+  font-weight: bold; /* カーソルを合わせた際に太字に */
 }

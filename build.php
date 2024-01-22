@@ -38,8 +38,6 @@ $tmpl4 = fread($file, $size);
 $tmpl .= $tmpl4;
 fclose($file);
 
-
-
 # データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -73,8 +71,6 @@ if($stmt->execute()){
     $bgm_list .= "<option value={$row["bgm_id"]}>{$row["bgm"]}</option>";
   }
 }
-
-
 
 if ($_GET != NULL) {
   if (isset($_GET['mode']) && $_GET['mode'] == 'edit'){
@@ -135,8 +131,6 @@ if ($_GET != NULL) {
   $tmpl = str_replace("★注意★", "", $tmpl);
   $tmpl = str_replace("★デッキid★", "", $tmpl);
 }
-
-
   $contents1="";
   $contents2="";
 
@@ -186,10 +180,6 @@ if ($_GET != NULL) {
     $contents2 .= "</form></div></div>";
   }
 
-
-
-
-
 // 文字列置き換え
 $tmpl = str_replace("★1枚目★", $contents1, $tmpl);
 $tmpl = str_replace("★2枚目★", $contents2, $tmpl);
@@ -199,7 +189,7 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'edit') {
   // 編集モードの処理を行う
   $tmpl = str_replace("★初期値★", $_GET['deck_name'], $tmpl);
   $bgm_list = str_replace("<option value={$_GET["bgm_id"]}>", "<option value={$_GET["bgm_id"]} selected>", $bgm_list);
-}elseif($_SESSION['textbox'] == NULL){
+}elseif(!isset ($_SESSION['textbox'])){
   $tmpl = str_replace("★初期値★", "", $tmpl);
 }else{
   $tmpl = str_replace("★初期値★", $_SESSION['textbox'], $tmpl);
@@ -214,6 +204,5 @@ $tmpl = str_replace("●" , "/" , $tmpl);
 
 // 画面に出力
 echo $tmpl;
-
 
 ?>

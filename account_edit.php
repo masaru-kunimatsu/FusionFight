@@ -57,7 +57,7 @@ $html_conf = <<< _aaa_
     </form>
   </div>
 </div>
-  <!-- /メインコンテンツ -->
+<!-- /メインコンテンツ -->
 _aaa_;
 
 if (isset($_POST['mode']) && $_POST['mode'] == "conf"){

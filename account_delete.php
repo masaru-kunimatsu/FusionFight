@@ -13,35 +13,45 @@ $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
-$html_in = <<< _aaa_
+
+// HTMLの土台を用意
+$html_conf = <<< _aaa_
 <!-- メインコンテンツ -->
 <div class="account">
   <div class="account_box">
-    <form action="login.php" method="POST" class="login-form">
-      <h1 class='form_tittle' >ログイン</h1>
+    <form action="account_delete.php" method="POST" class="login-form">
+      <h1 class='form_tittle' >以下のアカウントを削除しますか?</h1>
+      <p class="form-label" for="signin-id">ユーザーネーム</p>
+      <p class="form-text" >★ユーザー名★</p>
+      <br>
       <p class="form-label" for="signin-id">メールアドレス</p>
-      <input id="signin-id" name="email" type="email" placeholder="メールアドレスを入力">
+      <p class="form-text" >★ユーザーメール★</p>
       <br>
-      <p class="form-label" for="signin-pass">パスワード</p>
-      <input id="signin-pass" name="pass" type="password" placeholder="パスワードを入力">
+      <p class="form-label" for="signin-id">password</p>
+      <p class="form-text" >(表示されません)</p>
       <br>
-      <button name="login" type="submit" class="login_button">ログインする</button>
+      <button name="submit" type="submit" class="login_button">削除する</button>
+      <input type='hidden' name='mode' value='comp'>
+      <input type='hidden' name='name' value='★ユーザー名★'>
+      <input type='hidden' name='email' value='★ユーザーメール★'>
+      <input type='hidden' name='id' value='★ユーザーid★'>
     </form>
   </div>
 </div>
-  <!-- /メインコンテンツ -->
+<!-- /メインコンテンツ -->
 _aaa_;
 
 $html_comp = <<<_aaa_
 <div class="white_bg">
   <div class="white_bg_box">
-    <h1 class='white_tittle' >正常にログインしました</h1>
-    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="index.php"  class = 'white_link'> トップページ</a></p>
+    <h1 class='white_tittle' >  削除が完了しました</h1>
+    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="index.php"  class = 'none_link'> トップページ</a></p>
   </div>
 </div>
 _aaa_;
 
-if (isset($_POST['email']) && isset($_POST['pass'])){
+if (isset($_POST['mode']) && $_POST['mode'] == "comp"){
+  $tmpl .= $html_comp;
 
   #データベースに接続
   $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -55,38 +65,33 @@ if (isset($_POST['email']) && isset($_POST['pass'])){
       echo "接続に失敗しました。";
     }else{
       # プレースホルダーの利用
-      $SQL = "SELECT * FROM user WHERE email = :email and pass = :pass";
+      $SQL = "DELETE FROM user WHERE user_id = :user;";
 
       # プリペアードステートメント
       $stmt = $dbh->prepare($SQL);
-      $stmt->execute(array(':email' => $_POST['email'], ':pass' => $_POST['pass']));
-      $result = $stmt->fetch();
+      $stmt->execute(array(':user' => $_SESSION['user_id']));
       $stmt = null;
 
-      //ログイン認証ができたときの処理
-      if ($result[0] != 0){
-        $_SESSION['user_id'] = $result['user_id'];
-        $_SESSION['user_name'] = $result['name'];
-        $_SESSION['user_mail'] = $result['email'];
-      //アカウント情報が間違っていたときの処理
-      }else{
-      $err_msg = "アカウント情報が間違っています。";
-      }
+      unset($_SESSION['user_id']);
+      unset($_SESSION['user_name']);
+      unset($_SESSION['user_mail']);
     }
   }catch (PDOException $e){
     echo('エラー内容：'.$e->getMessage());
     die();
   }
   $dbh = null;
-  $tmpl .= $html_comp;
 }else{
-  $tmpl .= $html_in;
+  $tmpl .= $html_conf;
+  $tmpl = str_replace("★ユーザー名★", $_SESSION['user_name'], $tmpl);
+  $tmpl = str_replace("★ユーザーメール★", $_SESSION['user_mail'], $tmpl);
+  $tmpl = str_replace("★ユーザーid★", $_SESSION['user_id'], $tmpl);
 }
 
 $file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/footer.tmpl");
-$tmpl5 = fread($file, $size);
-$tmpl .= $tmpl5;
+$tmpl3 = fread($file, $size);
+$tmpl .= $tmpl3;
 fclose($file);
 
 // セッションにユーザー名が保存されているか確認
@@ -97,7 +102,6 @@ if (isset($_SESSION['user_name'])) {
   $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
 }
 
-// 画面に出力
 echo $tmpl;
 
 exit;

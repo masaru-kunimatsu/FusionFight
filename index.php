@@ -1,6 +1,37 @@
 <?php
 session_start();
 
+$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/head.tmpl");
+$tmpl = fread($file, $size);
+fclose($file);
+
+$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/header.tmpl");
+$tmpl2 = fread($file, $size);
+$tmpl .= $tmpl2;
+fclose($file);
+
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
+} else {
+  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
+}
+
+$file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/index.tmpl");
+$tmpl3 = fread($file, $size);
+$tmpl .= $tmpl3;
+fclose($file);
+
+$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/footer.tmpl");
+$tmpl4 = fread($file, $size);
+$tmpl .= $tmpl4;
+fclose($file);
+
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
@@ -98,6 +129,9 @@ try{
     
     # SQL文の実行
     if($stmt->execute()){
+
+      $record_found = false;
+
       while($row = $stmt->fetch()){
         // デッキページにリンクする画像ボタンを作成
         $contents .= "<section id='main_sheet'><form action='build.php' method='get'>";
@@ -130,7 +164,20 @@ try{
         $contents .= "<input type='hidden' name='prog' value='{$row["prog"]}'>";
         $contents .= "<input type='hidden' name='rare' value='{$row["rare"]}'>";
         $contents .= "</form></section>";
+
+        $record_found = true;
       }
+
+      if (!$record_found) {
+        // 該当するレコードがない場合のメッセージを表示
+        $file = fopen("tmpl/none.tmpl", "r") or die("tmpl/none.tmpl ファイルを開けませんでした。");
+        $size = filesize("tmpl/none.tmpl");
+        $tmpl_none = fread($file, $size);
+        $tmpl = str_replace("★検索結果★", $tmpl_none, $tmpl);
+        $tmpl = str_replace("★該当なしのテキスト★", "該当するカードが存在しません。<br>検索条件を変更してください。", $tmpl);
+        fclose($file);
+      }
+
     }
     # リスト用SQL文の実行
     if($stmtlist->execute()){
@@ -164,37 +211,6 @@ try{
   die();
 }
 $dbh = null;
-
-$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/head.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
-
-$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/header.tmpl");
-$tmpl2 = fread($file, $size);
-$tmpl .= $tmpl2;
-fclose($file);
-
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-  $user_name = $_SESSION['user_name'];
-  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
-
-$file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/index.tmpl");
-$tmpl3 = fread($file, $size);
-$tmpl .= $tmpl3;
-fclose($file);
-
-$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/footer.tmpl");
-$tmpl4 = fread($file, $size);
-$tmpl .= $tmpl4;
-fclose($file);
 
 // 文字列置き換え
 if ($_GET != null){

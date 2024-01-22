@@ -25,6 +25,11 @@ $html_in = <<< _aaa_
         <p class = 'white_text'><a href="logout.php"  class = 'white_link'>ログアウトする <i class="fa-solid fa-person-walking-arrow-right"></i></a></p>
     </div>
   </div>
+  <div class="account_box">
+    <div class="logout">
+        <p class = 'white_text'><a href="account_delete.php"  class = 'white_link'>アカウントを削除する <i class="fa-solid fa-user-xmark"></i></a></p>
+    </div>
+  </div>
 </div>
   <!-- /メインコンテンツ -->
 _aaa_;

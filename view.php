@@ -97,6 +97,9 @@ try{
     
     # SQL文の実行
     if($stmt->execute()){
+
+      $record_found = false;
+
       while($row = $stmt->fetch()){
 
         $tmpl_each = $tmpl3;
@@ -137,6 +140,17 @@ try{
         $tmpl_each = str_replace("★コード2★", $row["rear_barcode"], $tmpl_each);
 
         $tmpl .= $tmpl_each;
+        $record_found = true;
+      }
+
+      if (!$record_found) {
+        // 該当するレコードがない場合のメッセージを表示
+        $file = fopen("tmpl/none.tmpl", "r") or die("tmpl/none.tmpl ファイルを開けませんでした。");
+        $size = filesize("tmpl/none.tmpl");
+        $tmpl_none = fread($file, $size);
+        $tmpl .= $tmpl_none;
+        $tmpl = str_replace("★該当なしのテキスト★", "デッキが登録されていません<p class = 'white_text'><i class='fa-solid fa-angles-left'></i><a href='build.php'  class = 'none_link'> デッキの作成はこちらから</a></p>", $tmpl);
+        fclose($file);
       }
     }
 }catch (PDOException $e){
