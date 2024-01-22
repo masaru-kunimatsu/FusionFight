@@ -13,20 +13,12 @@ $tmpl2 = fread($file, $size);
 $tmpl .= $tmpl2;
 fclose($file);
 
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-  $user_name = $_SESSION['user_name'];
-  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
-
 // HTMLの土台を用意
 $html = <<<_aaa_
 <div class="white_bg">
   <div class="white_bg_box">
     <h1 class='white_tittle' >登録が完了しました</h1>
-    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="build.php"  class = 'white_link'> デッキ作成ページに戻る</a></p>
+    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="index.php"  class = 'white_link'> トップページ</a></p>
   </div>
 </div>
 _aaa_;
@@ -39,7 +31,8 @@ $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);
 
-# データベースに接続
+
+#データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
 $pass = 'testpass';
@@ -50,18 +43,27 @@ try{
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{
-    #INSERT文の定義
-    $sql = "INSERT INTO bgm (bgm,user_id) VALUES (:text,:user)";
+    # プレースホルダーの利用
+    $SQL = "INSERT INTO user (email, pass, name) VALUES (:email, :pass, :name);";
+
     # プリペアードステートメント
-    $stmt = $dbh->prepare($sql);
+    $stmt = $dbh->prepare($SQL);
+    $stmt->execute(array(':email' => $_POST['email'], ':name' => $_POST['name'], ':pass' => $_POST['pass']));
+    $result = $stmt->fetch();
+    $stmt = null;
 
-    #bindParamによるパラメータ－と変数の紐付け
-    $stmt -> bindParam(':text',$_GET["text"]);
-    $stmt -> bindParam(':user',$_SESSION['user_id']);
+    # プレースホルダーの利用
+    $SQL = "SELECT * FROM user WHERE email = :email and pass = :pass";
 
-    #INSERTの実行
-    $stmt->execute();
-    echo("BGMを追加しました。");
+    # プリペアードステートメント
+    $stmt = $dbh->prepare($SQL);
+    $stmt->execute(array(':email' => $_POST['email'], ':pass' => $_POST['pass']));
+    $result = $stmt->fetch();
+    $stmt = null;
+    
+    $_SESSION['user_id'] = $result['user_id'];
+    $_SESSION['user_name'] = $result['name'];
+    $_SESSION['user_mail'] = $result['email'];
   }
 }catch (PDOException $e){
   echo('エラー内容：'.$e->getMessage());
@@ -69,9 +71,14 @@ try{
 }
 $dbh = null;
 
+// セッションにユーザー名が保存されているか確認
+if (isset($_SESSION['user_name'])) {
+  $user_name = $_SESSION['user_name'];
+  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
+} else {
+  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
+}
 
-
-// 画面に出力
 echo $tmpl;
 
 exit;
