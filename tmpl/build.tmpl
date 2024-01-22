@@ -40,11 +40,11 @@
   </div>
   <div class='form_area'>
     <form action='confirm.php' method='get'>
-      <div><i class="fa-solid fa-tags"></i> デッキ名 :<input type="text" name="deck_name" placeholder="入力してください" value="★初期値★" size="30">
+      <div><i class="fa-solid fa-tags"></i> デッキ名 :<input id="textbox" type="text" name="deck_name" placeholder="入力してください" value="★初期値★" size="30">
       </div>
       <div class = 'bgm_area' style='display: flex; justify-content;'>
         <div><i class="fa-solid fa-music"></i> BGM :</div>
-          <select name="bgm" >
+          <select id="bgmSelect" name="bgm" >
             <option value="">選択してください</option>
             ★bgmリスト★
           </select>
@@ -58,3 +58,33 @@
     </form>
   </div>
 </div>
+
+<script>
+  document.getElementById('textbox').addEventListener('input', function () {
+      var textboxValue = document.getElementById('textbox').value;
+      // Ajaxを使用してPHPに値を送信
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'set_session.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              console.log(xhr.responseText); // コンソールにPHPからの応答を表示
+          }
+      };
+      xhr.send('textbox_value=' + textboxValue);
+  });
+
+  document.getElementById('bgmSelect').addEventListener('change', function () {
+    var bgm_value = document.getElementById('bgmSelect').value;
+    // Ajaxを使用してPHPに値を送信
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'set_session.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText); // コンソールにPHPからの応答を表示
+        }
+    };
+    xhr.send('bgm_value=' + bgm_value);
+  });
+</script>

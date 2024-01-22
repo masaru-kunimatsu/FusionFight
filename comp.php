@@ -76,6 +76,8 @@ try{
     unset($_SESSION['card1']);
     unset($_SESSION['card2']);
     unset($_SESSION['deck_id']);
+    unset($_SESSION['textbox']);
+    unset($_SESSION['bgm_value']);
   }
 
 }catch (PDOException $e){
