@@ -26,11 +26,12 @@ $tmpl3 = fread($file, $size);
 $tmpl .= $tmpl3;
 fclose($file);
 
-$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/footer.tmpl");
+$file = fopen("tmpl/result.tmpl", "r") or die("tmpl/result.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/result.tmpl");
 $tmpl4 = fread($file, $size);
-$tmpl .= $tmpl4;
 fclose($file);
+
+
 
 #データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -131,39 +132,30 @@ try{
     if($stmt->execute()){
 
       $record_found = false;
+      $card_id = "";
 
       while($row = $stmt->fetch()){
         // デッキページにリンクする画像ボタンを作成
-        $contents .= "<section id='main_sheet'><form action='build.php' method='get'>";
-        $contents .= "<div class='sheet'>";
-        $contents .= "<div class='leftsheet'>";
-        $contents .= "<img src='{$row["image"]}' height=70%;></div>";
-        $contents .= "<div class='rightsheet'>";
-        $contents .= "<div class='rightsheet_name'>{$row['name']}</div>";
-        $contents .= "<div class='rightsheet_tit'>タイプ<span class='rightsheet_form'><br>{$row['form']}</span></div>";
-        $contents .= "<div class='rightsheet_tit'>ワザ<span class='rightsheet_form'><br>{$row['skill']}</span>";
-        $contents .= ($row["climax"] == 1) ? "<img src='material/CMlogo.png'><br>" : '';
-        $contents .= "</div>";
-        $contents .= "<div class='rightuppersheet'>";
-        $contents .= "<img src='type●{$row['type']}.png' >";
-        $contents .= "<img src='rare●{$row['rare']}.png' >";
-        $contents .= "<img src='logo●{$row['prog']}.webp' ></div>";
-        $contents .= "<div class='rightbottomsheet'>";
-        $contents .= "<img src='{$row['barcode']}'>";
-        $contents .= "<button class='rightbottomsheet_button' type='submit' name='sub'>";
-        $contents .= "デッキに追加する <i class='fa-solid fa-forward'></i></button>";
-        $contents .= "</div></div></div>";
-        $contents .= "<input type='hidden' name='card_id' value='{$row["card_id"]}'>";
-        $contents .= "<input type='hidden' name='image' value='{$row["image"]}'>";
-        $contents .= "<input type='hidden' name='barcode' value='{$row["barcode"]}'>";
-        $contents .= "<input type='hidden' name='name' value='{$row["name"]}'>";
-        $contents .= "<input type='hidden' name='form' value='{$row["form"]}'>";
-        $contents .= "<input type='hidden' name='skill' value='{$row["skill"]}'>";
-        $contents .= "<input type='hidden' name='climax' value='{$row["climax"]}'>";
-        $contents .= "<input type='hidden' name='type' value='{$row["type"]}'>";
-        $contents .= "<input type='hidden' name='prog' value='{$row["prog"]}'>";
-        $contents .= "<input type='hidden' name='rare' value='{$row["rare"]}'>";
-        $contents .= "</form></section>";
+        $card_id = $row['card_id'];
+        $button_id = "deckAddButton".$row['card_id'];
+
+        $tmpl_each = $tmpl4;
+        $tmpl_each = str_replace("★button_id★", $button_id, $tmpl_each);
+        $tmpl_each = str_replace("★card_id★", $card_id, $tmpl_each);
+        $tmpl_each = str_replace("★row['image']★", $row['image'], $tmpl_each);
+        $tmpl_each = str_replace("★row['name']★", $row['name'], $tmpl_each);
+        $tmpl_each = str_replace("★row['form']★", $row['form'], $tmpl_each);
+        $skillValue = $row['skill']."</span>";
+          if ($row['climax'] == 1) {
+            $skillValue .= "<img src='material/CMlogo.png'>";
+          }
+        $tmpl_each = str_replace("★skillValue★", $skillValue, $tmpl_each);
+        $tmpl_each = str_replace("★row['type']★", $row['type'], $tmpl_each);
+        $tmpl_each = str_replace("★row['rare']★", $row['rare'], $tmpl_each);
+        $tmpl_each = str_replace("★row['prog']★", $row['prog'], $tmpl_each);
+        $tmpl_each = str_replace("★row['barcode']★", $row['barcode'], $tmpl_each);
+
+        $tmpl .= $tmpl_each;
 
         $record_found = true;
       }
@@ -212,6 +204,19 @@ try{
 }
 $dbh = null;
 
+
+$file = fopen("tmpl/index2.tmpl", "r") or die("tmpl/index2.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/index2.tmpl");
+$tmpl5 = fread($file, $size);
+$tmpl .= $tmpl5;
+fclose($file);
+
+$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
+$size = filesize("tmpl/footer.tmpl");
+$tmpl6 = fread($file, $size);
+$tmpl .= $tmpl6;
+fclose($file);
+
 // 文字列置き換え
 if ($_GET != null){
   $name_list = str_replace("<option value={$_GET["name"]}>", "<option value={$_GET["name"]} selected>", $name_list);
@@ -223,8 +228,9 @@ if ($_GET != null){
     $tmpl = str_replace(">クライマックス技</option>", " selected>クライマックス技</option>", $tmpl);
   }
 }
-$tmpl = str_replace("★検索結果★", $contents, $tmpl);
+
 $tmpl = str_replace("●", "/", $tmpl);
+
 $tmpl = str_replace("★名前リスト★", $name_list, $tmpl);
 $tmpl = str_replace("★形態リスト★", $form_list, $tmpl);
 $tmpl = str_replace("★分類リスト★", $type_list, $tmpl);
