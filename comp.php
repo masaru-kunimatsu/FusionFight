@@ -20,7 +20,7 @@ $html = <<<_aaa_
     <h1 class='white_tittle' >登録が完了しました</h1>
     <p class = 'white_text'><i class="fa-solid fa-plus"></i><a href="build.php"  class = 'white_link'> 追加でデッキを作成する</a></p>
     <br>
-    <p class = 'white_text'><a href="view.php"  class = 'white_link'>デッキ一覧へ <i class="fa-solid fa-angles-left"></i></a></p>
+    <p class = 'white_text'><a href="view.php"  class = 'white_link'>デッキ一覧へ <i class="fa-solid fa-angles-right"></i></a></p>
   </div>
 </div>
 _aaa_;

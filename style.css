@@ -744,6 +744,11 @@ table {
   align-items:flex-end; /* 垂直方向に中央寄せ */
 }
 
+.deck_bgm_box {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .deckindex {
   font-weight: bold;
   font-size: x-large;
