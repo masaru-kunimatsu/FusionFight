@@ -250,7 +250,7 @@ table {
   }
 
   .popup-text {
-    margin: 5px 0px;
+    margin: 20px 0px;
     color: #00000070;
     font-size: large;
     transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */

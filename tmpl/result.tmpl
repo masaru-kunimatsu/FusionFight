@@ -3,6 +3,7 @@
 					$(document).ready(function(){
 						$('#★button_id★').on('click', function(e) {
 							e.preventDefault();
+							updatePopupText();
 							$.ajax({
 								type: 'POST',
 								url: 'update_session.php',
@@ -16,6 +17,15 @@
 								}
 							});
 						});
+						function updatePopupText() {
+							$.ajax({
+								url: 'update_popup_text.php',
+									
+								success: function (response) {
+									$('#state_popup').html(response);
+								}
+							});
+						}
 					});
 					document.addEventListener('DOMContentLoaded', function () {
 						// ポップアップを閉じる関数
@@ -56,9 +66,9 @@
 								<input type="checkbox" id="popup">
 								<div class="popup-overlay">
 									<div class="popup-window">
-										<p class="popup-tittle">作成中のデッキにカードを保存しました</p>
-										<p class="popup-text" id="close_popup"><i class="fa-solid fa-backward"></i> 続けてカードを選択する</p>
+										<p class="popup-tittle" id ="state_popup">作成中のデッキにカードを保存しました</p>
 										<p><a class="popup-text" href="build.php" >デッキ作成画面に進む <i class="fa-solid fa-forward"></i></a></p>
+										<p class="popup-text" id="close_popup"><i class="fa-solid fa-xmark"></i> 閉じる</p>
 										<label class="popup-close" for="popup">
 											<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
 												<line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>

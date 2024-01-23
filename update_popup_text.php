@@ -2,8 +2,8 @@
 session_start();
 
 if (!empty($_SESSION['card1']) && !empty($_SESSION['card2'])) {
-    echo "Both card1 and card2 are not empty.";
+    echo "これ以上保存できません";
 } else {
-    echo "Content for the popup.";
+    echo "作成中のデッキにカードを保存しました";
 }
 ?>
