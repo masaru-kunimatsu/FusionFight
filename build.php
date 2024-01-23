@@ -4,7 +4,8 @@ session_start();
 
 // セッションにユーザー名が保存されているか確認
 if (!isset($_SESSION['user_name'])) {
-    header('Location: account.php');
+  $_SESSION['path'] = 'build.php';
+  header('Location: account.php');
 }
 
 $file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
@@ -51,7 +52,7 @@ try{
   }else{
     #BGMテーブルの取得
     $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM bgm WHERE user_id = $user_id ORDER BY bgm DESC";
+    $sql = "SELECT * FROM bgm WHERE user_id = $user_id ORDER BY bgm";
 
     # プリペアードステートメント
     $stmt = $dbh->prepare($sql);
@@ -189,11 +190,18 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'edit') {
   // 編集モードの処理を行う
   $tmpl = str_replace("★初期値★", $_GET['deck_name'], $tmpl);
   $bgm_list = str_replace("<option value={$_GET["bgm_id"]}>", "<option value={$_GET["bgm_id"]} selected>", $bgm_list);
-}elseif(!isset ($_SESSION['textbox'])){
-  $tmpl = str_replace("★初期値★", "", $tmpl);
 }else{
-  $tmpl = str_replace("★初期値★", $_SESSION['textbox'], $tmpl);
-  $bgm_list = str_replace("<option value={$_SESSION['bgm_value']}>", "<option value={$_SESSION['bgm_value']} selected>", $bgm_list);
+
+  if(isset ($_SESSION['textbox'])){
+    $tmpl = str_replace("★初期値★", $_SESSION['textbox'], $tmpl);
+  }else{
+    $tmpl = str_replace("★初期値★", "", $tmpl);
+  }
+
+  if(isset ($_SESSION['bgm_value'])){
+    $bgm_list = str_replace("<option value={$_SESSION['bgm_value']}>", "<option value={$_SESSION['bgm_value']} selected>", $bgm_list);
+  }
+
 }
 
 

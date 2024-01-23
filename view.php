@@ -4,6 +4,7 @@ session_start();
 
 // セッションにユーザー名が保存されているか確認
 if (!isset($_SESSION['user_name'])) {
+  $_SESSION['path'] = 'view.php';
   header('Location: account.php');
 }
 

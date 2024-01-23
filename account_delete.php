@@ -45,7 +45,7 @@ $html_comp = <<<_aaa_
 <div class="white_bg">
   <div class="white_bg_box">
     <h1 class='white_tittle' >  削除が完了しました</h1>
-    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="index.php"  class = 'none_link'> トップページ</a></p>
+    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="index.php" class = 'white_link'> トップページ</a></p>
   </div>
 </div>
 _aaa_;

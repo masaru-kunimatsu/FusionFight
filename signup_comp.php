@@ -18,7 +18,7 @@ $html = <<<_aaa_
 <div class="white_bg">
   <div class="white_bg_box">
     <h1 class='white_tittle' >登録が完了しました</h1>
-    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="index.php"  class = 'white_link'> トップページ</a></p>
+    <p class = 'white_text'><i class="fa-solid fa-angles-left"></i><a href="★パス★"  class = 'white_link'> ★リンク先★</a></p>
   </div>
 </div>
 _aaa_;
@@ -70,6 +70,18 @@ try{
   die();
 }
 $dbh = null;
+
+if (!isset($_SESSION['path'])){
+  $tmpl = str_replace("★パス★", 'index.php', $tmpl);
+  $tmpl = str_replace("★リンク先★", "トップページへ", $tmpl);
+}elseif($_SESSION['path'] == 'build.php'){
+  $tmpl = str_replace("★パス★", $_SESSION['path'], $tmpl);
+  $tmpl = str_replace("★リンク先★", "デッキ作成ページへ", $tmpl);
+}elseif($_SESSION['path'] == 'view.php'){
+  $tmpl = str_replace("★パス★", $_SESSION['path'], $tmpl);
+  $tmpl = str_replace("★リンク先★", "デッキ確認ページへ", $tmpl);
+}
+unset($_SESSION['path']);
 
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
