@@ -666,6 +666,40 @@ table {
   align-items: center; /* 子要素を縦方向に中央に揃える */
 }
 
+.bgm_tittle {
+  text-align: center; /* テキストの中央寄せ */
+  font-size: xx-large;
+  width: 100%;
+  margin: 40px 0px 20px 0px;
+}
+
+.bgm_table_area {
+  background: linear-gradient(to bottom, #ffffffdd, #ffffff86); /* 白色の垂直方向グラデーション */
+  color: rgb(108, 107, 107); 
+  margin: 20px 0px 20px 0px;
+  padding-bottom: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 上下方向の中央寄せ */
+  align-items: center; /* 左右方向の中央寄せ */
+}
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+}
+
+td {
+  border: 1px solid black;
+  padding: 5px 10px; /* セル内の余白 */
+}
+
+.bgm_edit_button {
+  text-align: center; /* テキストの中央寄せ */
+  padding: 0px 5px;
+}
+
 .decksave_button {
   background: linear-gradient(to right, #ffd90072, #FFA500); /* 黄色のグラデーション */
   color: white; /* 文字色を白に設定 */

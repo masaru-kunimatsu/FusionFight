@@ -188,8 +188,10 @@ $tmpl = str_replace("★2枚目★", $contents2, $tmpl);
 
 if (isset($_GET['mode']) && $_GET['mode'] === 'edit') {
   // 編集モードの処理を行う
-  $tmpl = str_replace("★初期値★", $_GET['deck_name'], $tmpl);
-  $bgm_list = str_replace("<option value={$_GET["bgm_id"]}>", "<option value={$_GET["bgm_id"]} selected>", $bgm_list);
+  $_SESSION['textbox'] = $_GET['deck_name'];
+  $_SESSION['bgm_value'] = $_GET["bgm_id"];
+  $tmpl = str_replace("★初期値★", $_SESSION['textbox'], $tmpl);
+  $bgm_list = str_replace("<option value={$_SESSION['bgm_value']}>", "<option value={$_SESSION['bgm_value']} selected>", $bgm_list);
 }else{
 
   if(isset ($_SESSION['textbox'])){

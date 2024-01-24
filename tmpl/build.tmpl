@@ -48,7 +48,7 @@
             ★bgmリスト★
           </select>
         </div>
-      <p><a href="bgm.php">BGM登録ページはこちら<i class="fa-solid fa-angles-right"></i></a></p>
+      <p><a href="bgm.php">BGMの 登録・編集・削除 はこちら<i class="fa-solid fa-angles-right"></i></a></p>
       <button class='decksave_button' type='submit' name='sub'>
         デッキを保存する
         <i class="fa-solid fa-circle-arrow-right"></i>
@@ -62,28 +62,27 @@
   document.getElementById('textbox').addEventListener('input', function () {
       var textboxValue = document.getElementById('textbox').value;
       // Ajaxを使用してPHPに値を送信
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'set_session.php', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-              console.log(xhr.responseText); // コンソールにPHPからの応答を表示
+      $.ajax({
+          type: 'POST',
+          url: 'set_session.php',
+          data: { textbox_value: textboxValue },
+          success: function(response) {
+              console.log(response); // コンソールにPHPからの応答を表示
           }
-      };
-      xhr.send('textbox_value=' + textboxValue);
+      });
   });
 
   document.getElementById('bgmSelect').addEventListener('change', function () {
     var bgm_value = document.getElementById('bgmSelect').value;
     // Ajaxを使用してPHPに値を送信
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'set_session.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText); // コンソールにPHPからの応答を表示
+    $.ajax({
+        type: 'POST',
+        url: 'set_session.php',
+        data: { bgm_value: bgm_value },
+        success: function(response) {
+            console.log(response); // コンソールにPHPからの応答を表示
         }
-    };
-    xhr.send('bgm_value=' + bgm_value);
+    });
   });
+
 </script>
