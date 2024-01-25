@@ -63,6 +63,8 @@ function HTML($main){
 
   $html .= $footer_html;
 
+  $html = str_replace("●", "/", $html);
+
   return $html;
 
 }
