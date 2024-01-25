@@ -19,6 +19,10 @@ $html_form = <<<_aaa_
       <input type='hidden' name='mode' value='comp'>
     </form>
   </div>
+  <button class='login_button' type='submit' name='sub' onclick="history.back()">
+    <i class="fa-solid fa-reply"></i>
+    戻る
+  </button>
 </div>
 <!-- / メインナビゲーション -->
 _aaa_;
@@ -52,6 +56,10 @@ $html_edit = <<<_aaa_
       <input type='hidden' name='bgm' value='{$_GET['bgm']}'>
     </form>
   </div>
+  <button class='login_button' type='submit' name='sub' onclick="history.back()">
+    <i class="fa-solid fa-reply"></i>
+    戻る
+  </button>
 </div>
 <!-- / メインナビゲーション -->
 _aaa_;
@@ -117,6 +125,10 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
         <input type='hidden' name='bgm' value='{$_GET['bgm']}'>
       </form>
     </div>
+    <button class='login_button' type='submit' name='sub' onclick="history.back()">
+      <i class="fa-solid fa-reply"></i>
+      戻る
+    </button>
   </div>
   <!-- / メインナビゲーション -->
   _aaa_;

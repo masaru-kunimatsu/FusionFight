@@ -10,6 +10,10 @@ $html_list_head = <<<_aaa_
 <!-- / メインナビゲーション -->
 <div class="bgm_table_area">
 <h1 class='bgm_tittle' >BGM編集・削除</h1>
+  <button class='login_button' type='submit' name='sub' onclick="history.back()">
+  <i class="fa-solid fa-reply"></i>
+  戻る
+  </button>
   <table>
 _aaa_;
 
