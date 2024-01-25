@@ -96,34 +96,6 @@ if ($_GET != NULL) {
       $_SESSION['deck_id'] = $_GET['deck_id'];
       $tmpl = str_replace("★注意★", "", $tmpl);
       $tmpl = str_replace("★デッキid★", $_SESSION['deck_id'], $tmpl);
-  }elseif (empty($_SESSION['card1'])){
-      $_SESSION['card1'] = array(
-        'image' => $_GET["image"],
-        'barcode' => $_GET["barcode"],
-        'card_id' => $_GET["card_id"],
-        'name' => $_GET["name"],
-        'form' => $_GET["form"],
-        'skill' => $_GET["skill"],
-        'climax' => $_GET["climax"],
-        'type' => $_GET["type"],
-        'prog' => $_GET["prog"],
-        'rare' => $_GET["rare"]);
-        $tmpl = str_replace("★注意★", "", $tmpl);
-        $tmpl = str_replace("★デッキid★", "", $tmpl);
-  }elseif(empty($_SESSION['card2']) && isset($_GET["card_id"]) && ($_SESSION['card1']["card_id"] != $_GET["card_id"])){
-      $_SESSION['card2'] = array(
-        'image' => $_GET["image"],
-        'barcode' => $_GET["barcode"],
-        'card_id' => $_GET["card_id"],
-        'name' => $_GET["name"],
-        'form' => $_GET["form"],
-        'skill' => $_GET["skill"],
-        'climax' => $_GET["climax"],
-        'type' => $_GET["type"],
-        'prog' => $_GET["prog"],
-        'rare' => $_GET["rare"]);
-        $tmpl = str_replace("★注意★", "", $tmpl);
-        $tmpl = str_replace("★デッキid★", "", $tmpl);
   }else{
         $tmpl = str_replace("★注意★", "<i class='fa-solid fa-exclamation'></i> カードは2枚以上登録できません <i class='fa-solid fa-exclamation'></i>", $tmpl);
         $tmpl = str_replace("★デッキid★", "", $tmpl);
@@ -203,10 +175,24 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'edit') {
   if(isset ($_SESSION['bgm_value'])){
     $bgm_list = str_replace("<option value={$_SESSION['bgm_value']}>", "<option value={$_SESSION['bgm_value']} selected>", $bgm_list);
   }
-
 }
 
 
+$build_alert = array(
+  'alert_card1'  => '1枚目のカードを選択してください',
+  'alert_card2' => '2枚目のカードを選択してください',
+  'alert_textbox' => 'デッキ名を入力してください',
+  'alert_bgm_value' => 'BGMを選択してください'
+);
+
+$ogtext = "<div class='deckalert'></div>";
+
+foreach ($build_alert as $n => $v){
+  if(isset($_SESSION[$n]) && $_SESSION[$n] == 'alert'){
+    $tmpl = str_replace($ogtext , "<div class='deckalert'><i class='fa-solid fa-triangle-exclamation'></i> ".$v." <i class='fa-solid fa-triangle-exclamation'></i></div>".$ogtext, $tmpl);
+    unset($_SESSION[$n]);
+  }
+}
 
 $tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
 $tmpl = str_replace("●" , "/" , $tmpl);

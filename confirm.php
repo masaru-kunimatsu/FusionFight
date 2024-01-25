@@ -2,6 +2,28 @@
 
 session_start();
 
+$build_alert = array(
+  'alert_card1' => $_SESSION['card1'],
+  'alert_card2' => $_SESSION['card2'],
+  'alert_textbox' => $_SESSION['textbox'],
+  'alert_bgm_value' => $_SESSION['bgm_value']
+);
+
+$redirect = false;
+
+foreach ($build_alert as $n => $v){
+  if(!isset($v) || empty($v)){
+    $_SESSION[$n] = 'alert';
+    $redirect = true;
+  }
+}
+
+if ($redirect) {
+  $redirect = false;
+  header("Location: build.php");
+  exit;
+}
+
     $file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
     $size = filesize("tmpl/head.tmpl");
     $tmpl = fread($file, $size);
