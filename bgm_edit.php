@@ -50,12 +50,6 @@ $size = filesize("tmpl/head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
-$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/header.tmpl");
-$tmpl2 = fread($file, $size);
-$tmpl .= $tmpl2;
-fclose($file);
-
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
   $user_name = $_SESSION['user_name'];

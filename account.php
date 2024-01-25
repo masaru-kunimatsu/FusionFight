@@ -6,12 +6,6 @@ $size = filesize("tmpl/head.tmpl");
 $tmpl = fread($file, $size);
 fclose($file);
 
-$file = fopen("tmpl/header.tmpl", "r") or die("tmpl/header.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/header.tmpl");
-$tmpl2 = fread($file, $size);
-$tmpl .= $tmpl2;
-fclose($file);
-
 $html_in = <<< _aaa_
 <!-- メインコンテンツ -->
 <div class="account">
