@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/head.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
+include 'functions.php';
+$header_tmpl = GetHeader();
+$tmpl = $header_tmpl;
 
 $html_form = <<< _aaa_
 <!-- メインコンテンツ -->
@@ -65,11 +64,8 @@ if (isset($_POST['mode']) && $_POST['mode'] == "conf"){
   $tmpl = str_replace("★ユーザーメール★", $_SESSION['user_mail'], $tmpl);
 }
 
-$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/footer.tmpl");
-$tmpl5 = fread($file, $size);
-$tmpl .= $tmpl5;
-fclose($file);
+$footer_tmpl = GetFooter();
+$tmpl .= $footer_tmpl;
 
 
 

@@ -1,18 +1,11 @@
 <?php
 session_start();
 
-$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/head.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
 
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-  $user_name = $_SESSION['user_name'];
-  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
+
+include 'functions.php';
+$header_tmpl = GetHeader();
+$tmpl = $header_tmpl;
 
 $file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/index.tmpl");
@@ -205,11 +198,8 @@ $tmpl5 = fread($file, $size);
 $tmpl .= $tmpl5;
 fclose($file);
 
-$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/footer.tmpl");
-$tmpl6 = fread($file, $size);
-$tmpl .= $tmpl6;
-fclose($file);
+$footer_tmpl = GetFooter();
+$tmpl .= $footer_tmpl;
 
 // 文字列置き換え
 if ($_GET != null){

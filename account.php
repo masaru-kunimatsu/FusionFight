@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/head.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
+include 'functions.php';
+$header_tmpl = GetHeader();
+$tmpl = $header_tmpl;
 
 $html_in = <<< _aaa_
 <!-- メインコンテンツ -->
@@ -48,18 +47,12 @@ _aaa_;
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
   $tmpl .= $html_in;
-  $user_name = $_SESSION['user_name'];
-  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
 } else {
   $tmpl .= $html_out;
-  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
 }
 
-$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/footer.tmpl");
-$tmpl5 = fread($file, $size);
-$tmpl .= $tmpl5;
-fclose($file);
+$footer_tmpl = GetFooter();
+$tmpl .= $footer_tmpl;
 
 
 

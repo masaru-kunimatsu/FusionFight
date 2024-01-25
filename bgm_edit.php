@@ -2,6 +2,10 @@
 
 session_start();
 
+include 'functions.php';
+$header_tmpl = GetHeader();
+$tmpl = $header_tmpl;
+
 $html_list_head = <<<_aaa_
 <!-- / メインナビゲーション -->
 <div class="bgm_table_area">
@@ -44,19 +48,6 @@ $html_list_none = <<<_aaa_
 <!-- / メインナビゲーション -->
 _aaa_;
 
-
-$file = fopen("tmpl/head.tmpl", "r") or die("tmpl/head.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/head.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
-
-// セッションにユーザー名が保存されているか確認
-if (isset($_SESSION['user_name'])) {
-  $user_name = $_SESSION['user_name'];
-  $tmpl = str_replace("★ユーザー名★", $user_name, $tmpl);
-} else {
-  $tmpl = str_replace("★ユーザー名★", "ゲスト", $tmpl);
-}
 
 # データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -103,11 +94,8 @@ $tmpl .= $html_list_head;
 
 $tmpl .= $html_list_foot;
 
-$file = fopen("tmpl/footer.tmpl", "r") or die("tmpl/footer.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/footer.tmpl");
-$tmpl3 = fread($file, $size);
-$tmpl .= $tmpl3;
-fclose($file);
+$footer_tmpl = GetFooter();
+$tmpl .= $footer_tmpl;
 
 // 画面に出力
 echo $tmpl;

@@ -1,0 +1,2 @@
+$footer_tmpl = GetFooter();
+$tmpl .= $footer_tmpl;
