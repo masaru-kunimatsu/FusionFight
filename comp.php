@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 // HTMLの土台を用意
 $html = <<<_aaa_
@@ -18,10 +16,8 @@ $html = <<<_aaa_
 </div>
 _aaa_;
 
-$tmpl .= $html;
+$tmpl = $html;
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
 
 # データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -72,7 +68,8 @@ $dbh = null;
 
 
 // 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit();
 

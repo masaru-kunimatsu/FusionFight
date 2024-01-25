@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 $html_in = <<< _aaa_
 <!-- メインコンテンツ -->
@@ -71,7 +69,7 @@ if (isset($_POST['email']) && isset($_POST['pass'])){
     die();
   }
   $dbh = null;
-  $tmpl .= $html_comp;
+  $tmpl = $html_comp;
   if (!isset($_SESSION['path'])){
     $tmpl = str_replace("★パス★", 'index.php', $tmpl);
     $tmpl = str_replace("★リンク先★", "トップページへ", $tmpl);
@@ -85,14 +83,11 @@ if (isset($_POST['email']) && isset($_POST['pass'])){
   unset($_SESSION['path']);
 
 }else{
-  $tmpl .= $html_in;
+  $tmpl = $html_in;
 }
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit;
 ?>

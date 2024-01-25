@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 $html_form = <<<_aaa_
 <!-- / メインナビゲーション -->
@@ -100,7 +98,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
 
       #INSERTの実行
       $stmt->execute();
-      $tmpl .= $html_comp;
+      $tmpl = $html_comp;
       $tmpl = str_replace("★リンク★", "<p class = 'white_text'><i class='fa-solid fa-angles-left'></i><a href='build.php'  class = 'white_link'> デッキ作成ページに戻る</a></p>", $tmpl);
     }
   }catch (PDOException $e){
@@ -132,7 +130,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
   </div>
   <!-- / メインナビゲーション -->
   _aaa_;
-  $tmpl .= $html_edit;
+  $tmpl = $html_edit;
   }elseif(isset($_GET['mode']) && $_GET['mode'] == "edit_comp"){
   # データベースに接続
   try{
@@ -152,7 +150,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
 
       #INSERTの実行
       $stmt->execute();
-      $tmpl .= $html_comp;
+      $tmpl = $html_comp;
       $tmpl = str_replace("★リンク★", "<p class = 'white_text'><i class='fa-solid fa-angles-left'></i><a href='bgm_edit.php'  class = 'white_link'> BGM一覧ページに戻る</a></p>", $tmpl);
     }
   }catch (PDOException $e){
@@ -161,13 +159,10 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
   }
   $dbh = null;
 }else{
-  $tmpl .= $html_form;
+  $tmpl = $html_form;
 }
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit;

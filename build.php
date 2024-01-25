@@ -9,17 +9,12 @@ if (!isset($_SESSION['user_name'])) {
 }
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 $file = fopen("tmpl/build.tmpl", "r") or die("tmpl/build.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/build.tmpl");
-$tmpl3 = fread($file, $size);
-$tmpl .= $tmpl3;
+$tmpl = fread($file, $size);
 fclose($file);
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
 
 # データベースに接続
 $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -177,10 +172,8 @@ foreach ($build_alert as $n => $v){
 }
 
 $tmpl = str_replace("★bgmリスト★", $bgm_list, $tmpl);
-$tmpl = str_replace("●" , "/" , $tmpl);
 
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 ?>

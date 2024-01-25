@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 $html_list_head = <<<_aaa_
 <!-- / メインナビゲーション -->
@@ -58,7 +56,7 @@ $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
 $user = 'testuser';
 $pass = 'testpass';
 
-$tmpl .= $html_list_head;
+$tmpl = $html_list_head;
 
   try{
     $dbh = new PDO($dsn, $user, $pass);
@@ -98,10 +96,7 @@ $tmpl .= $html_list_head;
 
 $tmpl .= $html_list_foot;
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit;

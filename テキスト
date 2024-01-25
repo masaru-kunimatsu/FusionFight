@@ -1,2 +1,2 @@
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
+$html = HTML($tmpl);
+echo $html;

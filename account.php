@@ -2,10 +2,8 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
-$html_in = <<< _aaa_
+$tmpl_in = <<< _aaa_
 <!-- メインコンテンツ -->
 <div class="account">
   <div class="account_box">
@@ -27,7 +25,7 @@ $html_in = <<< _aaa_
   <!-- /メインコンテンツ -->
 _aaa_;
 
-$html_out = <<< _aaa_
+$tmpl_out = <<< _aaa_
 <!-- メインコンテンツ -->
 <div class="account">
   <div class="account_box">
@@ -46,18 +44,16 @@ _aaa_;
 
 // セッションにユーザー名が保存されているか確認
 if (isset($_SESSION['user_name'])) {
-  $tmpl .= $html_in;
+  $tmpl = $tmpl_in;
 } else {
-  $tmpl .= $html_out;
+  $tmpl = $tmpl_out;
 }
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
+$html = HTML($tmpl);
 
 
 // 画面に出力
-echo $tmpl;
+echo $html;
 
 exit();
 

@@ -9,14 +9,12 @@ if (!isset($_SESSION['user_name'])) {
 }
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
-$tmpl .= "<div class='view_bg'>";
+$tmpl = "<div class='view_bg'>";
 
 $file = fopen("tmpl/view.tmpl", "r") or die("tmpl/view.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/view.tmpl");
-$tmpl3 = fread($file, $size);
+$tmpl_view = fread($file, $size);
 fclose($file);
 
 #データベースに接続
@@ -86,7 +84,7 @@ try{
 
       while($row = $stmt->fetch()){
 
-        $tmpl_each = $tmpl3;
+        $tmpl_each = $tmpl_view;
         $tmpl_each = str_replace("★デッキid★", $row["deck_id"], $tmpl_each);
         $tmpl_each = str_replace("★デッキ名★", $row["deck_name"], $tmpl_each);
         $tmpl_each = str_replace("★BGM名★", $row["bgm"], $tmpl_each);
@@ -143,18 +141,10 @@ try{
 }
 $dbh = null;
 
-
-
 $tmpl .="</div>";
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-// 文字列置き換え
-$tmpl = str_replace("●", "/", $tmpl);
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 ?>
 

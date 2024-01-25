@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 $html_up = <<< _aaa_
 <!-- メインコンテンツ -->
@@ -55,19 +53,16 @@ $html_conf = <<< _aaa_
 _aaa_;
 
 if (isset($_POST['mode']) && $_POST['mode'] == "conf"){
-  $tmpl .= $html_conf;
+  $tmpl = $html_conf;
   $tmpl = str_replace("★ユーザー名★", $_POST['name'], $tmpl);
   $tmpl = str_replace("★ユーザーメール★", $_POST['email'], $tmpl);
   $tmpl = str_replace("★ユーザーパス★", $_POST['pass'], $tmpl);
 }else{
-  $tmpl .= $html_up;
+  $tmpl = $html_up;
 }
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit;
 ?>

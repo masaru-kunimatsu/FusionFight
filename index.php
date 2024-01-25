@@ -4,18 +4,15 @@ session_start();
 
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 $file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/index.tmpl");
-$tmpl3 = fread($file, $size);
-$tmpl .= $tmpl3;
+$tmpl = fread($file, $size);
 fclose($file);
 
 $file = fopen("tmpl/result.tmpl", "r") or die("tmpl/result.tmpl ファイルを開けませんでした。");
 $size = filesize("tmpl/result.tmpl");
-$tmpl4 = fread($file, $size);
+$tmpl_result = fread($file, $size);
 fclose($file);
 
 
@@ -126,7 +123,7 @@ try{
         $card_id = $row['card_id'];
         $button_id = "deckAddButton".$row['card_id'];
 
-        $tmpl_each = $tmpl4;
+        $tmpl_each = $tmpl_result;
         $tmpl_each = str_replace("★button_id★", $button_id, $tmpl_each);
         $tmpl_each = str_replace("★card_id★", $card_id, $tmpl_each);
         $tmpl_each = str_replace("★row['image']★", $row['image'], $tmpl_each);
@@ -198,9 +195,6 @@ $tmpl5 = fread($file, $size);
 $tmpl .= $tmpl5;
 fclose($file);
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
 // 文字列置き換え
 if ($_GET != null){
   $name_list = str_replace("<option value={$_GET["name"]}>", "<option value={$_GET["name"]} selected>", $name_list);
@@ -213,16 +207,14 @@ if ($_GET != null){
   }
 }
 
-$tmpl = str_replace("●", "/", $tmpl);
-
 $tmpl = str_replace("★名前リスト★", $name_list, $tmpl);
 $tmpl = str_replace("★形態リスト★", $form_list, $tmpl);
 $tmpl = str_replace("★分類リスト★", $type_list, $tmpl);
 $tmpl = str_replace("★作品リスト★", $prog_list, $tmpl);
 $tmpl = str_replace("★レアリティリスト★", $rare_list, $tmpl);
 
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 ?>
 

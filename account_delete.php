@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 // HTMLの土台を用意
 $html_conf = <<< _aaa_
@@ -43,7 +41,7 @@ $html_comp = <<<_aaa_
 _aaa_;
 
 if (isset($_POST['mode']) && $_POST['mode'] == "comp"){
-  $tmpl .= $html_comp;
+  $tmpl = $html_comp;
 
   #データベースに接続
   $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
@@ -74,16 +72,14 @@ if (isset($_POST['mode']) && $_POST['mode'] == "comp"){
   }
   $dbh = null;
 }else{
-  $tmpl .= $html_conf;
+  $tmpl = $html_conf;
   $tmpl = str_replace("★ユーザー名★", $_SESSION['user_name'], $tmpl);
   $tmpl = str_replace("★ユーザーメール★", $_SESSION['user_mail'], $tmpl);
   $tmpl = str_replace("★ユーザーid★", $_SESSION['user_id'], $tmpl);
 }
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit;
 ?>

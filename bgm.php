@@ -3,8 +3,6 @@
 session_start();
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
 
 // HTMLの土台を用意
 $html_start = <<< _aaa_
@@ -24,12 +22,9 @@ $html_start = <<< _aaa_
   <!-- /メインコンテンツ -->
 _aaa_;
 
-$tmpl .= $html_start;
+$tmpl = $html_start;
 
-$footer_tmpl = GetFooter();
-$tmpl .= $footer_tmpl;
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit;

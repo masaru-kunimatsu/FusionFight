@@ -25,18 +25,11 @@ if ($redirect) {
 }
 
 include 'functions.php';
-$header_tmpl = GetHeader();
-$tmpl = $header_tmpl;
     
     $file = fopen("tmpl/confirm.tmpl", "r") or die("tmpl/confirm.tmpl ファイルを開けませんでした。");
     $size = filesize("tmpl/confirm.tmpl");
-    $tmpl3 = fread($file, $size);
-    $tmpl .= $tmpl3;
+    $tmpl = fread($file, $size);
     fclose($file);
-    
-    $footer_tmpl = GetFooter();
-    $tmpl .= $footer_tmpl;
-
 
     if ($_GET != NULL){
       if (isset($_GET['mode']) && $_GET['mode'] == 'delete'){
@@ -163,10 +156,8 @@ $tmpl = str_replace("★レア2★", $_SESSION['card2']['rare'], $tmpl);
 $tmpl = str_replace("★コード2★", $_SESSION['card2']['barcode'], $tmpl);
 $tmpl = str_replace("★id2★", $_SESSION['card2']["card_id"], $tmpl);
 
-$tmpl = str_replace("●" , "/" , $tmpl);
-
-// 画面に出力
-echo $tmpl;
+$html = HTML($tmpl);
+echo $html;
 
 exit();
 ?>
