@@ -2,13 +2,13 @@
 
 session_start();
 
+include 'functions.php';
+
 // セッションにユーザー名が保存されているか確認
 if (!isset($_SESSION['user_name'])) {
   $_SESSION['path'] = 'view.php';
   header('Location: account.php');
 }
-
-include 'functions.php';
 
 $tmpl = "<div class='view_bg'>";
 

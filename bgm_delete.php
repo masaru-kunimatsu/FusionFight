@@ -1,7 +1,8 @@
 <?php
 
-# データベースに接続
+include 'functions.php';
 
+# データベースに接続
 try{
   $dbh = SetDBH();
   if ($dbh == null){

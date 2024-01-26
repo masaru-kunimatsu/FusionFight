@@ -1,6 +1,8 @@
 <?php
 session_start(); // セッションを開始
 
+include 'functions.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POSTリクエストがある場合
 

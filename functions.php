@@ -13,7 +13,6 @@ function GetTmpl($read){
 
 }
 
-
 function HTML($main){
 
   // head要素やheaderのテンプレート読み込み
@@ -60,5 +59,28 @@ function SetDBH(){
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   return $dbh;
+
+}
+
+function TextSecurity($before){
+
+  // テキスト入力内容を$aにコピー
+  $a = $before;
+    
+  # 文字コードをUTF-8 に統一
+  $enc = mb_detect_encoding($a);
+  $a = mb_convert_encoding($a, "UTF-8", $enc);
+    
+  # クロスサイトスクリプティング対策※文字コードを整えてから処理する必要がある
+  $a = htmlentities($a, ENT_QUOTES, "UTF-8");
+    
+  # 改行コード処理
+  $a = str_replace("\r\n", "", $a);
+  $a = str_replace("\n", "", $a);
+  $a = str_replace("\r", "", $a);
+    
+  $after = htmlspecialchars($a, ENT_QUOTES, "UTF-8");
+
+  return $after;
 
 }

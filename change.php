@@ -1,10 +1,9 @@
 
 <?php
-// セッションの開始
+
 session_start();
 
-
-
+include 'functions.php';
 
 // 入れ替え
 

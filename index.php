@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-
-
 include 'functions.php';
 
 $file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
@@ -62,29 +60,16 @@ try{
         $SQL .= " AND m_card.rare_id = {$_GET["rare"]}";
       }
       if ($_GET["text"] != "") {
-          // テキスト入力内容を$aにコピー
-          $a = $_GET["text"];
-    
-          # 文字コードをUTF-8 に統一
-          $enc = mb_detect_encoding($a);
-          $a = mb_convert_encoding($a, "UTF-8", $enc);
-    
-          # クロスサイトスクリプティング対策※文字コードを整えてから処理する必要がある
-          $a = htmlentities($a, ENT_QUOTES, "UTF-8");
-    
-          # 改行コード処理
-          $a = str_replace("\r\n", "", $a);
-          $a = str_replace("\n", "", $a);
-          $a = str_replace("\r", "", $a);
-    
-          $input["text"] = $a;
+
+        $security_text = TextSecurity($_GET["text"]);
+        $search_text = $security_text;
           
-        $SQL .= " AND  (m_name.name LIKE '%{$input["text"]}%' 
-                  OR   m_card.form LIKE '%{$input["text"]}%' 
-                  OR   m_card.skill LIKE '%{$input["text"]}%' 
-                  OR   m_type.type LIKE '%{$input["text"]}%' 
-                  OR   m_prog.prog LIKE '%{$input["text"]}%' 
-                  OR   m_rare.rare LIKE '%{$input["text"]}%')";
+        $SQL .= " AND  (m_name.name LIKE '%{$search_text}%' 
+                  OR   m_card.form LIKE '%{$search_text}%' 
+                  OR   m_card.skill LIKE '%{$search_text}%' 
+                  OR   m_type.type LIKE '%{$search_text}%' 
+                  OR   m_prog.prog LIKE '%{$search_text}%' 
+                  OR   m_rare.rare LIKE '%{$search_text}%')";
       }
 
 

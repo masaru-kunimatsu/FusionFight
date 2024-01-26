@@ -2,6 +2,8 @@
 
 session_start();
 
+include 'functions.php';
+
 $build_alert = array(
   'alert_card1' => $_SESSION['card1'],
   'alert_card2' => $_SESSION['card2'],
@@ -23,8 +25,6 @@ if ($redirect) {
   header("Location: build.php");
   exit;
 }
-
-include 'functions.php';
 
 $tmpl = GetTmpl('confirm');
     
@@ -97,23 +97,12 @@ try{
 }
 $dbh = null;
 
+// デッキ名のテキストの処理
 if (isset($_GET["deck_name"]) && $_GET["deck_name"] != "") {
-    // テキスト入力内容を$aにコピー
-    $a = $_GET["deck_name"];
+
+    $security_text = TextSecurity($_GET["deck_name"]);
+    $deck_name = $security_text;
     
-    # 文字コードをUTF-8 に統一
-    $enc = mb_detect_encoding($a);
-    $a = mb_convert_encoding($a, "UTF-8", $enc);
-    
-    # クロスサイトスクリプティング対策※文字コードを整えてから処理する必要がある
-    $a = htmlentities($a, ENT_QUOTES, "UTF-8");
-    
-    # 改行コード処理
-    $a = str_replace("\r\n", "", $a);
-    $a = str_replace("\n", "", $a);
-    $a = str_replace("\r", "", $a);
-    
-    $deck_name = htmlspecialchars($a, ENT_QUOTES, "UTF-8");
 }
 
 

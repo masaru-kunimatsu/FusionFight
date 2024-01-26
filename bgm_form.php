@@ -36,9 +36,6 @@ $html_comp = <<<_aaa_
 </div>
 _aaa_;
 
-
-if(isset($_GET['mode']) && $_GET['mode'] == "edit"){
-
 $html_edit = <<<_aaa_
 <!-- / メインナビゲーション -->
 <div class="account">
@@ -46,12 +43,12 @@ $html_edit = <<<_aaa_
     <form action="bgm_form.php" method="get" class="login-form">
       <h1 class='form_tittle' >BGM編集</h1>
       <p class="form-label">内容を編集し 保存する を押してください</p>
-      <input id="signin-id" name="text" type="text" value="{$_GET['bgm']}" size = 30>
+      <input id="signin-id" name="edit_bgm" type="text" value="★BGM★" size = 30>
       <br>
       <button name="login" type="submit" class="login_button">保存する</button>
       <input type='hidden' name='mode' value='edit_comp'>
-      <input type='hidden' name='id' value='{$_GET['id']}'>
-      <input type='hidden' name='bgm' value='{$_GET['bgm']}'>
+      <input type='hidden' name='id' value='★ID★'>
+      <input type='hidden' name='bgm' value='★BGM★'>
     </form>
   </div>
   <button class='login_button' type='submit' name='sub' onclick="history.back()">
@@ -61,8 +58,6 @@ $html_edit = <<<_aaa_
 </div>
 <!-- / メインナビゲーション -->
 _aaa_;
-
-}
 
 if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
 
@@ -77,8 +72,12 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
       # プリペアードステートメント
       $stmt = $dbh->prepare($sql);
 
+      #入力されたテキストの処理
+      $security_text = TextSecurity($_GET["text"]);
+      $bgm_text = $security_text;
+
       #bindParamによるパラメータ－と変数の紐付け
-      $stmt -> bindParam(':text',$_GET["text"]);
+      $stmt -> bindParam(':text',$bgm_text);
       $stmt -> bindParam(':user',$_SESSION['user_id']);
 
       #INSERTの実行
@@ -92,31 +91,13 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
   }
   $dbh = null;
 }elseif(isset($_GET['mode']) && $_GET['mode'] == "edit"){
-
-  $html_edit = <<<_aaa_
-  <!-- / メインナビゲーション -->
-  <div class="account">
-    <div class="account_box">
-      <form action="bgm_form.php" method="get" class="login-form">
-        <h1 class='form_tittle' >BGM編集</h1>
-        <p class="form-label">内容を編集し 保存する を押してください</p>
-        <input id="signin-id" name="edit_bgm" type="text" value="{$_GET['bgm']}" size = 30>
-        <br>
-        <button name="login" type="submit" class="login_button">保存する</button>
-        <input type='hidden' name='mode' value='edit_comp'>
-        <input type='hidden' name='id' value='{$_GET['id']}'>
-        <input type='hidden' name='bgm' value='{$_GET['bgm']}'>
-      </form>
-    </div>
-    <button class='login_button' type='submit' name='sub' onclick="history.back()">
-      <i class="fa-solid fa-reply"></i>
-      戻る
-    </button>
-  </div>
-  <!-- / メインナビゲーション -->
-  _aaa_;
+  
   $tmpl = $html_edit;
-  }elseif(isset($_GET['mode']) && $_GET['mode'] == "edit_comp"){
+  $tmpl = str_replace("★BGM★", $_GET['bgm'], $tmpl);
+  $tmpl = str_replace("★ID★", $_GET['id'], $tmpl);
+
+}elseif(isset($_GET['mode']) && $_GET['mode'] == "edit_comp"){
+
   # データベースに接続
   try{
     $dbh = SetDBH();
@@ -128,8 +109,12 @@ if (isset($_GET['mode']) && $_GET['mode'] == "comp"){
       # プリペアードステートメント
       $stmt = $dbh->prepare($sql);
 
+      #入力されたテキストの処理
+      $security_text = TextSecurity($_GET['edit_bgm']);
+      $bgm_text = $security_text;
+
       #bindParamによるパラメータ－と変数の紐付け
-      $stmt -> bindParam(':text',$_GET['edit_bgm']);
+      $stmt -> bindParam(':text',$bgm_text);
       $stmt -> bindParam(':id',$_GET['id']);
 
       #INSERTの実行

@@ -1,1 +1,2 @@
-$dbh = SetDBH();
+$security_text = TextSecurity(before);
+after = $security_text;

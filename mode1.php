@@ -3,6 +3,8 @@
 // セッションの開始
 session_start();
 
+include 'functions.php';
+
 // 削除
 $_SESSION['card1'] = array();
 // build.php にリダイレクト

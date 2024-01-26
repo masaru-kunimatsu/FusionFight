@@ -2,6 +2,7 @@
 
 session_start();
 
+include 'functions.php';
 
 if (empty($_SESSION['card1'])||empty($_SESSION['card2'])){
 

@@ -55,9 +55,13 @@ _aaa_;
 if (isset($_POST['mode']) && $_POST['mode'] == "conf"){
   if ($_POST['name'] != "" && $_POST['email'] != "" && $_POST['pass'] != ""){
     $tmpl = $html_conf;
-    $tmpl = str_replace("★ユーザー名★", $_POST['name'], $tmpl);
-    $tmpl = str_replace("★ユーザーメール★", $_POST['email'], $tmpl);
-    $tmpl = str_replace("★ユーザーパス★", $_POST['pass'], $tmpl);
+
+    $target = array("ユーザー名" => $_POST['name'], "ユーザーメール" => $_POST['email'], "ユーザーパス" => $_POST['pass']);
+    foreach($target as $k => $v){
+      $security_text = TextSecurity($v);
+      $target[$k] = $security_text;
+      $tmpl = str_replace("★".$k."★", $security_text, $tmpl);
+    }
   }else{
     $_SESSION['alert'] = true;
     header('Location: account_edit.php');
@@ -69,6 +73,7 @@ if (isset($_POST['mode']) && $_POST['mode'] == "conf"){
   if(isset($_SESSION['alert']) && $_SESSION['alert']){
     $alert = "<div class='alert'></div>";
     $tmpl = str_replace("$alert", "<div class='alert'>空白の項目があります</div>".$alert, $tmpl);
+    $_SESSION['alert'] = false;
   }
 }
 
