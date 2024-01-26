@@ -1,7 +1,7 @@
 		<!-- コンテンツ -->
 				<script>
 					$(document).ready(function(){
-						$('#★button_id★').on('click', function(e) {
+						$('#deckAddButton★card_id★').on('click', function(e) {
 							e.preventDefault();
 							updatePopupText();
 							$.ajax({
@@ -46,21 +46,21 @@
         <section id='main_sheet'>
 					<div class='sheet'>
 						<div class='leftsheet'>
-							<img src='★row['image']★' height=70%;>
+							<img src='★image★' height=70%;>
 						</div>
 						<div class='rightsheet'>
-							<div class='rightsheet_name'>★row['name']★</div>
-							<div class='rightsheet_tit'>タイプ<span class='rightsheet_form'><br>★row['form']★</span></div>
-							<div class='rightsheet_tit'>ワザ<span class='rightsheet_form'><br>★skillValue★<br></div>
+							<div class='rightsheet_name'>★name★</div>
+							<div class='rightsheet_tit'>タイプ<span class='rightsheet_form'><br>★form★</span></div>
+							<div class='rightsheet_tit'>ワザ<span class='rightsheet_form'><br>★skill★</span>★cm_img★<br></div>
 							<div class='rightuppersheet'>
-								<img src='type●★row['type']★.png' >
-								<img src='rare●★row['rare']★.png' >
-								<img src='logo●★row['prog']★.webp' >
+								<img src='type●★type★.png' >
+								<img src='rare●★rare★.png' >
+								<img src='logo●★prog★.webp' >
 							</div>
 							<div class='rightbottomsheet'>
-								<img src='★row['barcode']★'>
+								<img src='★barcode★'>
 
-								<label id='★button_id★' class="rightbottomsheet_button" for="popup">
+								<label id='deckAddButton★card_id★' class="rightbottomsheet_button" for="popup">
 									デッキに追加する <i class='fa-solid fa-forward'></i>
 								</label>
 								<input type="checkbox" id="popup">

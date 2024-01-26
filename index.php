@@ -6,7 +6,14 @@ include 'functions.php';
 $tmpl = GetTmpl('index');
 $tmpl_result = GetTmpl('result');
 
-
+# 検索窓に用いるカラムの配列
+$search_card_array = array(
+  'name_id' => 'name',
+  'type_id' => 'type',
+  'prog_id' => 'prog',
+  'rare_id' => 'rare',
+  'form'    => 'form'
+);
 
 #データベースに接続
 try{
@@ -14,6 +21,8 @@ try{
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{
+
+    #SQL文を作成
     $SQL = "SELECT * FROM m_card
     LEFT JOIN m_name on m_card.name_id = m_name.name_id
     LEFT JOIN m_type on m_card.type_id = m_type.type_id
@@ -22,41 +31,29 @@ try{
 
     if ($_GET== null){
       # 検索条件の指定がない場合は全件表示
-      # プレースホルダーの利用
       $SQL .= "ORDER BY m_card.card_id;";
       $stmt = $dbh->prepare($SQL);
       $stmtlist = $stmt;
     }else{
+      # 検索条件の指定がある場合はしぼりこみ表示
       $SQLlist = $SQL;
       $SQLlist .= " ORDER BY m_card.card_id";
-      # 検索条件の指定がある場合はしぼりこみ表示
-      # プレースホルダーの利用
       $SQL .= "WHERE 1 = 1"; // これは常に真となる条件を追加;
 
       // 条件が指定されている場合にのみ追加
-      if ($_GET["name"] != "") {
-        $SQL .= " AND m_card.name_id = {$_GET["name"]}";
+      foreach($search_card_array as $n => $v){
+        if (isset($_GET[$n]) && $_GET[$n] != "" ) {
+          $condition = " AND m_card.$n = {$_GET[$n]}";
+          $SQL .= $condition;
+        }
       }
-      if ($_GET["form"] != "") {
-        $SQL .= " AND m_card.form = '{$_GET["form"]}'";
-      }
+      $SQL = str_replace($_GET['form'], "'".$_GET['form']."'", $SQL);
       if ($_GET["climax"] == 1) {
         $SQL .= " AND m_card.climax = 1";
       }
-      if ($_GET["type"] != "") {
-        $SQL .= " AND m_card.type_id = {$_GET["type"]}";
-      }
-      if ($_GET["prog"] != "") {
-        $SQL .= " AND m_card.prog_id = {$_GET["prog"]}";
-      }
-      if ($_GET["rare"] != "") {
-        $SQL .= " AND m_card.rare_id = {$_GET["rare"]}";
-      }
       if ($_GET["text"] != "") {
-
         $security_text = TextSecurity($_GET["text"]);
         $search_text = $security_text;
-          
         $SQL .= " AND  (m_name.name LIKE '%{$search_text}%' 
                   OR   m_card.form LIKE '%{$search_text}%' 
                   OR   m_card.skill LIKE '%{$search_text}%' 
@@ -64,90 +61,68 @@ try{
                   OR   m_prog.prog LIKE '%{$search_text}%' 
                   OR   m_rare.rare LIKE '%{$search_text}%')";
       }
-
-
       // ORDER BY 句の追加
       $SQL .= " ORDER BY m_card.card_id";
       $stmt = $dbh->prepare($SQL);
       $stmtlist = $dbh->prepare($SQLlist);
     }
-
-    // 表示持つ列を代入する変数を用意
-    $contents = "";  //カード画像の表示
-    $name_list = "";
-    $names = array();
-    $form_list = "";
-    $forms = array();
-    $type_list = "";
-    $types = array();
-    $prog_list = "";
-    $progs = array();
-    $rare_list = "";
-    $rares = array();
     
-    # SQL文の実行
+    # 検索結果画面用のSQL文の実行
     if($stmt->execute()){
-
       $record_found = false;
       $card_id = "";
 
+      // カード表示画面に値を渡す
       while($row = $stmt->fetch()){
-        // デッキページにリンクする画像ボタンを作成
-        $card_id = $row['card_id'];
-        $button_id = "deckAddButton".$row['card_id'];
-
         $tmpl_each = $tmpl_result;
-        $tmpl_each = str_replace("★button_id★", $button_id, $tmpl_each);
-        $tmpl_each = str_replace("★card_id★", $card_id, $tmpl_each);
-        $tmpl_each = str_replace("★row['image']★", $row['image'], $tmpl_each);
-        $tmpl_each = str_replace("★row['name']★", $row['name'], $tmpl_each);
-        $tmpl_each = str_replace("★row['form']★", $row['form'], $tmpl_each);
-        $skillValue = $row['skill']."</span>";
-          if ($row['climax'] == 1) {
-            $skillValue .= "<img src='material/CMlogo.png'>";
-          }
-        $tmpl_each = str_replace("★skillValue★", $skillValue, $tmpl_each);
-        $tmpl_each = str_replace("★row['type']★", $row['type'], $tmpl_each);
-        $tmpl_each = str_replace("★row['rare']★", $row['rare'], $tmpl_each);
-        $tmpl_each = str_replace("★row['prog']★", $row['prog'], $tmpl_each);
-        $tmpl_each = str_replace("★row['barcode']★", $row['barcode'], $tmpl_each);
 
+        $card_column_array = array(
+          'card_id',
+          'image',
+          'barcode',
+          'name',
+          'form',
+          'skill',
+          'climax',
+          'type',
+          'rare',
+          'prog',
+        );
+        
+        foreach($card_column_array as $n){
+          $tmpl_each = str_replace("★".$n."★", $row[$n], $tmpl_each);
+        }
+        if ($row['climax'] == 1) {
+          $cm_img = "<img src='material/CMlogo.png'>";
+          $tmpl_each = str_replace("★cm_img★", $cm_img, $tmpl_each);
+        }else{
+          $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);
+        }
         $tmpl .= $tmpl_each;
-
         $record_found = true;
       }
-
+      // 該当するレコードがない場合のメッセージを表示
       if (!$record_found) {
-        // 該当するレコードがない場合のメッセージを表示
         $tmpl_none = GetTmpl('none');
         $tmpl_none = str_replace("★該当なしのテキスト★", "該当するカードが存在しません。<br>検索条件を変更してください。", $tmpl_none);
         $tmpl .= $tmpl_none;
       }
+    }
 
+    // 表示列を代入する変数を用意
+    foreach($search_card_array as $n =>$v){
+      ${$v.'_list'} = "";
+      ${$v.'s'} = array();
     }
     # リスト用SQL文の実行
     if($stmtlist->execute()){
       while($row = $stmtlist->fetch()){
-        // リスト用に重複を排除して変数に代入
-        if (!in_array($row["name_id"], $names)) {
-          $name_list .= "<option value={$row["name_id"]}>{$row["name"]}</option>";
-          $names[] = $row["name_id"]; // 配列に追加
-        }
-        if (!in_array($row["form"], $forms)) {
-          $form_list .= "<option value={$row["form"]}>{$row["form"]}</option>";
-          $forms[] = $row["form"]; // 配列に追加
-        }
-        if (!in_array($row["type"], $types)) {
-          $type_list .= "<option value={$row["type_id"]}>{$row["type"]}</option>";
-          $types[] = $row["type"]; // 配列に追加
-        }
-        if (!in_array($row["prog"], $progs)) {
-          $prog_list .= "<option value={$row["prog_id"]}>{$row["prog"]}</option>";
-          $progs[] = $row["prog"]; // 配列に追加
-        }
-        if (!in_array($row["rare"], $rares)) {
-          $rare_list .= "<option value={$row["rare_id"]}>{$row["rare"]}</option>";
-          $rares[] = $row["rare"]; // 配列に追加
+        # リストを作成
+        foreach($search_card_array as $n =>$v){
+          if (!in_array($row[$n], ${$v.'s'})){
+            ${$v.'_list'}  .= "<option value={$row[$n]}>{$row[$v]}</option>";
+            ${$v.'s'}[] = $row[$n]; // 配列に追加
+          }
         }
       }
     }
@@ -161,26 +136,28 @@ $dbh = null;
 $tmpl_close = GetTmpl('index2');
 $tmpl .= $tmpl_close;
 
-// 文字列置き換え
+// 検索後に値を保持するため、クライマックスロゴ表示のための文字列置換
 if ($_GET != null){
-  $name_list = str_replace("<option value={$_GET["name"]}>", "<option value={$_GET["name"]} selected>", $name_list);
-  $form_list = str_replace("<option value={$_GET["form"]}>", "<option value={$_GET["form"]} selected>", $form_list);
-  $type_list = str_replace("<option value={$_GET["type"]}>", "<option value={$_GET["type"]} selected>", $type_list);
-  $prog_list = str_replace("<option value={$_GET["prog"]}>", "<option value={$_GET["prog"]} selected>", $prog_list);
-  $rare_list = str_replace("<option value={$_GET["rare"]}>", "<option value={$_GET["rare"]} selected>", $rare_list);
+  foreach($search_card_array as $n =>$v){
+    $default = "<option value={$_GET[$n]}>";
+    $selected = "<option value={$_GET[$n]} selected>";
+    ${$v.'_list'} = str_replace($default, $selected, ${$v.'_list'});
+  }
+
   if ($_GET["climax"]==1){
     $tmpl = str_replace(">クライマックス技</option>", " selected>クライマックス技</option>", $tmpl);
   }
+
+  if ($_GET["text"] != ""){
+    $tmpl = str_replace('value="" placeholder', "value='{$_GET["text"]}' placeholder", $tmpl);
+  }
 }
 
-$tmpl = str_replace("★名前リスト★", $name_list, $tmpl);
-$tmpl = str_replace("★形態リスト★", $form_list, $tmpl);
-$tmpl = str_replace("★分類リスト★", $type_list, $tmpl);
-$tmpl = str_replace("★作品リスト★", $prog_list, $tmpl);
-$tmpl = str_replace("★レアリティリスト★", $rare_list, $tmpl);
+// 取得した表示列をテンプレに入れる
+foreach($search_card_array as $n =>$v){
+  $tmpl = str_replace("★".$v."★", ${$v.'_list'}, $tmpl);
+}
 
 $html = HTML($tmpl);
 echo $html;
-
 ?>
-

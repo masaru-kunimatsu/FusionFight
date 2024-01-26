@@ -5,14 +5,14 @@
 			<form action="index.php" method="get">
 				<p class = 'reset_condition'><a href="index.php"  class = 'reset_condition_link'><i class="fa-solid fa-circle-xmark"></i> 検索条件をリセット</a></p>
 				<p>キャラクター</p>
-				<select name="name">
+				<select name="name_id">
 					<option value="">選択してください</option>
-					★名前リスト★
+					★name★
 				</select>
 				<p>形態</p>
 				<select name="form">
 					<option value="">選択してください</option>
-					★形態リスト★
+					★form★
 				</select>
 				<p>技</p>
 				<select name="climax">
@@ -20,22 +20,22 @@
 					<option value="1">クライマックス技</option>
 				</select>
 				<p>分類</p>
-				<select name="type">
+				<select name="type_id">
 					<option value="">選択してください</option>
-					★分類リスト★
+					★type★
 				</select>
 				<p>作品</p>
-				<select name="prog">
+				<select name="prog_id">
 					<option value="">選択してください</option>
-					★作品リスト★
+					★prog★
 				</select>
 				<p>レアリティ</p>
-				<select name="rare">
+				<select name="rare_id">
 					<option value="">選択してください</option>
-					★レアリティリスト★
+					★rare★
 				</select>
 				<p>フリーワード検索</p>
-				<input type="text" name="text" placeholder="キーワードを入力してください" size="40">
+				<input type="text" name="text" size="40" value="" placeholder="キーワードを入力してください" >
 				<br>
 				<input type="image" src="material/card_search.png" alt="検索する" id="searchButton">
 			</form>
