@@ -1,45 +1,33 @@
-<div id="wrapper" style="display: flex; justify-content;">
-	<div>
-		<aside id="sidebar">
-			<h3 class="heading">検索条件を指定</h3>
-			<form action="index.php" method="get">
-				<p class = 'reset_condition'><a href="index.php"  class = 'reset_condition_link'><i class="fa-solid fa-circle-xmark"></i> 検索条件をリセット</a></p>
-				<p>キャラクター</p>
-				<select name="name_id">
-					<option value="">選択してください</option>
-					★name★
-				</select>
-				<p>形態</p>
-				<select name="form">
-					<option value="">選択してください</option>
-					★form★
-				</select>
-				<p>技</p>
-				<select name="climax">
-					<option value="">選択してください</option>
-					<option value="1">クライマックス技</option>
-				</select>
-				<p>分類</p>
-				<select name="type_id">
-					<option value="">選択してください</option>
-					★type★
-				</select>
-				<p>作品</p>
-				<select name="prog_id">
-					<option value="">選択してください</option>
-					★prog★
-				</select>
-				<p>レアリティ</p>
-				<select name="rare_id">
-					<option value="">選択してください</option>
-					★rare★
-				</select>
-				<p>フリーワード検索</p>
-				<input type="text" name="text" size="40" value="" placeholder="キーワードを入力してください" >
-				<br>
-				<input type="image" src="material/card_search.png" alt="検索する" id="searchButton">
-			</form>
-		</aside>
-	</div>
-	<div class = "serchresult">
+<!-- メインコンテンツ -->
+<div class = "conte">
+
+  <div class = "top_image">
+    <img src="material/top_image.png" class="top_conte">
+    <div class="text-overlay1">
+      <p>アプリ版フュージョンファイトを<br>遊びつくそう！</p>
+    </div>
+  </div>
+
+  <div class = "top_image">
+    <img src="material/top2_image.png" alt="Top Image">
+    <div class="text-overlay2">
+      <p><img src="material/icon_tri.png" class='top-icon'>画面のバーコードを読み込んで遊べる !</p>
+      <p><img src="material/icon_tri.png" class='top-icon'>UD3弾までのカードを250種類以上収録 !</p>
+      <p><img src="material/icon_tri.png" class='top-icon'>条件のしぼり込みで簡単検索 !</p>
+      <p><img src="material/icon_tri.png" class='top-icon'>お気に入りのデッキを保存しよう !</p>
+    </div>
+  </div>
+
+  <div class = "top_image3">
+    <img src="material/top3_image.png" alt="Top Image">
+    <div class="image-overlay">
+      <img src="material/icon_z_og.png" class='fortune-icon'>今日のラッキーカードはこちら<img src="material/icon_z_og.png" class='fortune-icon'>
+      <div class="image-overlay-child">
+        ★image_script★
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /メインコンテンツ -->
 

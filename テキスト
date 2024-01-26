@@ -1,1 +1,26 @@
-$tmpl = GetTmpl('file');
+<script>
+  $(document).ready(function(){
+    $('#JumpButton★card_id★').on('click', function(e) {
+      e.preventDefault();
+
+      // データ属性からfortune_card_idを取得
+      var fortuneCardId = $(this).data('fortune-card-id');
+
+      // Ajaxリクエスト
+      $.ajax({
+        type: 'POST',
+        url: 'search.php',
+        data: {fortune: fortuneCardId },
+        success: function(response) {
+          console.log('非同期通信成功:');
+          console.log(fortuneCardId);
+// 遷移させたい場合は、ここで適切な処理を追加
+          window.location.href = "search.php";
+        },
+        error: function(xhr, status, error) {
+          console.error('非同期通信エラー:', status, error);
+        }
+      });
+    });
+  });
+</script>

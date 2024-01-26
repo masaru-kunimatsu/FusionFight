@@ -39,6 +39,11 @@ body {
     margin: 0 auto; /* ページを中央に寄せる */
     color: white;
 }
+
+.add_shadow {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* 影の設定 */
+}
+
 ol, ul {
     list-style: none;
 }
@@ -64,7 +69,6 @@ table {
 .logo_image{
   flex: 3; 
 }
-
 
 .logo_image a:hover img {
     transform: scale(1.1); /* ホバー時に画像を拡大 */
@@ -121,9 +125,121 @@ table {
     margin: 0 10%;
 }
 
-
 #mainNav li:not(:last-child) {
     border-right: 1px solid #fff; /* メニュー同士の仕切り線 */
+}
+
+.nav-icon{
+  width: 15%;
+  vertical-align: middle;
+}
+
+.conte {
+  margin-bottom: -50px;
+}
+
+.top_image {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.top_image3 {
+  position: relative;
+  width: 90%;
+  top: -60px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.top_conte {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.text-overlay1 {
+  position: absolute;
+  top: 50%; /* 画像の中央にテキストを配置する例 */
+  left: 32%;
+  transform: translate(-50%, -10%);
+  color:gold;
+  text-align: center;
+  font-size: xx-large; /* テキストの大きさをxx-largeに設定 */
+  font-weight: bold; /* テキストの太さをboldに設定 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
+  background: rgba(255, 255, 255, 0.64); /* 文字に半透明の背景を追加 */
+  padding: 10px; /* 必要に応じて余白を追加 */
+}
+
+.text-overlay2 {
+  position: absolute;
+  top: 55%; /* 画像の中央にテキストを配置する例 */
+  left: 45%;
+  transform: translate(0%, -10%);
+  color:white;
+  font-size: x-large; /* テキストの大きさをx-largeに設定 */
+  font-weight: bold; /* テキストの太さをboldに設定 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
+  background: rgba(0, 0, 0, 0.571); /* 文字に半透明の背景を追加 */
+  padding: 10px; /* 必要に応じて余白を追加 */
+}
+
+.top-icon {
+  width: 7%;
+  vertical-align: middle;
+  margin: 4px 5px 4px 0px;
+}
+
+.image-overlay {
+  position: absolute;
+  color:rgba(0, 13, 255, 0.777);
+  font-size: x-large; /* テキストの大きさをx-largeに設定 */
+  font-weight: bold; /* テキストの太さをboldに設定 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.449); /* 文字の輪郭を追加 */
+  padding: 10px; /* 必要に応じて余白を追加 */
+  width: 50%;
+  height: 85%;
+  top: 10%;
+  left: 48%;
+  background: rgba(250, 250, 250, 0.896);
+  overflow: auto;
+}
+
+.image-overlay-child {
+  display: flex;
+  flex-wrap: wrap; /* 折り返しを有効にする */
+  justify-content: space-around; 
+  align-items: center; /* 垂直方向にセンタリング */
+}
+
+.image-overlay-child .image-overlay-form {
+  width: calc(33.333% - 20px); /* 画像の横幅に合わせて調整し、間隔も考慮 */
+  box-sizing: border-box; /* 要素のボーダーボックスが width に含まれるように */
+  padding: 10px; /* 画像の間隔を調整 */
+  text-align: center; /* 中央揃え */
+  margin-bottom: 20px; /* 下のマージンを追加 */
+}
+
+.image-overlay-child .image-overlay-form img {
+  width: 100%; /* 画像を親要素に合わせて表示 */
+  height: auto; /* アスペクト比を維持するために高さを自動調整 */
+  transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* 影の設定 */
+}
+
+.image-overlay-child .image-overlay-form img:hover {
+  transform: scale(1.1); /* ホバー時に画像を拡大 */
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.7); /* ホバー時の影の設定 */
+}
+
+
+.fortune-icon {
+  width: 10%;
+  vertical-align: middle;
+  margin: 4px 6px;
 }
 
 #footer {

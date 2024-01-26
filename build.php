@@ -78,7 +78,7 @@ if ($_GET != NULL) {
 
   if (isset($_SESSION['card1']) && !empty($_SESSION['card1'])) {
     $contents1 .= "<div class='decksheet'>";
-    $contents1 .= "<div class='deckleftsheet'><img src='{$_SESSION["card1"]["image"]}'></div>";
+    $contents1 .= "<div class='deckleftsheet'><img src='{$_SESSION["card1"]["image"]}'  class ='add_shadow' ></div>";
     $contents1 .= "<div class='deckrightsheet'>";
     $contents1 .= "<div class='deckrightsheet_name'>{$_SESSION["card1"]["name"]}</div>";
     $contents1 .= "<div class='deckrightsheet_tit'>タイプ</div>";
@@ -89,19 +89,19 @@ if ($_GET != NULL) {
     $contents1 .= "</div>";
     $contents1 .= "<div class='deckrightsheet_bottom'>";
     $contents1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png'>";
-    $contents1 .= "<img src='{$_SESSION["card1"]["barcode"]}'>";
+    $contents1 .= "<img src='{$_SESSION["card1"]["barcode"]}' class = 'add_shadow' >";
     $contents1 .= "</div></div></div>";
   }else{
     $contents1 .= "<div class='decksheet_none'>";
     $contents1 .= "<div class='decksheet_none_text'>カードを登録しよう！";
-    $contents1 .= "<form action='index.php' method='get'>";
+    $contents1 .= "<form action='search.php' method='get'>";
     $contents1 .= "<button type='submit' class='decknone_button'><i class='fa-solid fa-angles-left'></i> カードを選択する</button>";
     $contents1 .= "</form></div></div>";
   }
 
   if (isset($_SESSION['card2']) && !empty($_SESSION['card2'])) {
     $contents2 .= "<div class='decksheet'>";
-    $contents2 .= "<div class='deckleftsheet'><img src='{$_SESSION["card2"]["image"]}'></div>";
+    $contents2 .= "<div class='deckleftsheet'><img src='{$_SESSION["card2"]["image"]}' class = 'add_shadow' ></div>";
     $contents2 .= "<div class='deckrightsheet'>";
     $contents2 .= "<div class='deckrightsheet_name'>{$_SESSION["card2"]["name"]}</div>";
     $contents2 .= "<div class='deckrightsheet_tit'>タイプ</div>";
@@ -112,12 +112,12 @@ if ($_GET != NULL) {
     $contents2 .= "</div>";
     $contents2 .= "<div class='deckrightsheet_bottom'>";
     $contents2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png'>";
-    $contents2 .= "<img src='{$_SESSION["card2"]["barcode"]}'>";
+    $contents2 .= "<img src='{$_SESSION["card2"]["barcode"]}' class = 'add_shadow' >";
     $contents2 .= "</div></div></div>";
   }else{
     $contents2 .= "<div class='decksheet_none'>";
     $contents2 .= "<div class='decksheet_none_text'>カードを登録しよう！";
-    $contents2 .= "<form action='index.php' method='get'>";
+    $contents2 .= "<form action='search.php' method='get'>";
     $contents2 .= "<button type='submit' class='decknone_button'><i class='fa-solid fa-angles-left'></i> カードを選択する</button>";
     $contents2 .= "</form></div></div>";
   }
