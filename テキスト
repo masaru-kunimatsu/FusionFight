@@ -1,2 +1,1 @@
-$security_text = TextSecurity(before);
-after = $security_text;
+$tmpl = GetTmpl('file');

@@ -3,15 +3,8 @@ session_start();
 
 include 'functions.php';
 
-$file = fopen("tmpl/index.tmpl", "r") or die("tmpl/index.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/index.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
-
-$file = fopen("tmpl/result.tmpl", "r") or die("tmpl/result.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/result.tmpl");
-$tmpl_result = fread($file, $size);
-fclose($file);
+$tmpl = GetTmpl('index');
+$tmpl_result = GetTmpl('result');
 
 
 
@@ -126,12 +119,9 @@ try{
 
       if (!$record_found) {
         // 該当するレコードがない場合のメッセージを表示
-        $file = fopen("tmpl/none.tmpl", "r") or die("tmpl/none.tmpl ファイルを開けませんでした。");
-        $size = filesize("tmpl/none.tmpl");
-        $tmpl_none = fread($file, $size);
-        $tmpl = str_replace("★検索結果★", $tmpl_none, $tmpl);
-        $tmpl = str_replace("★該当なしのテキスト★", "該当するカードが存在しません。<br>検索条件を変更してください。", $tmpl);
-        fclose($file);
+        $tmpl_none = GetTmpl('none');
+        $tmpl_none = str_replace("★該当なしのテキスト★", "該当するカードが存在しません。<br>検索条件を変更してください。", $tmpl_none);
+        $tmpl .= $tmpl_none;
       }
 
     }
@@ -168,12 +158,8 @@ try{
 }
 $dbh = null;
 
-
-$file = fopen("tmpl/index2.tmpl", "r") or die("tmpl/index2.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/index2.tmpl");
-$tmpl5 = fread($file, $size);
-$tmpl .= $tmpl5;
-fclose($file);
+$tmpl_close = GetTmpl('index2');
+$tmpl .= $tmpl_close;
 
 // 文字列置き換え
 if ($_GET != null){

@@ -12,10 +12,7 @@ if (!isset($_SESSION['user_name'])) {
 
 $tmpl = "<div class='view_bg'>";
 
-$file = fopen("tmpl/view.tmpl", "r") or die("tmpl/view.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/view.tmpl");
-$tmpl_view = fread($file, $size);
-fclose($file);
+$tmpl_view = GetTmpl('view');
 
 #データベースに接続
 try{
@@ -122,12 +119,9 @@ try{
 
       if (!$record_found) {
         // 該当するレコードがない場合のメッセージを表示
-        $file = fopen("tmpl/none.tmpl", "r") or die("tmpl/none.tmpl ファイルを開けませんでした。");
-        $size = filesize("tmpl/none.tmpl");
-        $tmpl_none = fread($file, $size);
+        $tmpl_none = GetTmpl('none');
+        $tmpl_none = str_replace("★該当なしのテキスト★", "デッキが登録されていません<p class = 'white_text'><i class='fa-solid fa-angles-left'></i><a href='build.php'  class = 'none_link'> デッキの作成はこちらから</a></p>", $tmpl_none);
         $tmpl .= $tmpl_none;
-        $tmpl = str_replace("★該当なしのテキスト★", "デッキが登録されていません<p class = 'white_text'><i class='fa-solid fa-angles-left'></i><a href='build.php'  class = 'none_link'> デッキの作成はこちらから</a></p>", $tmpl);
-        fclose($file);
       }
     }
 }catch (PDOException $e){
