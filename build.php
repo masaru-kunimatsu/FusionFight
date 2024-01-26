@@ -10,20 +10,12 @@ if (!isset($_SESSION['user_name'])) {
 
 include 'functions.php';
 
-$file = fopen("tmpl/build.tmpl", "r") or die("tmpl/build.tmpl ファイルを開けませんでした。");
-$size = filesize("tmpl/build.tmpl");
-$tmpl = fread($file, $size);
-fclose($file);
+$tmpl = GetTmpl('build');
 
 
 # データベースに接続
-$dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
-$user = 'testuser';
-$pass = 'testpass';
-
 try{
-  $dbh = new PDO($dsn, $user, $pass);
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $dbh = SetDBH();
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{

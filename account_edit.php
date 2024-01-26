@@ -6,6 +6,7 @@ include 'functions.php';
 $html_form = <<< _aaa_
 <!-- メインコンテンツ -->
 <div class="account">
+  <div class='alert'></div>
   <div class="account_box">
     <form action="account_edit.php" method="POST" class="login-form">
       <h1 class='form_tittle' >ユーザー編集</h1>
@@ -52,14 +53,23 @@ $html_conf = <<< _aaa_
 _aaa_;
 
 if (isset($_POST['mode']) && $_POST['mode'] == "conf"){
-  $tmpl = $html_conf;
-  $tmpl = str_replace("★ユーザー名★", $_POST['name'], $tmpl);
-  $tmpl = str_replace("★ユーザーメール★", $_POST['email'], $tmpl);
-  $tmpl = str_replace("★ユーザーパス★", $_POST['pass'], $tmpl);
+  if ($_POST['name'] != "" && $_POST['email'] != "" && $_POST['pass'] != ""){
+    $tmpl = $html_conf;
+    $tmpl = str_replace("★ユーザー名★", $_POST['name'], $tmpl);
+    $tmpl = str_replace("★ユーザーメール★", $_POST['email'], $tmpl);
+    $tmpl = str_replace("★ユーザーパス★", $_POST['pass'], $tmpl);
+  }else{
+    $_SESSION['alert'] = true;
+    header('Location: account_edit.php');
+  }
 }else{
   $tmpl = $html_form;
   $tmpl = str_replace("★ユーザー名★", $_SESSION['user_name'], $tmpl);
   $tmpl = str_replace("★ユーザーメール★", $_SESSION['user_mail'], $tmpl);
+  if(isset($_SESSION['alert']) && $_SESSION['alert']){
+    $alert = "<div class='alert'></div>";
+    $tmpl = str_replace("$alert", "<div class='alert'>空白の項目があります</div>".$alert, $tmpl);
+  }
 }
 
 $html = HTML($tmpl);

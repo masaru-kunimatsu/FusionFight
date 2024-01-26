@@ -50,17 +50,11 @@ $html_list_none = <<<_aaa_
 <!-- / メインナビゲーション -->
 _aaa_;
 
-
-# データベースに接続
-$dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
-$user = 'testuser';
-$pass = 'testpass';
-
 $tmpl = $html_list_head;
 
+# データベースに接続
   try{
-    $dbh = new PDO($dsn, $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = SetDBH();
     if ($dbh == null){
       echo "接続に失敗しました。";
     }else{

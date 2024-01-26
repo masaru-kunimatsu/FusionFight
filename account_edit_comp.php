@@ -5,7 +5,7 @@ session_start();
 include 'functions.php';
 
 // HTMLの土台を用意
-$html = <<<_aaa_
+$tmpl = <<<_aaa_
 <div class="white_bg">
   <div class="white_bg_box">
     <h1 class='white_tittle' >登録が完了しました</h1>
@@ -14,16 +14,10 @@ $html = <<<_aaa_
 </div>
 _aaa_;
 
-$tmpl = $html;
-
 #データベースに接続
-$dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
-$user = 'testuser';
-$pass = 'testpass';
 
 try{
-  $dbh = new PDO($dsn, $user, $pass);
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $dbh = SetDBH();
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{

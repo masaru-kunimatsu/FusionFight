@@ -25,60 +25,53 @@ if ($redirect) {
 }
 
 include 'functions.php';
-    
-    $file = fopen("tmpl/confirm.tmpl", "r") or die("tmpl/confirm.tmpl ファイルを開けませんでした。");
-    $size = filesize("tmpl/confirm.tmpl");
-    $tmpl = fread($file, $size);
-    fclose($file);
 
-    if ($_GET != NULL){
-      if (isset($_GET['mode']) && $_GET['mode'] == 'delete'){
-        $_SESSION['card1'] = array(
-          'image' => $_GET["van_image"],
-          'barcode' => $_GET["van_barcode"],
-          'card_id' => $_GET["van_card_id"],
-          'name' => $_GET["van_name"],
-          'form' => $_GET["van_form"],
-          'skill' => $_GET["van_skill"],
-          'climax' => $_GET["van_climax"],
-          'rare' => $_GET["van_rare"]);
-        $_SESSION['card2'] = array(
-          'image' => $_GET["rear_image"],
-          'barcode' => $_GET["rear_barcode"],
-          'card_id' => $_GET["rear_card_id"],
-          'name' => $_GET["rear_name"],
-          'form' => $_GET["rear_form"],
-          'skill' => $_GET["rear_skill"],
-          'climax' => $_GET["rear_climax"],
-          'rare' => $_GET["rear_rare"]);
-        $_SESSION['deck_id'] = $_GET['deck_id'];
-        $tmpl = str_replace("★アクション★", "deck_delete.php", $tmpl);
-        $tmpl = str_replace("★クラス★", "conf_delete_button", $tmpl);
-        $tmpl = str_replace("★テキスト★", "デッキを削除する<i class='fa-solid fa-trash-can'></i>", $tmpl);
-        $tmpl = str_replace("★デッキid★", $_GET['deck_id'], $tmpl);
-        $tmpl = str_replace("★モード★", "", $tmpl);
-      }else{
-        $tmpl = str_replace("★アクション★", "comp.php", $tmpl);
-        $tmpl = str_replace("★クラス★", "conf_save_button", $tmpl);
-        $tmpl = str_replace("★テキスト★", "デッキを保存する<i class='fa-solid fa-database'></i>", $tmpl);
-        if (isset ($_SESSION['deck_id']) && $_SESSION['deck_id'] != null){
-          $tmpl = str_replace("★モード★", "edit", $tmpl);
-          $tmpl = str_replace("★デッキid★", $_SESSION['deck_id'], $tmpl);
-        }else{
-          $tmpl = str_replace("★モード★", "", $tmpl);
-          $tmpl = str_replace("★デッキid★", "", $tmpl);
-        }
-      }
+$tmpl = GetTmpl('confirm');
+    
+if ($_GET != NULL){
+  if (isset($_GET['mode']) && $_GET['mode'] == 'delete'){
+    $_SESSION['card1'] = array(
+      'image' => $_GET["van_image"],
+      'barcode' => $_GET["van_barcode"],
+      'card_id' => $_GET["van_card_id"],
+      'name' => $_GET["van_name"],
+      'form' => $_GET["van_form"],
+      'skill' => $_GET["van_skill"],
+      'climax' => $_GET["van_climax"],
+      'rare' => $_GET["van_rare"]);
+    $_SESSION['card2'] = array(
+      'image' => $_GET["rear_image"],
+      'barcode' => $_GET["rear_barcode"],
+      'card_id' => $_GET["rear_card_id"],
+      'name' => $_GET["rear_name"],
+      'form' => $_GET["rear_form"],
+      'skill' => $_GET["rear_skill"],
+      'climax' => $_GET["rear_climax"],
+      'rare' => $_GET["rear_rare"]);
+    $_SESSION['deck_id'] = $_GET['deck_id'];
+    $tmpl = str_replace("★アクション★", "deck_delete.php", $tmpl);
+    $tmpl = str_replace("★クラス★", "conf_delete_button", $tmpl);
+    $tmpl = str_replace("★テキスト★", "デッキを削除する<i class='fa-solid fa-trash-can'></i>", $tmpl);
+    $tmpl = str_replace("★デッキid★", $_GET['deck_id'], $tmpl);
+    $tmpl = str_replace("★モード★", "", $tmpl);
+  }else{
+    $tmpl = str_replace("★アクション★", "comp.php", $tmpl);
+    $tmpl = str_replace("★クラス★", "conf_save_button", $tmpl);
+    $tmpl = str_replace("★テキスト★", "デッキを保存する<i class='fa-solid fa-database'></i>", $tmpl);
+    if (isset ($_SESSION['deck_id']) && $_SESSION['deck_id'] != null){
+      $tmpl = str_replace("★モード★", "edit", $tmpl);
+      $tmpl = str_replace("★デッキid★", $_SESSION['deck_id'], $tmpl);
+    }else{
+      $tmpl = str_replace("★モード★", "", $tmpl);
+      $tmpl = str_replace("★デッキid★", "", $tmpl);
     }
+  }
+}
 
 # データベースに接続
-$dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
-$user = 'testuser';
-$pass = 'testpass';
 
 try{
-  $dbh = new PDO($dsn, $user, $pass);
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $dbh = SetDBH();
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{

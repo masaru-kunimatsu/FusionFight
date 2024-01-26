@@ -35,13 +35,8 @@ _aaa_;
 if (isset($_POST['email']) && isset($_POST['pass'])){
 
   #データベースに接続
-  $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
-  $user = 'testuser';
-  $pass = 'testpass';
-
   try{
-    $dbh = new PDO($dsn, $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = SetDBH();
     if ($dbh == null){
       echo "接続に失敗しました。";
     }else{

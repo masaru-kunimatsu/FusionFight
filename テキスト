@@ -1,2 +1,1 @@
-$html = HTML($tmpl);
-echo $html;
+$dbh = SetDBH();

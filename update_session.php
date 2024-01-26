@@ -5,16 +5,11 @@ session_start();
 
 if (empty($_SESSION['card1'])||empty($_SESSION['card2'])){
 
-  # データベースに接続
-  $dsn = 'mysql:host=localhost; dbname=fusionfight; charset=utf8';
-  $user = 'testuser';
-  $pass = 'testpass';
-
   $post_card_id = isset($_POST['post_card_id']) ? $_POST['post_card_id'] : null;
 
+  # データベースに接続
   try{
-    $dbh = new PDO($dsn, $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = SetDBH();
     if ($dbh == null){
       echo "接続に失敗しました。";
     }else{
