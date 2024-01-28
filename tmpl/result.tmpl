@@ -1,44 +1,41 @@
 		<!-- コンテンツ -->
-				<script>
-					$(document).ready(function(){
-						$('#deckAddButton★card_id★').on('click', function(e) {
-							e.preventDefault();
-							updatePopupText();
-							$.ajax({
-								type: 'POST',
-								url: 'update_session.php',
-								data: { post_card_id: ★card_id★ },
-								success: function(response) {
-									console.log('非同期通信成功:', response);
-									document.getElementById('popup').checked = true; // チェックボックスをチェック
-								},
-								error: function(xhr, status, error) {
-									console.error('非同期通信エラー:', status, error);
-								}
-							});
-						});
-						function updatePopupText() {
-							$.ajax({
-								url: 'update_popup_text.php',
-									
-								success: function (response) {
-									$('#state_popup').html(response);
-								}
-							});
-						}
-					});
-					document.addEventListener('DOMContentLoaded', function () {
-						// ポップアップを閉じる関数
-						function closePopup() {
-							document.getElementById('popup').checked = false;
-						}
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
 
-						// テキストにイベントリスナーを追加
-						document.getElementById('close_popup').addEventListener('click', function () {
-							closePopup(); // ポップアップを閉じる
-						});
+					setTimeout(function() {
+							// 1秒後に要素を表示する処理
+							$('#deckAddButton★card_id★').show();
+					}, 1000);
+
+					$(document).on('click', '#deckAddButton★card_id★', function(e) {
+							e.preventDefault();
+							$.ajax({
+									type: 'POST',
+									url: 'update_session.php',
+									data: { post_card_id: ★card_id★ },
+									success: function(response) {
+											console.log('非同期通信成功:', response);
+											$('#state_popup').html(response)
+											document.getElementById('popup').checked = true; // チェックボックスをチェック;
+									},
+									error: function(xhr, status, error) {
+											console.error('非同期通信エラー:', status, error);
+									}
+							});
 					});
-				</script>
+
+
+					// ポップアップを閉じる関数
+					function closePopup() {
+							document.getElementById('popup').checked = false;
+					}
+
+					// テキストにイベントリスナーを追加
+					document.getElementById('close_popup').addEventListener('click', function () {
+							closePopup(); // ポップアップを閉じる
+					});
+			});
+		</script>
 
 
 

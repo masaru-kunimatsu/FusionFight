@@ -1,26 +1,95 @@
-<script>
-  $(document).ready(function(){
-    $('#JumpButton★card_id★').on('click', function(e) {
-      e.preventDefault();
+		<!-- コンテンツ -->
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
 
-      // データ属性からfortune_card_idを取得
-      var fortuneCardId = $(this).data('fortune-card-id');
+					setTimeout(function() {
+							// 1秒後に要素を表示する処理
+							$('#deckAddButton★card_id★').show();
+					}, 1000);
 
-      // Ajaxリクエスト
-      $.ajax({
-        type: 'POST',
-        url: 'search.php',
-        data: {fortune: fortuneCardId },
-        success: function(response) {
-          console.log('非同期通信成功:');
-          console.log(fortuneCardId);
-// 遷移させたい場合は、ここで適切な処理を追加
-          window.location.href = "search.php";
-        },
-        error: function(xhr, status, error) {
-          console.error('非同期通信エラー:', status, error);
-        }
-      });
-    });
-  });
-</script>
+					$(document).on('click', '#deckAddButton★card_id★', function(e) {
+							e.preventDefault();
+							updatePopupText();
+							$.ajax({
+									type: 'POST',
+									url: 'update_session.php',
+									data: { post_card_id: ★card_id★ },
+									success: function(response) {
+											console.log('非同期通信成功:', response);
+											document.getElementById('popup').checked = true; // チェックボックスをチェック
+									},
+									error: function(xhr, status, error) {
+											console.error('非同期通信エラー:', status, error);
+									}
+							});
+					});
+
+					function updatePopupTextWithDelay() {
+							setTimeout(function() {
+									updatePopupText();
+							}, 500); // ミリ秒単位で遅延時間を設定
+					}
+
+					function updatePopupText() {
+							$.ajax({
+									url: 'update_popup_text.php',
+									success: function (response) {
+											$('#state_popup').html(response);
+									}
+							});
+					}
+
+					// ポップアップを閉じる関数
+					function closePopup() {
+							document.getElementById('popup').checked = false;
+					}
+
+					// テキストにイベントリスナーを追加
+					document.getElementById('close_popup').addEventListener('click', function () {
+							closePopup(); // ポップアップを閉じる
+					});
+			});
+		</script>
+
+
+
+
+        <section id='main_sheet'>
+					<div class='sheet'>
+						<div class='leftsheet'>
+							<img src='★image★' class = 'add_shadow' height=70%;>
+						</div>
+						<div class='rightsheet'>
+							<div class='rightsheet_name'>★name★</div>
+							<div class='rightsheet_tit'>タイプ<span class='rightsheet_form'><br>★form★</span></div>
+							<div class='rightsheet_tit'>ワザ<span class='rightsheet_form'><br>★skill★</span>★cm_img★<br></div>
+							<div class='rightuppersheet'>
+								<img src='type●★type★.png' >
+								<img src='rare●★rare★.png' >
+								<img src='logo●★prog★.webp' >
+							</div>
+							<div class='rightbottomsheet'>
+								<img src='★barcode★' class = 'add_shadow'>
+
+								<label id='deckAddButton★card_id★' class="rightbottomsheet_button" for="popup">
+									デッキに追加する <i class='fa-solid fa-forward'></i>
+								</label>
+								<input type="checkbox" id="popup">
+								<div class="popup-overlay">
+									<div class="popup-window">
+										<p class="popup-tittle" id ="state_popup">作成中のデッキにカードを保存しました</p>
+										<p><a class="popup-text" href="build.php" >デッキ作成画面に進む <i class="fa-solid fa-forward"></i></a></p>
+										<p class="popup-text" id="close_popup"><i class="fa-solid fa-xmark"></i> 閉じる</p>
+										<label class="popup-close" for="popup">
+											<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+												<line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+												<line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+											</svg>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+		<!-- / コンテンツ -->
