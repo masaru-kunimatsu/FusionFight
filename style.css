@@ -444,6 +444,31 @@ table {
     width: 100%;
   }
 
+  .view_change_area{
+    padding: 15px 0px;
+    display: flex;
+    justify-content: center; /* 横方向（メイン軸）を中央に寄せる */
+    align-items: center; /* 縦方向（クロス軸）を中央に寄せる */
+  }
+
+
+  .view_change_button {
+    background: linear-gradient(to bottom, #87CEEB, #00BFFF); /* 水色のグラデーション */
+    color: white; /* 文字色を白に設定 */
+    font-weight: bold;
+    border: none; /* ボーダーをなしに設定 */
+    padding:5px 10px;
+    margin: 0px 100px;
+    font-size: large; /* フォントサイズを大きく設定 */
+    cursor: pointer; /* カーソルをポインターに設定 */
+    border-radius: 5px; /* 角丸を設定 */
+    transition: background 0.3s ease; /* 背景色の変化にアニメーションを追加 */
+}
+
+.view_change_button:hover {
+    background: linear-gradient(to bottom, #00BFFF, #87CEEB); /* ホバー時のグラデーション */
+}
+
   #main_sheet {
     opacity: 0;
     animation: late-open 0s ease-in 1.5s forwards;
@@ -548,20 +573,50 @@ table {
 
   
   .rightbottomsheet_button {
-    background: linear-gradient(to right, #FFD700, #FFA500); /* 黄色のグラデーション */
-    color: white; /* 文字色を白に設定 */
+    background: linear-gradient(to right, #FFD700, #FFA500);
+    color: white;
     font-weight: bold;
     border-color: #FFA500;
-    padding: 5px 5px; /* 適切なパディングを設定 */
+    padding: 5px 5px;
     margin-right: 20px;
-    font-size: large; /* フォントサイズを大きく設定 */
-    cursor: pointer; /* カーソルをポインターに設定 */
-    border-radius: 5px; /* 角丸を設定 */
-    transition: transform 0.3s ease; /* transformのアニメーションを追加 */
+    font-size: large;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* box-shadowのアニメーションを追加 */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* 影の設定 */
   }
 
   .rightbottomsheet_button:hover {
-    transform: scale(1.1); /* カーソルが合ったときに1.1倍に拡大 */
+      transform: scale(1.1);
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.602); /* 影の設定 */
+  }
+
+.serchresult_image {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.image-result-form{
+  width: calc(33.3333% - 20px); /* 画像の横幅に合わせて調整し、間隔も考慮 */
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-result-form img {
+  width: 100%;
+  height: auto;
+  transition: all 0.2s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.image-result-form img:hover {
+  transform: scale(1.1);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.7);
 }
 
 .account {

@@ -4,13 +4,42 @@ session_start();
 include 'functions.php';
 
 $tmpl = GetTmpl('search');
-$tmpl_result = GetTmpl('result');
+
+
+
+if(isset($_POST['mode']) && $_POST['mode'] == 'image'){
+  $tmpl_open = GetTmpl('result_open_image');
+  $tmpl .= $tmpl_open;
+  $tmpl_result = GetTmpl('result_image');
+  $_SESSION['image_view'] = 'image';
+}elseif(isset($_POST['mode']) && $_POST['mode'] == 'detail'){
+  $tmpl_open = GetTmpl('result_open');
+  $tmpl .= $tmpl_open;
+  $tmpl_result = GetTmpl('result');
+  $_SESSION['image_view'] = 'detail';
+}elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'image'){
+  $tmpl_open = GetTmpl('result_open_image');
+  $tmpl .= $tmpl_open;
+  $tmpl_result = GetTmpl('result_image');
+}elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'detail'){
+  $tmpl_open = GetTmpl('result_open');
+  $tmpl .= $tmpl_open;
+  $tmpl_result = GetTmpl('result');
+}else{
+  $tmpl_open = GetTmpl('result_open');
+  $tmpl .= $tmpl_open;
+  $tmpl_result = GetTmpl('result');
+  $_SESSION['image_view'] = 'detail';
+}
 
 if (!isset($_SESSION['card1'])){
   $_SESSION['card1'] = array();
 }
 if (!isset($_SESSION['card2'])){
   $_SESSION['card2'] = array();
+}
+if (!isset($_SESSION['condition'])){
+  $_SESSION['condition'] = array();
 }
 # 検索窓に用いるカラムの配列
 $search_card_array = array(
@@ -35,35 +64,57 @@ try{
     LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
     LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id ";
 
-    if(isset($_POST['fortune']) && $_POST['fortune'] != null){ 
+    if(isset($_GET)){ 
+      foreach($search_card_array as $n => $v){
+        if (isset($_GET[$n]) && $_GET[$n] != "" ) {
+          $_SESSION['condition'][$n] = $_GET[$n];
+        }
+      }
+      if (isset($_GET['climax']) && $_GET['climax'] != "" ) {
+        $_SESSION['condition']['climax'] = $_GET['climax'];
+      }
+      if (isset($_GET['text']) && $_GET['text'] != "" ) {
+        $_SESSION['condition']['text'] = $_GET['text'];
+      }
+    }
+
+    if(isset($_GET['fortune']) && $_GET['fortune'] != null){ 
       # fortuneカードがある場合
       $SQLlist = $SQL;
       $SQLlist .= " ORDER BY m_card.card_id";
       $SQLfor = $SQL;
-      $SQLfor .= " WHERE m_card.card_id = {$_POST['fortune']}"; 
+      $SQLfor .= " WHERE m_card.card_id = {$_GET['fortune']}"; 
       $SQLfor .= " ORDER BY m_card.card_id";
       $stmt = $dbh->prepare($SQLfor);
       $stmtfor = $stmt;
       $stmtlist = $dbh->prepare($SQLlist);
+      $search_flag = false;
+      $_SESSION['condition'] = array();
+
     }elseif($_GET== null){
       # 検索条件の指定がない場合は全件表示
       $SQL .= "ORDER BY m_card.card_id;";
       $stmt = $dbh->prepare($SQL);
       $stmtlist = $stmt;
+      $search_flag = false;
+      $_SESSION['condition'] = array();
     }else{
       # 検索条件の指定がある場合はしぼりこみ表示
+      $search_flag = true;
       $SQLlist = $SQL;
       $SQLlist .= " ORDER BY m_card.card_id";
       $SQL .= "WHERE 1 = 1"; // これは常に真となる条件を追加;
 
       // 条件が指定されている場合にのみ追加
       foreach($search_card_array as $n => $v){
-        if (isset($_GET[$n]) && $_GET[$n] != "" ) {
-          $condition = " AND m_card.$n = {$_GET[$n]}";
+        if (isset($_SESSION['condition'][$n]) && $_SESSION['condition'][$n] != "" ) {
+          $condition = " AND m_card.$n = {$_SESSION['condition'][$n]}";
           $SQL .= $condition;
         }
       }
-      $SQL = str_replace($_GET['form'], "'".$_GET['form']."'", $SQL);
+      if ($_GET["form"] != ""){
+        $SQL = str_replace($_SESSION['condition']['form'], "'".$_SESSION['condition']['form']."'", $SQL);
+      }
       if ($_GET["climax"] == 1) {
         $SQL .= " AND m_card.climax = 1";
       }
@@ -79,7 +130,6 @@ try{
       }
       if (isset($_GET['fortune_card_id'])) {
         $SQL .= " AND m_card.card_id = {$_GET['fortune_card_id']}";
-        echo $SQL;
       }
 
       // ORDER BY 句の追加
@@ -89,7 +139,7 @@ try{
     }
     
     # 検索結果画面用のSQL文の実行
-    if(isset($_POST['fortune']) && $_POST['fortune'] != null){ 
+    if(isset($_GET['fortune']) && $_GET['fortune'] != null){ 
       $stmtfor->execute();
 
       // カード表示画面に値を渡す
@@ -187,23 +237,25 @@ try{
 }
 $dbh = null;
 
-$tmpl_close = GetTmpl('search2');
+$tmpl_close = GetTmpl('result_close');
 $tmpl .= $tmpl_close;
 
 // 検索後に値を保持するため、クライマックスロゴ表示のための文字列置換
-if ($_GET != null){
+if ($search_flag){
   foreach($search_card_array as $n =>$v){
-    $default = "<option value={$_GET[$n]}>";
-    $selected = "<option value={$_GET[$n]} selected>";
-    ${$v.'_list'} = str_replace($default, $selected, ${$v.'_list'});
+    if (isset($_SESSION['condition'][$n]) && $_SESSION['condition'][$n] != "" ){
+      $default = "<option value={$_SESSION['condition'][$n]}>";
+      $selected = "<option value={$_SESSION['condition'][$n]} selected>";
+      ${$v.'_list'} = str_replace($default, $selected, ${$v.'_list'});
+    }
   }
 
-  if ($_GET["climax"]==1){
+  if (isset($_SESSION['condition']["climax"]) && $_SESSION['condition']["climax"]==1){
     $tmpl = str_replace(">クライマックス技</option>", " selected>クライマックス技</option>", $tmpl);
   }
 
-  if ($_GET["text"] != ""){
-    $tmpl = str_replace('value="" placeholder', "value='{$_GET["text"]}' placeholder", $tmpl);
+  if (isset($_SESSION['condition']["text"]) && $_SESSION['condition']["text"] != ""){
+    $tmpl = str_replace('value="" placeholder', "value='{$_SESSION['condition']["text"]}' placeholder", $tmpl);
   }
 }
 

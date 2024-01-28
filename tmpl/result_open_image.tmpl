@@ -1,0 +1,21 @@
+<div class = "serchresult" >
+	<div class="view_change_area">
+		<form action="search.php" method="POST">
+			<div >
+				<button type="submit" class="view_change_button">
+					<i class="fa-solid fa-list-ul"></i> 詳細リスト
+				</button>
+			</div>
+		<input type='hidden' name='mode' value='detail'>
+		</form>
+		<form action="search.php" method="POST">
+			<div>
+				<button type="submit" class="view_change_button">
+					<i class="fa-regular fa-image"></i> 画像リスト
+				</button>
+			</div>
+			<input type='hidden' name='mode' value='image'>
+		</form>
+	</div>
+
+	<div class = "serchresult_image" >
