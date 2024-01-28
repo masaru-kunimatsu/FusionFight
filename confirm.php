@@ -4,28 +4,6 @@ session_start();
 
 include 'functions.php';
 
-$build_alert = array(
-  'alert_card1' => $_SESSION['card1'],
-  'alert_card2' => $_SESSION['card2'],
-  'alert_textbox' => $_SESSION['textbox'],
-  'alert_bgm_value' => $_SESSION['bgm_value']
-);
-
-$redirect = false;
-
-foreach ($build_alert as $n => $v){
-  if(!isset($v) || empty($v)){
-    $_SESSION[$n] = 'alert';
-    $redirect = true;
-  }
-}
-
-if ($redirect) {
-  $redirect = false;
-  header("Location: build.php");
-  exit;
-}
-
 $tmpl = GetTmpl('confirm');
     
 if ($_GET != NULL){
@@ -48,7 +26,8 @@ if ($_GET != NULL){
       'skill' => $_GET["rear_skill"],
       'climax' => $_GET["rear_climax"],
       'rare' => $_GET["rear_rare"]);
-    $_SESSION['deck_id'] = $_GET['deck_id'];
+    $_SESSION['textbox'] = $_GET["deck_name"];
+    $_SESSION['bgm_value'] = $_GET['bgm'];
     $tmpl = str_replace("★アクション★", "deck_delete.php", $tmpl);
     $tmpl = str_replace("★クラス★", "conf_delete_button", $tmpl);
     $tmpl = str_replace("★テキスト★", "デッキを削除する<i class='fa-solid fa-trash-can'></i>", $tmpl);
@@ -66,6 +45,28 @@ if ($_GET != NULL){
       $tmpl = str_replace("★デッキid★", "", $tmpl);
     }
   }
+}
+
+$build_alert = array(
+  'alert_card1' => $_SESSION['card1'],
+  'alert_card2' => $_SESSION['card2'],
+  'alert_textbox' => $_SESSION['textbox'],
+  'alert_bgm_value' => $_SESSION['bgm_value']
+);
+
+$redirect = false;
+
+foreach ($build_alert as $n => $v){
+  if(!isset($v) || empty($v)){
+    $_SESSION[$n] = 'alert';
+    $redirect = true;
+  }
+}
+
+if ($redirect) {
+  $redirect = false;
+  header("Location: build.php");
+  exit;
 }
 
 # データベースに接続
