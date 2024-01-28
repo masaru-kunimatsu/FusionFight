@@ -6,8 +6,12 @@ include 'functions.php';
 $tmpl = GetTmpl('search');
 
 
-
-if(isset($_POST['mode']) && $_POST['mode'] == 'image'){
+if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
+  $tmpl_open = GetTmpl('result_open');
+  $tmpl .= $tmpl_open;
+  $tmpl_result = GetTmpl('result');
+  $_SESSION['image_view'] = 'image';
+}elseif(isset($_POST['mode']) && $_POST['mode'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
   $tmpl .= $tmpl_open;
   $tmpl_result = GetTmpl('result_image');
@@ -68,13 +72,19 @@ try{
       foreach($search_card_array as $n => $v){
         if (isset($_GET[$n]) && $_GET[$n] != "" ) {
           $_SESSION['condition'][$n] = $_GET[$n];
+        }elseif(isset($_GET[$n]) && $_GET[$n] == "" ){
+          $_SESSION['condition'][$n] = "";
         }
       }
       if (isset($_GET['climax']) && $_GET['climax'] != "" ) {
         $_SESSION['condition']['climax'] = $_GET['climax'];
+      }elseif(isset($_GET['climax']) && $_GET['climax'] == "" ){
+        $_SESSION['condition']['climax'] = 0;
       }
       if (isset($_GET['text']) && $_GET['text'] != "" ) {
         $_SESSION['condition']['text'] = $_GET['text'];
+      }elseif(isset($_GET['text']) && $_GET['text'] == "" ){
+        $_SESSION['condition']['text'] = "";
       }
     }
 
@@ -91,7 +101,7 @@ try{
       $search_flag = false;
       $_SESSION['condition'] = array();
 
-    }elseif($_GET== null){
+    }elseif($_GET == null && $_POST == null ){
       # 検索条件の指定がない場合は全件表示
       $SQL .= "ORDER BY m_card.card_id;";
       $stmt = $dbh->prepare($SQL);
@@ -103,22 +113,24 @@ try{
       $search_flag = true;
       $SQLlist = $SQL;
       $SQLlist .= " ORDER BY m_card.card_id";
-      $SQL .= "WHERE 1 = 1"; // これは常に真となる条件を追加;
+      $SQL .= " WHERE 1 = 1"; // これは常に真となる条件を追加;
 
       // 条件が指定されている場合にのみ追加
       foreach($search_card_array as $n => $v){
-        if (isset($_SESSION['condition'][$n]) && $_SESSION['condition'][$n] != "" ) {
+        if (isset($_GET[$n]) && $_GET[$n] != "" ){
           $condition = " AND m_card.$n = {$_SESSION['condition'][$n]}";
           $SQL .= $condition;
         }
       }
-      if ($_GET["form"] != ""){
-        $SQL = str_replace($_SESSION['condition']['form'], "'".$_SESSION['condition']['form']."'", $SQL);
+      if (isset($_GET["form"]) && $_GET["form"] != ""){
+        $SQL = str_replace($_SESSION['condition']['form'], $_SESSION['condition']['form'], $SQL);
+        $SQL .= " AND 2=2";
       }
-      if ($_GET["climax"] == 1) {
+
+      if (isset($_GET["climax"]) && $_GET["climax"] == 1) {
         $SQL .= " AND m_card.climax = 1";
       }
-      if ($_GET["text"] != "") {
+      if (isset($_GET["text"]) && $_GET["text"] != "") {
         $security_text = TextSecurity($_GET["text"]);
         $search_text = $security_text;
         $SQL .= " AND  (m_name.name LIKE '%{$search_text}%' 
@@ -130,6 +142,26 @@ try{
       }
       if (isset($_GET['fortune_card_id'])) {
         $SQL .= " AND m_card.card_id = {$_GET['fortune_card_id']}";
+      }
+
+      if (isset($_POST)){
+        if (isset($_SESSION['condition']['form'])) {
+          $SQL = str_replace($_SESSION['condition']['form'], "'".$_SESSION['condition']['form']."'", $SQL);
+          $SQL .= " AND 2=2";
+        }
+        if (isset($_SESSION['condition']['climax']) && $_SESSION['condition']['climax'] == 1) {
+          $SQL .= " AND m_card.climax = 1";
+        }
+        if (isset($_SESSION['condition']["text"]) && $_SESSION['condition']["text"] != "") {
+          $security_text = TextSecurity($_SESSION['condition']["text"]);
+          $search_text = $security_text;
+          $SQL .= " AND  (m_name.name LIKE '%{$search_text}%' 
+                    OR   m_card.form LIKE '%{$search_text}%' 
+                    OR   m_card.skill LIKE '%{$search_text}%' 
+                    OR   m_type.type LIKE '%{$search_text}%' 
+                    OR   m_prog.prog LIKE '%{$search_text}%' 
+                    OR   m_rare.rare LIKE '%{$search_text}%')";
+        }
       }
 
       // ORDER BY 句の追加
