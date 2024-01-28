@@ -101,7 +101,7 @@ try{
       $search_flag = false;
       $_SESSION['condition'] = array();
 
-    }elseif($_GET == null && $_POST == null ){
+    }elseif($_GET == null && empty($_POST["mode"]) ){
       # 検索条件の指定がない場合は全件表示
       $SQL .= "ORDER BY m_card.card_id;";
       $stmt = $dbh->prepare($SQL);
@@ -144,7 +144,13 @@ try{
         $SQL .= " AND m_card.card_id = {$_GET['fortune_card_id']}";
       }
 
-      if (isset($_POST)){
+      if (isset($_POST['mode'])){
+        foreach($search_card_array as $n => $v){
+          if (isset($_SESSION['condition'][$n]) && $_SESSION['condition'][$n] != "" ){
+            $condition = " AND m_card.$n = {$_SESSION['condition'][$n]}";
+            $SQL .= $condition;
+          }
+        }
         if (isset($_SESSION['condition']['form'])) {
           $SQL = str_replace($_SESSION['condition']['form'], "'".$_SESSION['condition']['form']."'", $SQL);
           $SQL .= " AND 2=2";
