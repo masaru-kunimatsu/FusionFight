@@ -444,6 +444,18 @@ table {
     width: 100%;
   }
 
+  #main_sheet {
+    opacity: 0;
+    animation: late-open 0s ease-in 1.5s forwards;
+  }
+  
+  /* late-open = display: block; */
+  @keyframes late-open {
+    to {
+      opacity: 1;
+    }
+  }
+
   .sheet {
     display: flex;
     background-image: url('material/sheet.jpeg');
