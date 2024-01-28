@@ -76,7 +76,7 @@ if ($_GET != NULL) {
   $contents1="";
   $contents2="";
 
-  if (isset($_SESSION['card1']) && !empty($_SESSION['card1'])) {
+  if (isset($_SESSION['card1']) && !empty($_SESSION['card1']['card_id'])) {
     $contents1 .= "<div class='decksheet'>";
     $contents1 .= "<div class='deckleftsheet'><img src='{$_SESSION["card1"]["image"]}'  class ='add_shadow' ></div>";
     $contents1 .= "<div class='deckrightsheet'>";
@@ -99,7 +99,7 @@ if ($_GET != NULL) {
     $contents1 .= "</form></div></div>";
   }
 
-  if (isset($_SESSION['card2']) && !empty($_SESSION['card2'])) {
+  if (isset($_SESSION['card2']) && !empty($_SESSION['card2']['card_id'])) {
     $contents2 .= "<div class='decksheet'>";
     $contents2 .= "<div class='deckleftsheet'><img src='{$_SESSION["card2"]["image"]}' class = 'add_shadow' ></div>";
     $contents2 .= "<div class='deckrightsheet'>";

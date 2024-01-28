@@ -1,42 +1,90 @@
-  #popup {
-    display: none; /* label でコントロールするので input は非表示に */
-  }
+<?php
+
+session_start();
+
+
+include 'functions.php';
+
+if (empty($_SESSION['card1'])||empty($_SESSION['card2'])){
+
+  $post_card_id = isset($_POST['post_card_id']) ? $_POST['post_card_id'] : null;
   
-  .popup-open {
-    cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
+  if !isset($_SESSION['card1']){
+    $_SESSION['card1'] = [];
   }
-  
-  .popup-overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center; /* テキストを中央揃えにする */
+  if !isset($_SESSION['card2']){
+    $_SESSION['card2'] = [];
   }
-  
-  .popup-overlay:not(:checked) {
-    display: none;
+
+  # データベースに接続
+  try{
+    $dbh = SetDBH();
+    if ($dbh == null){
+      echo "接続に失敗しました。";
+    }else{
+      #INSERT文の定義
+      $sql = "SELECT * FROM m_card
+      LEFT JOIN m_name on m_card.name_id = m_name.name_id
+      LEFT JOIN m_type on m_card.type_id = m_type.type_id
+      LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
+      LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id
+      WHERE m_card.card_id = :id;";
+
+      # プリペアードステートメント
+      $stmt = $dbh->prepare($sql);
+
+      #bindParamによるパラメータ－と変数の紐付け
+      $stmt -> bindParam(':id',$post_card_id);
+
+      #INSERTの実行
+      $stmt->execute();
+      $result = $stmt->fetch();
+
+      if (empty($_SESSION['card1']) && ($_SESSION['card2']["card_id"] != $result["card_id"])){
+        $_SESSION['card1'] = array(
+          'image' => $result["image"],
+          'barcode' => $result["barcode"],
+          'card_id' => $result["card_id"],
+          'name' => $result["name"],
+          'name_id' => $result["name_id"],
+          'form' => $result["form"],
+          'skill' => $result["skill"],
+          'climax' => $result["climax"],
+          'type' => $result["type"],
+          'prog' => $result["prog"],
+          'rare' => $result["rare"]);
+      }elseif(empty($_SESSION['card2']) && ($_SESSION['card1']["card_id"] != $result["card_id"])){
+        $_SESSION['card2'] = array(
+          'image' => $result["image"],
+          'barcode' => $result["barcode"],
+          'card_id' => $result["card_id"],
+          'name' => $result["name"],
+          'name_id' => $result["name_id"],
+          'form' => $result["form"],
+          'skill' => $result["skill"],
+          'climax' => $result["climax"],
+          'type' => $result["type"],
+          'prog' => $result["prog"],
+          'rare' => $result["rare"]);
+      }
+      
+    }
+  }catch (PDOException $e){
+    echo('エラー内容：'.$e->getMessage());
+    die();
   }
-  
-  #popup:checked ~ .popup-overlay {
-    display: block;
-    z-index: 99999;
-    background-color: #00000070;
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
+  $dbh = null;
+}
+
+if(isset($_SESSION['user_name'])){
+  if (!empty($_SESSION['card1']) && !empty($_SESSION['card2'])) {
+      echo "カードが2枚登録されています<br>これ以上は保存できません";
+  } else {
+      echo "作成中のデッキにカードを保存しました";
   }
-  
-  .popup-window {
-    width: 90vw;
-    max-width: 560px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 6px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
+}else{
+  echo "デッキ作成にはログインが必要です";
+}
+
+
+?>

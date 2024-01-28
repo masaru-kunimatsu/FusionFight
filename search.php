@@ -6,6 +6,12 @@ include 'functions.php';
 $tmpl = GetTmpl('search');
 $tmpl_result = GetTmpl('result');
 
+if (!isset($_SESSION['card1'])){
+  $_SESSION['card1'] = array();
+}
+if (!isset($_SESSION['card2'])){
+  $_SESSION['card2'] = array();
+}
 # 検索窓に用いるカラムの配列
 $search_card_array = array(
   'name_id' => 'name',
