@@ -135,22 +135,67 @@ table {
 }
 
 .conte {
-  margin-bottom: -50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* 子要素を縦に配置 */
+  align-items: center; /* 子要素を中央に配置 */
 }
 
 .top_image {
   position: relative;
+  background-image: url('material/top_image.png');
   width: 90%;
-  margin: 0 auto;
+  height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
+  margin: 0px auto; /* 適切なマージンを設定 */
+  margin-bottom: 5%;
   overflow: hidden;
+  background-size: cover; /* 画像を親要素にカバーするように調整 */
+  background-position: center; /* 画像を中央に配置 */
+  background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
+}
+
+.top_image2 {
+  background-image: url('material/top2_image.png');
+  width: 90%;
+  height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
+  margin: 0 auto; /* 適切なマージンを設定 */
+  overflow: hidden;
+  background-size: cover; /* 画像を親要素にカバーするように調整 */
+  background-position: center; /* 画像を中央に配置 */
+  background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
 }
 
 .top_image3 {
-  position: relative;
+  background-image: url('material/top3_image.png');
   width: 90%;
-  top: -60px;
-  margin: 0 auto;
+  height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
+  margin: 0 auto; /* 適切なマージンを設定 */
   overflow: hidden;
+  background-size: cover; /* 画像を親要素にカバーするように調整 */
+  background-position: center; /* 画像を中央に配置 */
+  background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
+}
+
+.top_image4 {
+  background-image: url('material/top4_image.png');
+  width: 90%;
+  height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
+  margin: 0 auto; /* 適切なマージンを設定 */
+  overflow: hidden;
+  background-size: cover; /* 画像を親要素にカバーするように調整 */
+  background-position: center; /* 画像を中央に配置 */
+  background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
+}
+
+.top_image5 {
+  background-image: url('material/top5_image.png');
+  width: 90%;
+  height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
+  margin: 0 auto; /* 適切なマージンを設定 */
+  overflow: hidden;
+  background-size: cover; /* 画像を親要素にカバーするように調整 */
+  background-position: center; /* 画像を中央に配置 */
+  background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
 }
 
 .top_conte {
@@ -161,50 +206,40 @@ table {
 }
 
 .text-overlay0 {
-  position: absolute;
-  top: 7%; /* 画像の中央にテキストを配置する例 */
-  left: 27%;
-  transform: translate(-50%, -10%);
   color:gold;
-  text-align: center;
+  text-align:start;
+  width:50%;
+  margin: 10% 0 0 2% ;
   font-size: xx-large; /* テキストの大きさをxx-largeに設定 */
   font-weight: bold; /* テキストの太さをboldに設定 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
-  background: rgba(255, 255, 255, 0.64); /* 文字に半透明の背景を追加 */
+  background: rgba(255, 255, 255, 0.812); /* 文字に半透明の背景を追加 */
   padding: 10px; /* 必要に応じて余白を追加 */
 }
 
 .text-overlay1 {
-  position: absolute;
-  top: 50%; /* 画像の中央にテキストを配置する例 */
-  left: 30%;
-  transform: translate(-50%, -10%);
   color:gold;
-  text-align: center;
+  text-align:start;
+  width:56%;
+  margin:10% 0 0 2% ;
   font-size: xx-large; /* テキストの大きさをxx-largeに設定 */
   font-weight: bold; /* テキストの太さをboldに設定 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
-  background: rgba(255, 255, 255, 0.64); /* 文字に半透明の背景を追加 */
+  background: rgba(255, 255, 255, 0.812); /* 文字に半透明の背景を追加 */
   padding: 10px; /* 必要に応じて余白を追加 */
 }
 
 .introduction {
-  position: absolute;
-  top: 75%; /* 画像の中央にテキストを配置する例 */
-  left: 35%;
-  transform: translate(-50%, -10%);
   color: black;;
   text-align: center;
+  width: 56%;
+  margin:7% 0 0 2% ;
   font-size: x-large; /* テキストの大きさをxx-largeに設定 */
   font-weight: bold; /* テキストの太さをboldに設定 */
-  background: rgba(255, 255, 255, 0.64); /* 文字に半透明の背景を追加 */
+  background: rgba(255, 255, 255, 0.812); /* 文字に半透明の背景を追加 */
   display: flex;
   justify-content: center; /* 水平方向の中央揃え */
   align-items: center; /* 垂直方向の中央揃え */
-}
-
-.download {
-  color: black;
 }
 
 .logo-overlay {
@@ -213,13 +248,12 @@ table {
 
 .QR-overlay {
   width: 50%; /* 画像の幅を30%に調整 */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* 影の設定 */
 }
 
 .text-overlay2 {
-  position: absolute;
-  top: 55%; /* 画像の中央にテキストを配置する例 */
-  left: 45%;
-  transform: translate(0%, -10%);
+  width: 53%;
+  margin: 32% 10% 0% 44%;
   color:white;
   font-size: x-large; /* テキストの大きさをx-largeに設定 */
   font-weight: bold; /* テキストの太さをboldに設定 */
@@ -234,54 +268,114 @@ table {
   margin: 4px 5px 4px 0px;
 }
 
-.image-overlay {
-  position: absolute;
-  color:rgba(0, 13, 255, 0.777);
-  font-size: x-large; /* テキストの大きさをx-largeに設定 */
-  font-weight: bold; /* テキストの太さをboldに設定 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.449); /* 文字の輪郭を追加 */
-  padding: 10px; /* 必要に応じて余白を追加 */
+.text-overlay3 {
+  margin: 10% 0 0 47%;
+  color:white;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 10px;
   width: 50%;
-  height: 85%;
-  top: 10%;
-  left: 48%;
-  background: rgba(250, 250, 250, 0.896);
-  overflow: auto;
+  height: 38%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
+  background: rgba(0, 0, 0, 0.571); /* 文字に半透明の背景を追加 */ 
 }
 
-.image-overlay-child {
+.text-overlay3_bottom {
   display: flex;
-  flex-wrap: wrap; /* 折り返しを有効にする */
-  justify-content: space-around; 
-  align-items: center; /* 垂直方向にセンタリング */
+  justify-content:center; /* アイテムを均等に配置 */
+  align-items: center; /* アイコンを上下中央に配置 */
+  width: 100%;
 }
 
-.image-overlay-child .image-overlay-form {
-  width: calc(33.333% - 20px); /* 画像の横幅に合わせて調整し、間隔も考慮 */
-  box-sizing: border-box; /* 要素のボーダーボックスが width に含まれるように */
-  padding: 10px; /* 画像の間隔を調整 */
-  text-align: center; /* 中央揃え */
-  margin-bottom: 20px; /* 下のマージンを追加 */
-}
-
-.image-overlay-child .image-overlay-form img {
-  width: 100%; /* 画像を親要素に合わせて表示 */
-  height: auto; /* アスペクト比を維持するために高さを自動調整 */
-  transition: all 0.2s; /* カーソルを合わせたときに変化するアニメーションを追加 */
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* 影の設定 */
-}
-
-.image-overlay-child .image-overlay-form img:hover {
-  transform: scale(1.1); /* ホバー時に画像を拡大 */
-  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.7); /* ホバー時の影の設定 */
+.text-overlay3_bottom_img {
+  width: 25%;
+  height: auto;
+  margin: 0 30px;
 }
 
 
-.fortune-icon {
+.text-overlay4 {
+  color:white;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 10px;
+  width: 52%;
+  height: 31%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
+  background: rgba(0, 0, 0, 0.571); /* 文字に半透明の背景を追加 */
+  margin: 2% 0 0 45%;
+}
+
+.text-overlay4_bottom_img {
+  width: 48%;
+  height: auto;
+  margin: 0 5px;
+}
+
+.z-icon {
   width: 10%;
   vertical-align: middle;
   margin: 4px 6px;
 }
+
+.text-overlay5 {
+  color:white;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 10px;
+  width: 60%;
+  height: 40%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
+  background: rgba(0, 0, 0, 0.571); /* 文字に半透明の背景を追加 */
+  margin: 31% 0 0 37%;
+}
+
+@keyframes slideRightImage {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-650%);
+  }
+}
+
+.text-overlay5_bottom {
+  display: flex;
+  overflow-x: auto;
+}
+
+.text-overlay5_bottom_img {
+  width: 48%;
+  height: auto;
+  margin: 0 5px;
+  animation: slideRightImage 20s linear infinite;
+}
+
+.text-overlay6 {
+  color:white;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 10px 5px 0px 5px;
+  width: 53%;
+  height:85%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
+  background: rgba(0, 0, 0, 0.571); /* 文字に半透明の背景を追加 */
+  margin: 6% 0 0 45%;
+}
+
+.text-overlay6_bottom {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* 画像が折り返されるように設定 */
+}
+
+.text-overlay6_bottom_img {
+  width: 21%; /* 2列にするために幅を調整 */
+  height: auto;
+  margin: 10px;
+  /* animation: slideRightImage 20s linear infinite; */
+}
+
 
 #footer {
     background-color: #00000095; /* 背景色を黒に設定 */
