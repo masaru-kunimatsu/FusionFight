@@ -152,6 +152,16 @@ table {
   background-size: cover; /* 画像を親要素にカバーするように調整 */
   background-position: center; /* 画像を中央に配置 */
   background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
+  animation: fadeIn 2s ease; /* フェードインのアニメーションを追加 */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1; /* 最終的に不透明にする */
+  }
 }
 
 .top_image2 {
@@ -215,6 +225,18 @@ table {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
   background: rgba(255, 255, 255, 0.812); /* 文字に半透明の背景を追加 */
   padding: 10px; /* 必要に応じて余白を追加 */
+  animation: slideInLeft 2s ease-in-out forwards;
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* 最終的に左に移動して表示する */
+  }
 }
 
 .text-overlay1 {
@@ -227,6 +249,7 @@ table {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.907); /* 文字の輪郭を追加 */
   background: rgba(255, 255, 255, 0.812); /* 文字に半透明の背景を追加 */
   padding: 10px; /* 必要に応じて余白を追加 */
+  animation: slideInLeft 2s ease-in-out forwards;
 }
 
 .introduction {
@@ -240,6 +263,7 @@ table {
   display: flex;
   justify-content: center; /* 水平方向の中央揃え */
   align-items: center; /* 垂直方向の中央揃え */
+  animation: slideInLeft 2s ease-in-out forwards;
 }
 
 .logo-overlay {
@@ -332,10 +356,10 @@ table {
 
 @keyframes slideRightImage {
   0% {
-    transform: translateX(0%);
+    transform: translateX(20%);
   }
   100% {
-    transform: translateX(-650%);
+    transform: translateX(-750%);
   }
 }
 
@@ -348,7 +372,7 @@ table {
   width: 48%;
   height: auto;
   margin: 0 5px;
-  animation: slideRightImage 20s linear infinite;
+  animation: slideRightImage 30s linear infinite;
 }
 
 .text-overlay6 {
