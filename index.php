@@ -5,6 +5,7 @@ include 'functions.php';
 
 
 $html_top = <<< _aaa_
+
 <div class = "conte">
   <div class = "top_image">
     <div class="text-overlay0">
