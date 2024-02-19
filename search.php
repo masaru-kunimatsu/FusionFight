@@ -9,29 +9,35 @@ $tmpl = GetTmpl('search');
 if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
   $tmpl_open = GetTmpl('result_open');
   $tmpl .= $tmpl_open;
+  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
   $_SESSION['image_view'] = 'image';
 }elseif(isset($_POST['mode']) && $_POST['mode'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
+  $tmpl_js = GetTmpl('result_js');
   $tmpl .= $tmpl_open;
   $tmpl_result = GetTmpl('result_image');
   $_SESSION['image_view'] = 'image';
 }elseif(isset($_POST['mode']) && $_POST['mode'] == 'detail'){
   $tmpl_open = GetTmpl('result_open');
   $tmpl .= $tmpl_open;
+  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
   $_SESSION['image_view'] = 'detail';
 }elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
+  $tmpl_js = GetTmpl('result_js');
   $tmpl .= $tmpl_open;
   $tmpl_result = GetTmpl('result_image');
 }elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'detail'){
   $tmpl_open = GetTmpl('result_open');
   $tmpl .= $tmpl_open;
+  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
 }else{
   $tmpl_open = GetTmpl('result_open');
   $tmpl .= $tmpl_open;
+  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
   $_SESSION['image_view'] = 'detail';
 }
@@ -123,7 +129,7 @@ try{
         }
       }
       if (isset($_GET["form"]) && $_GET["form"] != ""){
-        $SQL = str_replace($_SESSION['condition']['form'], $_SESSION['condition']['form'], $SQL);
+        $SQL = str_replace($_SESSION['condition']['form'], "'".$_SESSION['condition']['form']."'", $SQL);
         $SQL .= " AND 2=2";
       }
 
@@ -176,12 +182,18 @@ try{
       $stmtlist = $dbh->prepare($SQLlist);
     }
     
+    $js_store="";
+    $html_store="";
+
     # 検索結果画面用のSQL文の実行
     if(isset($_GET['fortune']) && $_GET['fortune'] != null){ 
       $stmtfor->execute();
 
       // カード表示画面に値を渡す
       while($row = $stmt->fetch()){
+        $tmpl_each_js = $tmpl_js;
+        $tmpl_each_js = str_replace("★card_id★", $row['card_id'], $tmpl_each_js);
+
         $tmpl_each = $tmpl_result;
 
         $card_column_array = array(
@@ -206,8 +218,13 @@ try{
         }else{
           $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);
         }
-        $tmpl .= $tmpl_each;
+        $js_store .= $tmpl_each_js;
+        $html_store .= $tmpl_each;
       }
+
+
+      $tmpl .= $html_store;
+      $tmpl .= $js_store;
 
     }else{
       if($stmt->execute()){
@@ -216,6 +233,9 @@ try{
 
         // カード表示画面に値を渡す
         while($row = $stmt->fetch()){
+          $tmpl_each_js = $tmpl_js;
+          $tmpl_each_js = str_replace("★card_id★", $row['card_id'], $tmpl_each_js);
+
           $tmpl_each = $tmpl_result;
 
           $card_column_array = array(
@@ -240,9 +260,14 @@ try{
           }else{
             $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);
           }
-          $tmpl .= $tmpl_each;
+          $js_store .= $tmpl_each_js;
+          $html_store .= $tmpl_each;
           $record_found = true;
         }
+        $tmpl .= $html_store; 
+        $tmpl .= $js_store; 
+
+
         // 該当するレコードがない場合のメッセージを表示
         if (!$record_found) {
           $tmpl_none = GetTmpl('none');

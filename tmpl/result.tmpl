@@ -1,41 +1,45 @@
 		<!-- コンテンツ -->
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
 
-					setTimeout(function() {
-							// 1秒後に要素を表示する処理
-							$('#deckAddButton★card_id★').show();
-					}, 1000);
-
-					$(document).on('click', '#deckAddButton★card_id★', function(e) {
-							e.preventDefault();
-							$.ajax({
-									type: 'POST',
-									url: 'update_session.php',
-									data: { post_card_id: ★card_id★ },
-									success: function(response) {
-											console.log('非同期通信成功:', response);
-											$('#state_popup').html(response)
-											document.getElementById('popup').checked = true; // チェックボックスをチェック;
-									},
-									error: function(xhr, status, error) {
-											console.error('非同期通信エラー:', status, error);
-									}
-							});
-					});
+		<style>
+			  #popup★card_id★ {
+					display: none; /* label でコントロールするので input は非表示に */
+				}
+				
+				.popup-open★card_id★ {
+					cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
+				}
 
 
-					// ポップアップを閉じる関数
-					function closePopup() {
-							document.getElementById('popup').checked = false;
-					}
+				#popup★card_id★:checked ~ .popup-overlay★card_id★ {
+						display: flex; /* チェックされたときにポップアップを表示 */
+				}
 
-					// テキストにイベントリスナーを追加
-					document.getElementById('close_popup').addEventListener('click', function () {
-							closePopup(); // ポップアップを閉じる
-					});
-			});
-		</script>
+								
+				.popup-overlay★card_id★ {
+					display: none; /* ポップアップは初めは非表示に */
+					align-items: center;
+					justify-content: center;
+					text-align: center; /* テキストを中央揃えにする */
+					position: fixed;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100vh;
+					background-color: rgba(0, 0, 0, 0.8); /* 半透明の背景色 */
+				}
+				
+				.popup-window★card_id★ {
+					width: 90vw;
+					max-width: 560px;
+					padding: 20px;
+					background-color: #ffffff;
+					border-radius: 6px;
+					position: fixed;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+				}
+		</style>
 
 
 
@@ -56,26 +60,22 @@
 							</div>
 							<div class='rightbottomsheet'>
 								<img src='★barcode★' class = 'add_shadow'>
-
 								<label id='deckAddButton★card_id★' class="rightbottomsheet_button" for="popup">
 									デッキに追加する <i class='fa-solid fa-forward'></i>
 								</label>
-								<input type="checkbox" id="popup">
-								<div class="popup-overlay">
-									<div class="popup-window">
-										<p class="popup-tittle" id ="state_popup">作成中のデッキにカードを保存しました</p>
-										<p><a class="popup-text" href="build.php" >デッキ作成画面に進む <i class="fa-solid fa-forward"></i></a></p>
-										<p class="popup-text" id="close_popup"><i class="fa-solid fa-xmark"></i> 閉じる</p>
-										<label class="popup-close" for="popup">
-											<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-												<line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
-												<line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
-											</svg>
-										</label>
-									</div>
-								</div>
+
 							</div>
 						</div>
 					</div>
 				</section>
+												<input type="checkbox" id="popup★card_id★">
+								<div class="popup-overlay★card_id★">
+									<div class="popup-window★card_id★">
+										<p class="popup-tittle" id ="state_popup★card_id★">作成中のデッキにカードを保存しました</p>
+										<p><a class="popup-text" href="build.php" >デッキ作成画面に進む <i class="fa-solid fa-forward"></i></a></p>
+										<p class="popup-text" id="close_popup★card_id★"><i class="fa-solid fa-xmark"></i> 閉じる</p>
+										<label class="popup-close" for="popup">
+										</label>
+									</div>
+								</div>
 		<!-- / コンテンツ -->
