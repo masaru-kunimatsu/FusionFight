@@ -42,9 +42,10 @@ if($stmt->execute()){
   }
 }
 
+$edit_flag = FALSE;
 if ($_GET != NULL) {
   if (isset($_GET['mode']) && $_GET['mode'] == 'edit'){
-      $_SESSION['card1'] = array(
+      $_SESSION['card1_edit'] = array(
         'image' => $_GET["van_image"],
         'barcode' => $_GET["van_barcode"],
         'card_id' => $_GET["van_card_id"],
@@ -53,7 +54,7 @@ if ($_GET != NULL) {
         'skill' => $_GET["van_skill"],
         'climax' => $_GET["van_climax"],
         'rare' => $_GET["van_rare"]);
-      $_SESSION['card2'] = array(
+      $_SESSION['card2_edit'] = array(
         'image' => $_GET["rear_image"],
         'barcode' => $_GET["rear_barcode"],
         'card_id' => $_GET["rear_card_id"],
@@ -65,6 +66,7 @@ if ($_GET != NULL) {
       $_SESSION['deck_id'] = $_GET['deck_id'];
       $tmpl = str_replace("★注意★", "", $tmpl);
       $tmpl = str_replace("★デッキid★", $_SESSION['deck_id'], $tmpl);
+      $edit_flag = TRUE;
   }else{
         $tmpl = str_replace("★注意★", "<i class='fa-solid fa-exclamation'></i> カードは2枚以上登録できません <i class='fa-solid fa-exclamation'></i>", $tmpl);
         $tmpl = str_replace("★デッキid★", "", $tmpl);
@@ -76,7 +78,22 @@ if ($_GET != NULL) {
   $contents1="";
   $contents2="";
 
-  if (isset($_SESSION['card1']) && !empty($_SESSION['card1']['card_id'])) {
+  if($edit_flag){
+    $contents1 .= "<div class='decksheet'>";
+    $contents1 .= "<div class='deckleftsheet'><img src='{$_SESSION["card1_edit"]["image"]}'  class ='add_shadow' ></div>";
+    $contents1 .= "<div class='deckrightsheet'>";
+    $contents1 .= "<div class='deckrightsheet_name'>{$_SESSION["card1_edit"]["name"]}</div>";
+    $contents1 .= "<div class='deckrightsheet_tit'>タイプ</div>";
+    $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1_edit"]["form"]}</div>";
+    $contents1 .= "<div class='deckrightsheet_tit'>ワザ</div>";
+    $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1_edit"]["skill"]}";
+    $contents1 .= ($_SESSION["card1_edit"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
+    $contents1 .= "</div>";
+    $contents1 .= "<div class='deckrightsheet_bottom'>";
+    $contents1 .= "<img src='rare●{$_SESSION["card1_edit"]["rare"]}.png'>";
+    $contents1 .= "<img src='{$_SESSION["card1_edit"]["barcode"]}' class = 'add_shadow' >";
+    $contents1 .= "</div></div></div>";
+  }elseif (isset($_SESSION['card1']) && !empty($_SESSION['card1']['card_id'])) {
     $contents1 .= "<div class='decksheet'>";
     $contents1 .= "<div class='deckleftsheet'><img src='{$_SESSION["card1"]["image"]}'  class ='add_shadow' ></div>";
     $contents1 .= "<div class='deckrightsheet'>";
@@ -99,7 +116,22 @@ if ($_GET != NULL) {
     $contents1 .= "</form></div></div>";
   }
 
-  if (isset($_SESSION['card2']) && !empty($_SESSION['card2']['card_id'])) {
+  if($edit_flag){
+    $contents2 .= "<div class='decksheet'>";
+    $contents2 .= "<div class='deckleftsheet'><img src='{$_SESSION["card2_edit"]["image"]}'  class ='add_shadow' ></div>";
+    $contents2 .= "<div class='deckrightsheet'>";
+    $contents2 .= "<div class='deckrightsheet_name'>{$_SESSION["card2_edit"]["name"]}</div>";
+    $contents2 .= "<div class='deckrightsheet_tit'>タイプ</div>";
+    $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2_edit"]["form"]}</div>";
+    $contents2 .= "<div class='deckrightsheet_tit'>ワザ</div>";
+    $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2_edit"]["skill"]}";
+    $contents2 .= ($_SESSION["card2_edit"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
+    $contents2 .= "</div>";
+    $contents2 .= "<div class='deckrightsheet_bottom'>";
+    $contents2 .= "<img src='rare●{$_SESSION["card2_edit"]["rare"]}.png'>";
+    $contents2 .= "<img src='{$_SESSION["card2_edit"]["barcode"]}' class = 'add_shadow' >";
+    $contents2 .= "</div></div></div>";
+  }elseif (isset($_SESSION['card2']) && !empty($_SESSION['card2']['card_id'])) {
     $contents2 .= "<div class='decksheet'>";
     $contents2 .= "<div class='deckleftsheet'><img src='{$_SESSION["card2"]["image"]}' class = 'add_shadow' ></div>";
     $contents2 .= "<div class='deckrightsheet'>";
@@ -127,12 +159,11 @@ $tmpl = str_replace("★1枚目★", $contents1, $tmpl);
 $tmpl = str_replace("★2枚目★", $contents2, $tmpl);
 
 
-if (isset($_GET['mode']) && $_GET['mode'] === 'edit') {
+
+if ($edit_flag) {
   // 編集モードの処理を行う
-  $_SESSION['textbox'] = $_GET['deck_name'];
-  $_SESSION['bgm_value'] = $_GET["bgm_id"];
-  $tmpl = str_replace("★初期値★", $_SESSION['textbox'], $tmpl);
-  $bgm_list = str_replace("<option value={$_SESSION['bgm_value']}>", "<option value={$_SESSION['bgm_value']} selected>", $bgm_list);
+  $tmpl = str_replace("★初期値★", $_GET['deck_name'], $tmpl);
+  $bgm_list = str_replace("<option value={$_GET["bgm_id"]}>", "<option value={$_GET["bgm_id"]} selected>", $bgm_list);
 }else{
 
   if(isset ($_SESSION['textbox'])){
