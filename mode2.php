@@ -7,6 +7,7 @@ include 'functions.php';
 
 // 削除
 $_SESSION['card2'] = array();
+$_SESSION['over_alert'] = "deck_leisure";
 // build.php にリダイレクト
 header('Location: build.php');
 exit();

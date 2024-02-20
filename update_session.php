@@ -104,17 +104,20 @@ if (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
     $dbh = null;
   }
 }
-if(isset($_SESSION['user_name'])){
-  if(!empty($_SESSION['card1']) && !empty($_SESSION['card2'])) {
-    echo "カードが2枚登録されています<br>これ以上は保存できません";
-  }elseif($Duplication){
-    echo "同じキャラクター同士ではデッキを作成できません";
-  }else{
-    echo "作成中のデッキにカードを保存しました";
+
+if (isset($_SESSION['user_name'])) {
+  if ($Duplication) {
+      echo "同じキャラクター同士ではデッキを作成できません";
+  } elseif (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
+      $_SESSION['over_alert'] = "deck_leisure";
+      echo "作成中のデッキにカードを保存しました";
+  } elseif ($_SESSION['over_alert'] == "deck_leisure") {
+      $_SESSION['over_alert'] = "deck_stress";
+      echo "作成中のデッキにカードを保存しました";
+  } elseif ($_SESSION['over_alert'] == "deck_stress") {
+      echo "カードが2枚登録されています<br>これ以上は保存できません";
   }
-}else{
+} else {
   echo "デッキ作成にはログインが必要です";
 }
-
-
 ?>
