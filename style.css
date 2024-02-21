@@ -252,6 +252,10 @@ table {
   }
 }
 
+  .text-overlay6_bottom_img{
+    cursor: pointer;
+  }
+
 .top_conte {
   width: 100%;
   height: auto;

@@ -92,8 +92,19 @@ try{
       $stmt = $dbh->prepare($SQLfor);
       $stmtfor = $stmt;
       $stmtlist = $dbh->prepare($SQLlist);
-      // $search_flag = false;
-      // $_SESSION['condition'] = array();
+
+    }elseif(isset($_GET['tittle']) && $_GET['tittle'] != null){ 
+      # ロゴからリンクした場合
+      $SQLlist = $SQL;
+      $SQLlist .= " ORDER BY m_card.card_id";
+      $SQLlogo = $SQL;
+      $SQLlogo .= " WHERE m_prog.prog_id = {$_GET['tittle']}"; 
+      $SQLlogo .= " ORDER BY m_card.card_id";
+      $_SESSION['sql'] = $SQLlogo;
+      $stmt = $dbh->prepare($SQLlogo);
+      $stmtlogo = $stmt;
+      $stmtlist = $dbh->prepare($SQLlist);
+      $_SESSION['condition']['prog_id'] = $_GET['tittle'];
 
     }elseif($_GET == null){
       # 検索条件の指定がない場合は全件表示
@@ -103,11 +114,8 @@ try{
       }
       $stmt = $dbh->prepare($SQL);
       $stmtlist = $stmt;
-      // $search_flag = false;
-      // $_SESSION['condition'] = array();
     }else{
       # 検索条件の指定がある場合はしぼりこみ表示
-      // $search_flag = true;
       $SQLlist = $SQL;
       $SQLlist .= " ORDER BY m_card.card_id";
       $SQL .= " WHERE 1 = 1"; // これは常に真となる条件を追加;
