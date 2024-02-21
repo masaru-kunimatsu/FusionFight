@@ -5,42 +5,30 @@ include 'functions.php';
 
 $tmpl = GetTmpl('search');
 
-
 if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
   $tmpl_open = GetTmpl('result_open');
-  $tmpl .= $tmpl_open;
-  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
   $_SESSION['image_view'] = 'image';
 }elseif(isset($_POST['mode']) && $_POST['mode'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
-  $tmpl_js = GetTmpl('result_js');
-  $tmpl .= $tmpl_open;
   $tmpl_result = GetTmpl('result_image');
   $_SESSION['image_view'] = 'image';
 }elseif(isset($_POST['mode']) && $_POST['mode'] == 'detail'){
   $tmpl_open = GetTmpl('result_open');
-  $tmpl .= $tmpl_open;
-  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
   $_SESSION['image_view'] = 'detail';
 }elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
-  $tmpl_js = GetTmpl('result_js');
-  $tmpl .= $tmpl_open;
   $tmpl_result = GetTmpl('result_image');
 }elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'detail'){
   $tmpl_open = GetTmpl('result_open');
-  $tmpl .= $tmpl_open;
-  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
 }else{
   $tmpl_open = GetTmpl('result_open');
-  $tmpl .= $tmpl_open;
-  $tmpl_js = GetTmpl('result_js');
   $tmpl_result = GetTmpl('result');
   $_SESSION['image_view'] = 'detail';
 }
+$tmpl .= $tmpl_open;
 
 if (!isset($_SESSION['card1'])){
   $_SESSION['card1'] = array();
@@ -67,13 +55,6 @@ try{
     echo "接続に失敗しました。";
   }else{
 
-    #SQL文を作成
-    $SQL = "SELECT * FROM m_card
-    LEFT JOIN m_name on m_card.name_id = m_name.name_id
-    LEFT JOIN m_type on m_card.type_id = m_type.type_id
-    LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
-    LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id ";
-
     if(isset($_GET)){ 
       foreach($search_card_array as $n => $v){
         if (isset($_GET[$n]) && $_GET[$n] != "" ) {
@@ -94,6 +75,13 @@ try{
       }
     }
 
+    #SQL文を作成
+    $SQL = "SELECT * FROM m_card
+    LEFT JOIN m_name on m_card.name_id = m_name.name_id
+    LEFT JOIN m_type on m_card.type_id = m_type.type_id
+    LEFT JOIN m_prog on m_card.prog_id = m_prog.prog_id
+    LEFT JOIN m_rare on m_card.rare_id = m_rare.rare_id ";
+
     if(isset($_GET['fortune']) && $_GET['fortune'] != null){ 
       # fortuneカードがある場合
       $SQLlist = $SQL;
@@ -104,19 +92,22 @@ try{
       $stmt = $dbh->prepare($SQLfor);
       $stmtfor = $stmt;
       $stmtlist = $dbh->prepare($SQLlist);
-      $search_flag = false;
-      $_SESSION['condition'] = array();
+      // $search_flag = false;
+      // $_SESSION['condition'] = array();
 
-    }elseif($_GET == null && empty($_POST["mode"]) ){
+    }elseif($_GET == null){
       # 検索条件の指定がない場合は全件表示
       $SQL .= "ORDER BY m_card.card_id;";
+      if (isset($_SESSION['sql'])){
+        $SQL = $_SESSION['sql'];
+      }
       $stmt = $dbh->prepare($SQL);
       $stmtlist = $stmt;
-      $search_flag = false;
-      $_SESSION['condition'] = array();
+      // $search_flag = false;
+      // $_SESSION['condition'] = array();
     }else{
       # 検索条件の指定がある場合はしぼりこみ表示
-      $search_flag = true;
+      // $search_flag = true;
       $SQLlist = $SQL;
       $SQLlist .= " ORDER BY m_card.card_id";
       $SQL .= " WHERE 1 = 1"; // これは常に真となる条件を追加;
@@ -178,12 +169,12 @@ try{
 
       // ORDER BY 句の追加
       $SQL .= " ORDER BY m_card.card_id";
+
+      $_SESSION['sql'] = $SQL;
+
       $stmt = $dbh->prepare($SQL);
       $stmtlist = $dbh->prepare($SQLlist);
     }
-    
-    $js_store="";
-    $html_store="";
 
     # 検索結果画面用のSQL文の実行
     if(isset($_GET['fortune']) && $_GET['fortune'] != null){ 
@@ -191,9 +182,6 @@ try{
 
       // カード表示画面に値を渡す
       while($row = $stmt->fetch()){
-        $tmpl_each_js = $tmpl_js;
-        $tmpl_each_js = str_replace("★card_id★", $row['card_id'], $tmpl_each_js);
-
         $tmpl_each = $tmpl_result;
 
         $card_column_array = array(
@@ -218,13 +206,9 @@ try{
         }else{
           $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);
         }
-        $js_store .= $tmpl_each_js;
-        $html_store .= $tmpl_each;
+        $tmpl .= $tmpl_each;
       }
 
-
-      $tmpl .= $html_store;
-      $tmpl .= $js_store;
 
     }else{
       if($stmt->execute()){
@@ -233,8 +217,6 @@ try{
 
         // カード表示画面に値を渡す
         while($row = $stmt->fetch()){
-          $tmpl_each_js = $tmpl_js;
-          $tmpl_each_js = str_replace("★card_id★", $row['card_id'], $tmpl_each_js);
 
           $tmpl_each = $tmpl_result;
 
@@ -260,13 +242,9 @@ try{
           }else{
             $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);
           }
-          $js_store .= $tmpl_each_js;
-          $html_store .= $tmpl_each;
+          $tmpl .= $tmpl_each;
           $record_found = true;
         }
-        $tmpl .= $html_store; 
-        $tmpl .= $js_store; 
-
 
         // 該当するレコードがない場合のメッセージを表示
         if (!$record_found) {
@@ -304,7 +282,6 @@ $tmpl_close = GetTmpl('result_close');
 $tmpl .= $tmpl_close;
 
 // 検索後に値を保持するため、クライマックスロゴ表示のための文字列置換
-if ($search_flag){
   foreach($search_card_array as $n =>$v){
     if (isset($_SESSION['condition'][$n]) && $_SESSION['condition'][$n] != "" ){
       $default = "<option value={$_SESSION['condition'][$n]}>";
@@ -320,7 +297,7 @@ if ($search_flag){
   if (isset($_SESSION['condition']["text"]) && $_SESSION['condition']["text"] != ""){
     $tmpl = str_replace('value="" placeholder', "value='{$_SESSION['condition']["text"]}' placeholder", $tmpl);
   }
-}
+
 
 // 取得した表示列をテンプレに入れる
 foreach($search_card_array as $n =>$v){
