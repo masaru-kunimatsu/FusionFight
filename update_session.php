@@ -106,18 +106,22 @@ if (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
 }
 
 if (isset($_SESSION['user_name'])) {
+  $link = "デッキ作成画面に進む <i class='fa-solid fa-forward'></i>";
   if ($Duplication) {
-      echo "同じキャラクター同士ではデッキを作成できません";
+    $state = "同じキャラクター同士ではデッキを作成できません";
   } elseif (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
-      $_SESSION['over_alert'] = "deck_leisure";
-      echo "作成中のデッキにカードを保存しました";
+    $_SESSION['over_alert'] = "deck_leisure";
+    $state = "作成中のデッキにカードを保存しました";
   } elseif ($_SESSION['over_alert'] == "deck_leisure") {
-      $_SESSION['over_alert'] = "deck_stress";
-      echo "作成中のデッキにカードを保存しました";
+    $_SESSION['over_alert'] = "deck_stress";
+    $state = "作成中のデッキにカードを保存しました";
   } elseif ($_SESSION['over_alert'] == "deck_stress") {
-      echo "カードが2枚登録されています<br>これ以上は保存できません";
+    $state = "カードがすでに2枚登録されています";
   }
 } else {
-  echo "デッキ作成にはログインが必要です";
+  $state = "デッキ作成にはログインが必要です";
+  $link = "ログイン画面に進む <i class='fa-solid fa-forward'></i>";
 }
+
+echo json_encode(array("state" => $state, "link" => $link));
 ?>

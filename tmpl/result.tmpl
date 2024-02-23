@@ -49,26 +49,30 @@
 							$('#deckAddButton★card_id★').show();
 					}, 1000);
 
-					$(document).on('click', '#deckAddButton★card_id★', function(e) {
-							e.preventDefault();
-							$.ajax({
-									type: 'POST',
-									url: 'update_session.php',
-									data: { post_card_id: ★card_id★ },
-									success: function(response) {
-											console.log('非同期通信成功:', response);
-											$('#state_popup★card_id★').html(response);
-											document.getElementById('popup★card_id★').checked = true; // チェックボックスをチェック;
-											// .popup-overlayのz-indexを9999に設定
-            					$('.popup-overlay★card_id★').css('z-index', 9999);
 
-									},
-									error: function(xhr, status, error) {
-											console.error('非同期通信エラー:', status, error);
-									}
-							});
-					});
-
+$(document).on('click', '#deckAddButton★card_id★', function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'update_session.php',
+        data: { post_card_id: ★card_id★ },
+        dataType: 'json', // JSON形式のデータを期待
+        success: function(data) {
+            console.log('非同期通信成功:', data);
+            // $stateをHTMLに設定
+            $('#state_popup★card_id★').html(data.state);
+            // $linkをHTMLに設定
+            $('#link_popup★card_id★').html(data.link);
+            // チェックボックスをチェック
+            document.getElementById('popup★card_id★').checked = true; 
+            // .popup-overlayのz-indexを9999に設定
+            $('.popup-overlay★card_id★').css('z-index', 9999);
+        },
+        error: function(xhr, status, error) {
+            console.error('非同期通信エラー:', status, error);
+        }
+    });
+});
 
 					// ポップアップを閉じる関数
 					function closePopup() {
@@ -113,7 +117,7 @@
 								<div class="popup-overlay★card_id★">
 									<div class="popup-window★card_id★">
 										<p class="popup-tittle" id ="state_popup★card_id★">※テキスト表示が機能していません※</p>
-										<p><a class="popup-text" href="build.php" >デッキ作成画面に進む <i class="fa-solid fa-forward"></i></a></p>
+										<p><a class="popup-text" href="build.php" id ="link_popup★card_id★">※テキスト表示が機能していません※</a><i class="fa-solid fa-forward"></i></p>
 										<p class="popup-text" id="close_popup★card_id★"><i class="fa-solid fa-xmark"></i> 閉じる</p>
 										<label class="popup-close" for="popup">
 										</label>
