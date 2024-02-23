@@ -25,7 +25,6 @@ $card2_get = false;
 $Duplication = false;
 
 if (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
-  if(!empty($_SESSION['user_name'])){
 
     # データベースに接続
     try{
@@ -51,7 +50,9 @@ if (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
         $stmt->execute();
         $result = $stmt->fetch();
 
-        if(empty($_SESSION['card1'])){
+        if(!isset($_SESSION['user_name'])){
+          $card1_get = true;
+        }elseif(empty($_SESSION['card1'])){
           if(empty($_SESSION['card2'])){
               $card1_get = true;
           }elseif($_SESSION['card2']["name_id"] != $result["name_id"]){
@@ -102,7 +103,6 @@ if (empty($_SESSION['card1']) || empty($_SESSION['card2'])) {
       die();
     }
     $dbh = null;
-  }
 }
 
 if (isset($_SESSION['user_name'])) {

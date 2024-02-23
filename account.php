@@ -29,6 +29,9 @@ $tmpl_out = <<< _aaa_
 <!-- メインコンテンツ -->
 <div class="account">
   <div class="account_box">
+    <p class = 'white_text'><i class="fa-regular fa-circle-check"></i> デッキの作成・確認、BGMの登録・編集を行うにはログインが必要です</p>
+  </div>
+  <div class="account_box">
     <div class="logout">
         <p class = 'white_text'><a href="signup.php"  class = 'white_link'>新規ユーザー登録 <i class="fa-solid fa-users"></i></a></p>
     </div>

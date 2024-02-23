@@ -6,9 +6,6 @@ session_start();
 unset($_SESSION['sql']);
 $_SESSION['condition'] = array();
 
-// セッションを破棄する場合は以下のようにします
-// session_destroy();
-
 // リダイレクト
 header('Location: search.php');
 exit;
