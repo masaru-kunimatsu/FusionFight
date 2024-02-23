@@ -1,0 +1,38 @@
+<div id="wrapper" style="display: flex; justify-content;">
+
+	<script>
+			// ドキュメントが読み込まれた後に実行
+			document.addEventListener('DOMContentLoaded', function () {
+					// リンク要素を取得
+					var resetLink = document.querySelector('.reset_condition_link');
+
+					// リンクがクリックされたときの処理
+					resetLink.addEventListener('click', function (event) {
+							// デフォルトの動作をキャンセル
+							event.preventDefault();
+
+							// 非同期通信を行う
+							var xhr = new XMLHttpRequest();
+							xhr.open('GET', 'unset_session_sql.php', true); 
+							xhr.onload = function () {
+									if (xhr.status >= 200 && xhr.status < 300) {
+											// 成功時の処理: search.phpに遷移
+											window.location.href = 'search.php';
+									} else {
+											// エラー時の処理
+											console.error('非同期通信エラー:', xhr.statusText);
+									}
+							};
+							xhr.onerror = function () {
+									console.error('非同期通信エラー:', xhr.statusText);
+							};
+							xhr.send();
+					});
+			});
+	</script>
+	<div>
+	<aside id="sidebar">
+		<h3 class="heading">検索条件を指定</h3>
+		<p class = 'reset_condition'><a href="search.php"  class = 'reset_condition_link'><i class="fa-solid fa-circle-xmark"></i> 検索条件をリセット</a></p>
+		<form class = 'multi_condition' action="search.php" method="post" onsubmit="return submitForm()">
+			条件数

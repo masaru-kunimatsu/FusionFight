@@ -494,7 +494,7 @@ table {
   }
   .reset_condition {
     text-align: right; /* 右寄せにするためのスタイル */
-}
+  }
 
   .reset_condition_link {
     font-size:smaller;
@@ -509,6 +509,10 @@ table {
   
   .reset_condition_link:hover {
     font-weight: bold; /* カーソルを合わせた際に太字に */
+  }
+
+  .multi_condition {
+    text-align: center; 
   }
 
   #searchButton {
