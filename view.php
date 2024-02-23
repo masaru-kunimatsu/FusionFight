@@ -61,7 +61,7 @@ try{
       LEFT JOIN m_type AS rear_type ON rear_card.type_id = rear_type.type_id
       LEFT JOIN bgm on deck.bgm_id = bgm.bgm_id
       WHERE deck.user_id = :user
-      ORDER BY deck.deck_id;";
+      ORDER BY deck.sort;";
 
       $stmt = $dbh->prepare($SQL);
 

@@ -21,7 +21,7 @@ try{
   }else{
     #BGMテーブルの取得
     $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM bgm WHERE user_id = $user_id ORDER BY bgm";
+    $sql = "SELECT * FROM bgm WHERE user_id = $user_id ORDER BY sort";
 
     # プリペアードステートメント
     $stmt = $dbh->prepare($sql);
