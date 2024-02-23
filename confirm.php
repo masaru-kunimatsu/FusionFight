@@ -109,12 +109,12 @@ if (isset($_GET["deck_name"]) && $_GET["deck_name"] != "") {
 
 $skillValue1 = $_SESSION['card1']['skill'];
 if ($_SESSION["card1"]["climax"] == 1) {
-  $skillValue1 .= "<img src='material/CMlogo.png'>";
+  $skillValue1 .= "<img src='material/CMlogo.webp'>";
 }
 
 $skillValue2 = $_SESSION['card2']['skill'];
 if ($_SESSION["card2"]["climax"] == 1) {
-  $skillValue2 .= "<img src='material/CMlogo.png'>";
+  $skillValue2 .= "<img src='material/CMlogo.webp'>";
 }
 
 

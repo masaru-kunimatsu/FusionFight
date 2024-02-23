@@ -87,7 +87,7 @@ if ($_GET != NULL) {
     $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1_edit"]["form"]}</div>";
     $contents1 .= "<div class='deckrightsheet_tit'>ワザ</div>";
     $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1_edit"]["skill"]}";
-    $contents1 .= ($_SESSION["card1_edit"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
+    $contents1 .= ($_SESSION["card1_edit"]["climax"] == 1) ? "<img src='material/CMlogo.webp'>" : '';
     $contents1 .= "</div>";
     $contents1 .= "<div class='deckrightsheet_bottom'>";
     $contents1 .= "<img src='rare●{$_SESSION["card1_edit"]["rare"]}.png'>";
@@ -102,7 +102,7 @@ if ($_GET != NULL) {
     $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1"]["form"]}</div>";
     $contents1 .= "<div class='deckrightsheet_tit'>ワザ</div>";
     $contents1 .= "<div class='deckrightsheet_form'>{$_SESSION["card1"]["skill"]}";
-    $contents1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
+    $contents1 .= ($_SESSION["card1"]["climax"] == 1) ? "<img src='material/CMlogo.webp'>" : '';
     $contents1 .= "</div>";
     $contents1 .= "<div class='deckrightsheet_bottom'>";
     $contents1 .= "<img src='rare●{$_SESSION["card1"]["rare"]}.png'>";
@@ -125,7 +125,7 @@ if ($_GET != NULL) {
     $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2_edit"]["form"]}</div>";
     $contents2 .= "<div class='deckrightsheet_tit'>ワザ</div>";
     $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2_edit"]["skill"]}";
-    $contents2 .= ($_SESSION["card2_edit"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
+    $contents2 .= ($_SESSION["card2_edit"]["climax"] == 1) ? "<img src='material/CMlogo.webp'>" : '';
     $contents2 .= "</div>";
     $contents2 .= "<div class='deckrightsheet_bottom'>";
     $contents2 .= "<img src='rare●{$_SESSION["card2_edit"]["rare"]}.png'>";
@@ -140,7 +140,7 @@ if ($_GET != NULL) {
     $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2"]["form"]}</div>";
     $contents2 .= "<div class='deckrightsheet_tit'>ワザ</div>";
     $contents2 .= "<div class='deckrightsheet_form'>{$_SESSION["card2"]["skill"]}";
-    $contents2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='material/CMlogo.png'>" : '';
+    $contents2 .= ($_SESSION["card2"]["climax"] == 1) ? "<img src='material/CMlogo.webp'>" : '';
     $contents2 .= "</div>";
     $contents2 .= "<div class='deckrightsheet_bottom'>";
     $contents2 .= "<img src='rare●{$_SESSION["card2"]["rare"]}.png'>";

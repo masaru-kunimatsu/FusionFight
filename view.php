@@ -92,7 +92,7 @@ try{
 
         $skillValue1 = $row["van_skill"];
           if ($row["van_climax"] == 1) {
-            $skillValue1 .= "<img src='material/CMlogo.png'>";
+            $skillValue1 .= "<img src='material/CMlogo.webp'>";
           }
         $tmpl_each = str_replace("★ワザ1★", $skillValue1, $tmpl_each);
         $tmpl_each = str_replace("★レア1★", $row["van_rare"], $tmpl_each);
@@ -107,7 +107,7 @@ try{
 
         $skillValue2 = $row["rear_skill"];
           if ($row["rear_climax"] == 1) {
-            $skillValue2 .= "<img src='material/CMlogo.png'>";
+            $skillValue2 .= "<img src='material/CMlogo.webp'>";
           }
         $tmpl_each = str_replace("★ワザ2★", $skillValue2, $tmpl_each);
         $tmpl_each = str_replace("★レア2★", $row["rear_rare"], $tmpl_each);

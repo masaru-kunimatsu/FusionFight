@@ -209,7 +209,7 @@ try{
           $tmpl_each = str_replace("★".$n."★", $row[$n], $tmpl_each);
         }
         if ($row['climax'] == 1) {
-          $cm_img = "<img src='material/CMlogo.png'>";
+          $cm_img = "<img src='material/CMlogo.webp'>";
           $tmpl_each = str_replace("★cm_img★", $cm_img, $tmpl_each);
         }else{
           $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);
@@ -245,7 +245,7 @@ try{
             $tmpl_each = str_replace("★".$n."★", $row[$n], $tmpl_each);
           }
           if ($row['climax'] == 1) {
-            $cm_img = "<img src='material/CMlogo.png'>";
+            $cm_img = "<img src='material/CMlogo.webp'>";
             $tmpl_each = str_replace("★cm_img★", $cm_img, $tmpl_each);
           }else{
             $tmpl_each = str_replace("★cm_img★", "", $tmpl_each);

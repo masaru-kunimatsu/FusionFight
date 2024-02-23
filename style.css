@@ -27,7 +27,7 @@ footer, header, hgroup, menu, nav, section {
 body {
     margin: 0; /* ブラウザのデフォルトのmarginを削除 */
     padding: 0; /* ブラウザのデフォルトのpaddingを削除 */
-    background-image: url('material/space.png'); /* 画像のファイルパスを指定 */
+    background-image: url('material/space.webp'); /* 画像のファイルパスを指定 */
     background-size: cover; /* 画像をカバーするように調整 */
     background-position: center; /* 画像を中央に配置 */
     background-repeat: no-repeat; /* 画像の繰り返しを無効にする */
@@ -143,7 +143,7 @@ table {
 
 .top_image {
   position: relative;
-  background-image: url('material/top_image.png');
+  background-image: url('material/top_image.webp');
   width: 90%;
   height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
   margin: 0px auto; /* 適切なマージンを設定 */
@@ -165,7 +165,7 @@ table {
 }
 
 .top_image2 {
-  background-image: url('material/top2_image.png');
+  background-image: url('material/top2_image.webp');
   width: 90%;
   height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
   margin: 0 auto; /* 適切なマージンを設定 */
@@ -195,7 +195,7 @@ table {
 }
 
 .top_image3 {
-  background-image: url('material/top3_image.png');
+  background-image: url('material/top3_image.webp');
   width: 90%;
   height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
   margin: 0 auto; /* 適切なマージンを設定 */
@@ -209,7 +209,7 @@ table {
 }
 
 .top_image4 {
-  background-image: url('material/top4_image.png');
+  background-image: url('material/top4_image.webp');
   width: 90%;
   height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
   margin: 0 auto; /* 適切なマージンを設定 */
@@ -224,7 +224,7 @@ table {
 
 
 .top_image5 {
-  background-image: url('material/top5_image.png');
+  background-image: url('material/top5_image.webp');
   width: 90%;
   height: 80vh; /* 画面の高さに対する割合で指定 (viewport height) */
   margin: 0 auto; /* 適切なマージンを設定 */
@@ -613,7 +613,7 @@ table {
 
   .sheet {
     display: flex;
-    background-image: url('material/sheet.jpeg');
+    background-image: url('material/sheet.webp');
     background-size: cover; /* 画像を全体に広げる */
     background-position: center; /* 画像を中央に配置 */
     color: white; /* テキストを白色に設定（背景が画像の場合、見やすい色を選ぶと良い） */
@@ -867,7 +867,7 @@ table {
 
 .decksheet {
   display: flex;
-  background-image: url('material/sheet.jpeg');
+  background-image: url('material/sheet.webp');
   background-size: cover; 
   background-position: center; 
   color: white; /* テキストを白色に設定（背景が画像の場合、見やすい色を選ぶと良い） */
