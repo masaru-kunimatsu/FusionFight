@@ -3,8 +3,6 @@ session_start();
 
 // session_destroy();
 
-echo $_GET['page'];
-
 include 'functions.php';
 
 $tmpl = GetTmpl('search_before');
@@ -146,8 +144,6 @@ try{
     echo "接続に失敗しました。";
   }else{
 
-    echo $_SESSION['total_count'];
-
     #SQL文を作成
     $SQL = "SELECT * FROM m_card
     LEFT JOIN m_name on m_card.name_id = m_name.name_id
@@ -190,9 +186,6 @@ try{
       $_SESSION['condition']['prog_id'] = $_GET['tittle'];
     }elseif($_GET == null){
       # 検索条件の指定がない場合
-      echo "検索条件なし";
-      echo $current_page;
-
       if (isset($_SESSION['sql'])){
         $SQL = $_SESSION['sql'];
       }else{
@@ -395,6 +388,7 @@ if (isset($_SESSION['condition']["text"]) && $_SESSION['condition']["text"] != "
 foreach($search_card_array as $n =>$v){
   $tmpl = str_replace("★".$v."★", ${$v.'_list'}, $tmpl);
   $tmpl = str_replace("★".$v."2"."★", ${$v.'_list2'}, $tmpl);
+  $tmpl = str_replace("★".$v."3"."★", ${$v.'_list3'}, $tmpl);
 }
 
 $tmpl = str_replace("★count_edit★", $_SESSION['count_edit'], $tmpl);

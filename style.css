@@ -494,6 +494,7 @@ table {
   }
   .reset_condition {
     text-align: right; /* 右寄せにするためのスタイル */
+    margin:5px 0px 10px 0px;
   }
 
   .reset_condition_link {
