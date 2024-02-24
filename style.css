@@ -581,7 +581,7 @@ table {
     padding: 15px 0px;
     display: flex;
     justify-content: center; /* 横方向（メイン軸）を中央に寄せる */
-    align-items: center; /* 縦方向（クロス軸）を中央に寄せる */
+    align-items: flex-start; /* 要素を上側に固定 */
   }
 
 
@@ -591,15 +591,39 @@ table {
     font-weight: bold;
     border: none; /* ボーダーをなしに設定 */
     padding:5px 10px;
-    margin: 0px 100px;
+    margin: 0px 30px;
     font-size: large; /* フォントサイズを大きく設定 */
     cursor: pointer; /* カーソルをポインターに設定 */
     border-radius: 5px; /* 角丸を設定 */
     transition: background 0.3s ease; /* 背景色の変化にアニメーションを追加 */
 }
 
+
 .view_change_button:hover {
     background: linear-gradient(to bottom, #00BFFF, #87CEEB); /* ホバー時のグラデーション */
+}
+
+
+.count_edit_button {
+  background: linear-gradient(to bottom, #8791eb, #005eff); /* 水色のグラデーション */
+  color: white; /* 文字色を白に設定 */
+  font-weight: bold;
+  border: none; /* ボーダーをなしに設定 */
+  padding:5px 10px;
+  margin: 0px 30px;
+  font-size: large; /* フォントサイズを大きく設定 */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  border-radius: 5px; /* 角丸を設定 */
+  transition: background 0.3s ease; /* 背景色の変化にアニメーションを追加 */
+}
+
+.count_edit_button:hover {
+  background: linear-gradient(to bottom, #005eff, #8791eb); /* 水色のグラデーション */
+}
+
+.inner_text{
+  font-weight:bolder;
+  font-size:small;
 }
 
   #main_sheet {

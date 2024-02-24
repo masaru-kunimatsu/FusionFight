@@ -3,6 +3,8 @@ session_start();
 
 // session_destroy();
 
+echo $_GET['page'];
+
 include 'functions.php';
 
 $tmpl = GetTmpl('search_before');
@@ -26,27 +28,35 @@ if(isset($_SESSION['multi'])){
 if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
   $tmpl_open = GetTmpl('result_open');
   $tmpl_result = GetTmpl('result');
+  $tmpl_close = GetTmpl('result_close_image');
   $_SESSION['image_view'] = 'image';
 }elseif(isset($_POST['mode']) && $_POST['mode'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
   $tmpl_result = GetTmpl('result_image');
+  $tmpl_close = GetTmpl('result_close_image');
   $_SESSION['image_view'] = 'image';
 }elseif(isset($_POST['mode']) && $_POST['mode'] == 'detail'){
   $tmpl_open = GetTmpl('result_open');
   $tmpl_result = GetTmpl('result');
+  $tmpl_close = GetTmpl('result_close');
   $_SESSION['image_view'] = 'detail';
 }elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'image'){
   $tmpl_open = GetTmpl('result_open_image');
   $tmpl_result = GetTmpl('result_image');
+  $tmpl_close = GetTmpl('result_close_image');
 }elseif(isset($_SESSION['image_view']) && $_SESSION['image_view'] == 'detail'){
   $tmpl_open = GetTmpl('result_open');
   $tmpl_result = GetTmpl('result');
+  $tmpl_close = GetTmpl('result_close');
 }else{
   $tmpl_open = GetTmpl('result_open');
   $tmpl_result = GetTmpl('result');
+  $tmpl_close = GetTmpl('result_close');
   $_SESSION['image_view'] = 'detail';
 }
 $tmpl .= $tmpl_open;
+
+
 
 if (!isset($_SESSION['card1'])){
   $_SESSION['card1'] = array();
@@ -63,6 +73,21 @@ if (!isset($_SESSION['condition2'])){
 if (!isset($_SESSION['condition3'])){
   $_SESSION['condition3'] = array();
 }
+if (!isset($_SESSION['total_count'])){
+  $_SESSION['total_count'] = "";
+}
+if (!isset($_SESSION['count_edit'])){
+  $_SESSION['count_edit'] = 5;
+}
+
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+unset($_GET['page']);
+
+// 1ページあたりのアイテム数
+if (isset($_POST['count_edit'])){
+  $_SESSION['count_edit'] = $_POST['count_edit'];
+}
+
 
 # 検索窓に用いるカラムの配列
 $search_card_array = array(
@@ -73,35 +98,34 @@ $search_card_array = array(
   'form'    => 'form'
 );
 
-if(isset($_GET)){ 
-  foreach($search_card_array as $n => $v){
-    $n2 = $n.'2';
-    $n3 = $n.'3';
-    if (isset($_GET[$n])){
-      if ($_GET[$n] != "" ){
-        $_SESSION['condition'][$n] = $_GET[$n];
-      }
-      else{
-        $_SESSION['condition'][$n] = "";
-      }
+foreach($search_card_array as $n => $v){
+  $n2 = $n.'2';
+  $n3 = $n.'3';
+  if (isset($_GET[$n])){
+    if ($_GET[$n] != "" ){
+      $_SESSION['condition'][$n] = $_GET[$n];
     }
-    if (isset($_GET[$n2])){
-      if ($_GET[$n2] != "" ){
-        $_SESSION['condition2'][$n] = $_GET[$n2];
-      }
-      else{
-        $_SESSION['condition2'][$n] = "";
-      }
-    }
-    if (isset($_GET[$n3])){
-      if ($_GET[$n3] != "" ){
-        $_SESSION['condition3'][$n] = $_GET[$n3];
-      }
-      else{
-        $_SESSION['condition3'][$n] = "";
-      }
+    else{
+      $_SESSION['condition'][$n] = "";
     }
   }
+  if (isset($_GET[$n2])){
+    if ($_GET[$n2] != "" ){
+      $_SESSION['condition2'][$n] = $_GET[$n2];
+    }
+    else{
+      $_SESSION['condition2'][$n] = "";
+    }
+  }
+  if (isset($_GET[$n3])){
+    if ($_GET[$n3] != "" ){
+      $_SESSION['condition3'][$n] = $_GET[$n3];
+    }
+    else{
+      $_SESSION['condition3'][$n] = "";
+    }
+  }
+  
 
   if (isset($_GET['climax']) && $_GET['climax'] != "" ) {
     $_SESSION['condition']['climax'] = $_GET['climax'];
@@ -121,6 +145,8 @@ try{
   if ($dbh == null){
     echo "接続に失敗しました。";
   }else{
+
+    echo $_SESSION['total_count'];
 
     #SQL文を作成
     $SQL = "SELECT * FROM m_card
@@ -143,8 +169,19 @@ try{
       # ロゴからリンクした場合
       $SQLlogo = $SQL;
       $SQLlogo .= " WHERE m_prog.prog_id = {$_GET['tittle']}"; 
-      $SQLlogo .= " ORDER BY m_card.card_id";
+      $SQLlogo .= " ORDER BY m_card.card_id ";
       $_SESSION['sql'] = $SQLlogo;
+
+      if($_SESSION['image_view'] == 'detail'){
+        $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQLlogo);
+        $stmt_total = $dbh->query($sql_total);
+        $total_items = $stmt_total->fetchColumn();
+        $_SESSION['total_count'] = $total_items;
+
+        $offset = ($current_page - 1) * $_SESSION['count_edit'] ; // オフセット計算
+        $SQLlogo .= " LIMIT $offset , {$_SESSION['count_edit']} ;";
+      }
+
       $stmt = $dbh->prepare($SQLlogo);
       $stmtlogo = $stmt;
       $_SESSION['condition'] = array();
@@ -152,17 +189,31 @@ try{
       $_SESSION['condition3'] = array();
       $_SESSION['condition']['prog_id'] = $_GET['tittle'];
     }elseif($_GET == null){
-      # 検索条件の指定がない場合は全件表示
-      $SQL .= " ORDER BY m_card.card_id;";
+      # 検索条件の指定がない場合
+      echo "検索条件なし";
+      echo $current_page;
+
       if (isset($_SESSION['sql'])){
         $SQL = $_SESSION['sql'];
+      }else{
+        $_SESSION['sql'] = $SQL;
       }
+
+      if($_SESSION['image_view'] == 'detail'){
+        if($_SESSION['total_count'] == ""){
+          $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQLlist);
+          $stmt_total = $dbh->query($sql_total);
+          $total_items = $stmt_total->fetchColumn();
+          $_SESSION['total_count'] = $total_items;
+        }
+        $offset = ($current_page - 1) * $_SESSION['count_edit'] ; // オフセット計算
+        $SQL .= " LIMIT $offset , {$_SESSION['count_edit']} ;";
+      }
+
       $stmt = $dbh->prepare($SQL);
     }else{
       # 検索条件の指定がある場合はしぼりこみ表示
       $SQL .= " WHERE 1 = 1"; // これは常に真となる条件を追加;
-
-
 
       // 条件が指定されている場合にのみ追加
       foreach($search_card_array as $n => $v){
@@ -222,14 +273,22 @@ try{
       }
 
       // ORDER BY 句の追加
-      $SQL .= " ORDER BY m_card.card_id";
-
+      $SQL .= " ORDER BY m_card.card_id ";
       $_SESSION['sql'] = $SQL;
 
+      if($_SESSION['image_view'] == 'detail'){
+        $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQL);
+        $stmt_total = $dbh->query($sql_total);
+        $total_items = $stmt_total->fetchColumn();
+        $_SESSION['total_count'] = $total_items;
+
+        $offset = ($current_page - 1) * $_SESSION['count_edit'] ; // オフセット計算
+        $SQL .= " LIMIT $offset , {$_SESSION['count_edit']} ;";
+      }
       $stmt = $dbh->prepare($SQL);
     }
 
-    # 検索結果画面用のSQL文の実行
+    # 検索条件リスト画面用のSQL文の実行
     if($stmt->execute()){
       $record_found = false;
       $card_id = "";
@@ -301,7 +360,7 @@ try{
 }
 $dbh = null;
 
-$tmpl_close = GetTmpl('result_close');
+
 $tmpl .= $tmpl_close;
 
 // 検索後に値を保持するため、クライマックスロゴ表示のための文字列置換
@@ -336,8 +395,38 @@ if (isset($_SESSION['condition']["text"]) && $_SESSION['condition']["text"] != "
 foreach($search_card_array as $n =>$v){
   $tmpl = str_replace("★".$v."★", ${$v.'_list'}, $tmpl);
   $tmpl = str_replace("★".$v."2"."★", ${$v.'_list2'}, $tmpl);
-  $tmpl = str_replace("★".$v."3"."★", ${$v.'_list3'}, $tmpl);
 }
+
+$tmpl = str_replace("★count_edit★", $_SESSION['count_edit'], $tmpl);
+
+$paging = "";
+$total_pages = ceil($_SESSION['total_count'] / $_SESSION['count_edit']);
+
+$tmpl = str_replace("★total_pages★", $total_pages, $tmpl);
+
+$start_page = max(1, $current_page - 2);
+$end_page = min($total_pages, $start_page + 4);
+
+// 最終ページが5ページよりも前にある場合、開始ページを調整
+if ($end_page - $start_page < 4) {
+  $start_page = max(1, $end_page - 4);
+}
+
+if ($start_page >= 2){
+  $paging .= "<i class='fa-solid fa-ellipsis'></i>";
+}
+
+for ($i = $start_page; $i <= $end_page; $i++) {
+  $isActive = ($i == $current_page) ? " isActive" : "";
+  $paging .= "<li class='Pagination-Item'><a class='Pagination-Item-Link{$isActive}' href='?page={$i}'><span>{$i}</span></a></li>";
+  // $paging .= "<li class='Pagination-Item'><a class='Pagination-Item-Link' href='?page={$i}'><span>{$i}</span></a></li>";
+}
+
+if ($total_pages-2 > $current_page ){
+  $paging .= "<i class='fa-solid fa-ellipsis'></i>";
+}
+
+$tmpl = str_replace("★paging★", $paging, $tmpl);
 
 $html = HTML($tmpl);
 echo $html;
