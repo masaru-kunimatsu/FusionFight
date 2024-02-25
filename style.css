@@ -622,6 +622,24 @@ table {
   background: linear-gradient(to bottom, #005eff, #8791eb); /* 水色のグラデーション */
 }
 
+.size_edit_button {
+  background: linear-gradient(to bottom, #cf87eb, #a600ff); /* 水色のグラデーション */
+  color: white; /* 文字色を白に設定 */
+  font-weight: bold;
+  border: none; /* ボーダーをなしに設定 */
+  padding:5px 10px;
+  margin: 0px 30px;
+  font-size: large; /* フォントサイズを大きく設定 */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  border-radius: 5px; /* 角丸を設定 */
+  transition: background 0.3s ease; /* 背景色の変化にアニメーションを追加 */
+}
+
+.size_edit_button:hover {
+  background: linear-gradient(to bottom, #a600ff, #cf87eb); /* 水色のグラデーション */
+}
+
+
 .inner_text{
   font-weight:bolder;
   font-size:small;
@@ -754,26 +772,69 @@ table {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content:flex-start;
   align-items: center;
 }
 
-.image-result-form{
+.image-result-form-big{
   width: calc(33.3333% - 20px); /* 画像の横幅に合わせて調整し、間隔も考慮 */
   box-sizing: border-box;
   padding: 10px;
+  margin: 10px;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.image-result-form img {
+.image-result-form-big img{
   width: 100%;
   height: auto;
   transition: all 0.2s;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.image-result-form img:hover {
+.image-result-form-big img:hover {
+  transform: scale(1.1);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.7);
+}
+
+.image-result-form-middle{
+  width: calc(20% - 20px); /* 画像の横幅に合わせて調整し、間隔も考慮 */
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-result-form-middle img{
+  width: 100%;
+  height: auto;
+  transition: all 0.2s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.image-result-form-middle img:hover {
+  transform: scale(1.1);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.7);
+}
+
+.image-result-form-small{
+  width: calc(14.2857% - 20px); /* 画像の横幅に合わせて調整し、間隔も考慮 */
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-result-form-small img{
+  width: 100%;
+  height: auto;
+  transition: all 0.2s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.image-result-form-small img:hover {
   transform: scale(1.1);
   box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.7);
 }

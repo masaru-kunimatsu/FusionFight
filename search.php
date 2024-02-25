@@ -7,22 +7,6 @@ include 'functions.php';
 
 $tmpl = GetTmpl('search_before');
 
-if(isset($_POST['multi'])){
-  $_SESSION['multi'] = $_POST['multi'];
-}
-
-// if(isset($_SESSION['multi'])){
-//   if ($_SESSION['multi'] == 'single'){
-//     $tmpl .= GetTmpl('search_single');
-//   }elseif ($_SESSION['multi'] == 'double'){
-//     $tmpl .= GetTmpl('search_double');
-//   }elseif ($_SESSION['multi'] == 'triple'){
-//     $tmpl .= GetTmpl('search_triple');
-//   }
-// }else{
-//   $tmpl .= GetTmpl('search_single');
-// }
-
 $tmpl .= GetTmpl('search');
 
 if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
@@ -55,12 +39,14 @@ if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
   $_SESSION['image_view'] = 'detail';
 }
 
-
 if (!isset($_SESSION['total_count'])){
   $_SESSION['total_count'] = "";
 }
 if (!isset($_SESSION['count_edit'])){
   $_SESSION['count_edit'] = 5;
+}
+if (!isset($_SESSION['size_edit'])){
+  $_SESSION['size_edit'] = 'big';
 }
 
 $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -71,6 +57,12 @@ if (isset($_POST['count_edit'])){
   $_SESSION['count_edit'] = $_POST['count_edit'];
 }
 
+//画像一覧のサイズ表示
+if (isset($_POST['size_edit'])){
+  $_SESSION['size_edit'] = $_POST['size_edit'];
+  $_SESSION['image_view'] = 'image';
+
+}
 
 # 検索窓に用いるカラムの配列
 $search_card_array = array(
@@ -124,7 +116,7 @@ foreach($search_card_array as $n => $v){
     }
   }
   if (isset($_GET[$n2])){
-    if ($_GET[$n2] != "" ){
+    if ($_GET[$n2] != "" && $_GET[$n2] != $_SESSION['condition'][$n]){
       $_SESSION['condition2'][$n] = $_GET[$n2];
     }
     else{
@@ -132,7 +124,7 @@ foreach($search_card_array as $n => $v){
     }
   }
   if (isset($_GET[$n3])){
-    if ($_GET[$n3] != "" ){
+    if ($_GET[$n3] != "" &&  $_GET[$n3] != $_SESSION['condition'][$n] && $_GET[$n3] != $_SESSION['condition2'][$n] ){
       $_SESSION['condition3'][$n] = $_GET[$n3];
     }
     else{
@@ -256,6 +248,7 @@ try{
           $condition = " AND m_card.$n IN({$_SESSION['condition'][$n]},{$_SESSION['condition2'][$n]},{$_SESSION['condition3'][$n]})";
           $condition = str_replace($_SESSION['condition']['form'], "'".$_SESSION['condition']['form']."'", $condition);
           $condition = str_replace($_SESSION['condition2']['form'], "'".$_SESSION['condition2']['form']."'", $condition);
+
           $condition = str_replace($_SESSION['condition3']['form'], "'".$_SESSION['condition3']['form']."'", $condition);
         }
 
@@ -341,6 +334,9 @@ try{
         $tmpl .= $tmpl_none;
       }
     }
+
+    $tmpl = str_replace("★image_size★", $_SESSION['size_edit'], $tmpl);
+    $tmpl = str_replace("★".$_SESSION['size_edit']."_checked★", "checked", $tmpl);
     
     // 表示列を代入する変数を用意
     foreach($search_card_array as $n =>$v){
@@ -369,7 +365,6 @@ try{
   die();
 }
 $dbh = null;
-
 
 $tmpl .= $tmpl_close;
 
@@ -406,7 +401,6 @@ if (isset($_SESSION['condition']["text"]) && $_SESSION['condition']["text"] != "
   $tmpl = str_replace('value="" placeholder', "value='{$_SESSION['condition']["text"]}' placeholder", $tmpl);
 }
 
-
 // 取得した表示列をテンプレに入れる
 foreach($search_card_array as $n =>$v){
   $tmpl = str_replace("★".$v."★", ${$v.'_list'}, $tmpl);
@@ -414,36 +408,39 @@ foreach($search_card_array as $n =>$v){
   $tmpl = str_replace("★".$v."3"."★", ${$v.'_list3'}, $tmpl);
 }
 
+if ($_SESSION['image_view'] == 'detail'){
 
-$tmpl = str_replace("★count_edit★", $_SESSION['count_edit'], $tmpl);
+  $tmpl = str_replace("★count_edit★", $_SESSION['count_edit'], $tmpl);
 
-$paging = "";
-$total_pages = ceil($_SESSION['total_count'] / $_SESSION['count_edit']);
+  $paging = "";
+  $total_pages = ceil($_SESSION['total_count'] / $_SESSION['count_edit']);
 
-$tmpl = str_replace("★total_pages★", $total_pages, $tmpl);
+  $tmpl = str_replace("★total_pages★", $total_pages, $tmpl);
 
-$start_page = max(1, $current_page - 2);
-$end_page = min($total_pages, $start_page + 4);
+  $start_page = max(1, $current_page - 2);
+  $end_page = min($total_pages, $start_page + 4);
 
-// 最終ページが5ページよりも前にある場合、開始ページを調整
-if ($end_page - $start_page < 4) {
-  $start_page = max(1, $end_page - 4);
+  // 最終ページが5ページよりも前にある場合、開始ページを調整
+  if ($end_page - $start_page < 4) {
+    $start_page = max(1, $end_page - 4);
+  }
+
+  if ($start_page >= 2){
+    $paging .= "<i class='fa-solid fa-ellipsis'></i>";
+  }
+
+  for ($i = $start_page; $i <= $end_page; $i++) {
+    $isActive = ($i == $current_page) ? " isActive" : "";
+    $paging .= "<li class='Pagination-Item'><a class='Pagination-Item-Link{$isActive}' href='?page={$i}'><span>{$i}</span></a></li>";
+  }
+
+  if ($total_pages-2 > $current_page ){
+    $paging .= "<i class='fa-solid fa-ellipsis'></i>";
+  }
+
+  $tmpl = str_replace("★paging★", $paging, $tmpl);
 }
-
-if ($start_page >= 2){
-  $paging .= "<i class='fa-solid fa-ellipsis'></i>";
-}
-
-for ($i = $start_page; $i <= $end_page; $i++) {
-  $isActive = ($i == $current_page) ? " isActive" : "";
-  $paging .= "<li class='Pagination-Item'><a class='Pagination-Item-Link{$isActive}' href='?page={$i}'><span>{$i}</span></a></li>";
-}
-
-if ($total_pages-2 > $current_page ){
-  $paging .= "<i class='fa-solid fa-ellipsis'></i>";
-}
-
-$tmpl = str_replace("★paging★", $paging, $tmpl);
 
 $html = HTML($tmpl);
+
 echo $html;

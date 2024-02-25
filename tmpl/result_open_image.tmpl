@@ -16,6 +16,24 @@
 			</div>
 			<input type='hidden' name='mode' value='image'>
 		</form>
+		<details class="size_edit_button">
+			<summary>画像サイズ</summary>
+			<p class="inner_text">画像の表示サイズを変更します</p>
+			<form action="search.php" method="POST">
+
+				<input type="radio" name="size_edit" value="small" class="inner_text" ★small_checked★>
+				<label for="contactChoice1">小</label>
+
+				<input type="radio" name="size_edit" value="middle" class="inner_text" ★middle_checked★>
+				<label for="contactChoice2">中</label>
+
+				<input type="radio" name="size_edit" value="big" class="inner_text" ★big_checked★>
+				<label for="contactChoice3">大</label>
+
+				<br>
+				<input type="submit" value="変更">
+			</form>
+		</details>
 	</div>
 
 	<div class = "serchresult_image" >
