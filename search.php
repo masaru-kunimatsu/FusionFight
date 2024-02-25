@@ -11,17 +11,19 @@ if(isset($_POST['multi'])){
   $_SESSION['multi'] = $_POST['multi'];
 }
 
-if(isset($_SESSION['multi'])){
-  if ($_SESSION['multi'] == 'single'){
-    $tmpl .= GetTmpl('search_single');
-  }elseif ($_SESSION['multi'] == 'double'){
-    $tmpl .= GetTmpl('search_double');
-  }elseif ($_SESSION['multi'] == 'triple'){
-    $tmpl .= GetTmpl('search_triple');
-  }
-}else{
-  $tmpl .= GetTmpl('search_single');
-}
+// if(isset($_SESSION['multi'])){
+//   if ($_SESSION['multi'] == 'single'){
+//     $tmpl .= GetTmpl('search_single');
+//   }elseif ($_SESSION['multi'] == 'double'){
+//     $tmpl .= GetTmpl('search_double');
+//   }elseif ($_SESSION['multi'] == 'triple'){
+//     $tmpl .= GetTmpl('search_triple');
+//   }
+// }else{
+//   $tmpl .= GetTmpl('search_single');
+// }
+
+$tmpl .= GetTmpl('search');
 
 if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
   $tmpl_open = GetTmpl('result_open');
@@ -52,25 +54,8 @@ if(isset($_GET['fortune']) && ($_GET['fortune']) != ""){
   $tmpl_close = GetTmpl('result_close');
   $_SESSION['image_view'] = 'detail';
 }
-$tmpl .= $tmpl_open;
 
 
-
-if (!isset($_SESSION['card1'])){
-  $_SESSION['card1'] = array();
-}
-if (!isset($_SESSION['card2'])){
-  $_SESSION['card2'] = array();
-}
-if (!isset($_SESSION['condition'])){
-  $_SESSION['condition'] = array();
-}
-if (!isset($_SESSION['condition2'])){
-  $_SESSION['condition2'] = array();
-}
-if (!isset($_SESSION['condition3'])){
-  $_SESSION['condition3'] = array();
-}
 if (!isset($_SESSION['total_count'])){
   $_SESSION['total_count'] = "";
 }
@@ -96,9 +81,40 @@ $search_card_array = array(
   'form'    => 'form'
 );
 
+$tmpl_js = GetTmpl('search_js');
+
 foreach($search_card_array as $n => $v){
+
+  $tmpl_js_each = $tmpl_js;
+  $tmpl_js_each = str_replace("★condition_name★", $n, $tmpl_js_each);
+  $tmpl .= $tmpl_js_each;
+
   $n2 = $n.'2';
   $n3 = $n.'3';
+
+  if (!isset($_SESSION['card1'])){
+    $_SESSION['card1'] = array();
+  }
+  if (!isset($_SESSION['card2'])){
+    $_SESSION['card2'] = array();
+  }
+  if (!isset($_SESSION['condition'])){
+    $_SESSION['condition'] = array();
+    $_SESSION['condition'][$n] = "";
+    $_SESSION['condition']['form'] = "";
+  }
+  if (!isset($_SESSION['condition2'])){
+    $_SESSION['condition2'] = array();
+    $_SESSION['condition2'][$n] = "";
+    $_SESSION['condition2']['form'] = "";
+  }
+  if (!isset($_SESSION['condition3'])){
+    $_SESSION['condition3'] = array();
+    $_SESSION['condition3'][$n] = "";
+    $_SESSION['condition3']['form'] = "";
+  }
+
+
   if (isset($_GET[$n])){
     if ($_GET[$n] != "" ){
       $_SESSION['condition'][$n] = $_GET[$n];
@@ -124,7 +140,6 @@ foreach($search_card_array as $n => $v){
     }
   }
   
-
   if (isset($_GET['climax']) && $_GET['climax'] != "" ) {
     $_SESSION['condition']['climax'] = $_GET['climax'];
   }elseif(isset($_GET['climax']) && $_GET['climax'] == "" ){
@@ -281,6 +296,8 @@ try{
       $stmt = $dbh->prepare($SQL);
     }
 
+    $tmpl .= $tmpl_open;
+
     # 検索条件リスト画面用のSQL文の実行
     if($stmt->execute()){
       $record_found = false;
@@ -358,6 +375,7 @@ $tmpl .= $tmpl_close;
 
 // 検索後に値を保持するため、クライマックスロゴ表示のための文字列置換
 foreach($search_card_array as $n => $v){
+
   if (isset($_SESSION['condition'][$n]) && $_SESSION['condition'][$n] != "" ){
     $default = "<option value={$_SESSION['condition'][$n]}>";
     $selected = "<option value={$_SESSION['condition'][$n]} selected>";
@@ -367,12 +385,17 @@ foreach($search_card_array as $n => $v){
     $default2 = "<option value={$_SESSION['condition2'][$n]}>";
     $selected2 = "<option value={$_SESSION['condition2'][$n]} selected>";
     ${$v.'_list2'} = str_replace($default2, $selected2, ${$v.'_list2'});
+    $tmpl = str_replace("★".$n."_hidden2★", "", $tmpl);
   }
   if (isset($_SESSION['condition3'][$n]) && $_SESSION['condition3'][$n] != "" ){
     $default3 = "<option value={$_SESSION['condition3'][$n]}>";
     $selected3 = "<option value={$_SESSION['condition3'][$n]} selected>";
     ${$v.'_list3'} = str_replace($default3, $selected3, ${$v.'_list3'});
+    $tmpl = str_replace("★".$n."_hidden3★", "", $tmpl);
   }
+
+  $tmpl = str_replace("★".$n."_hidden2★", "hidden =".true, $tmpl);
+  $tmpl = str_replace("★".$n."_hidden3★", "hidden =".true, $tmpl);
 }
 
 if (isset($_SESSION['condition']["climax"]) && $_SESSION['condition']["climax"]==1){
@@ -390,6 +413,7 @@ foreach($search_card_array as $n =>$v){
   $tmpl = str_replace("★".$v."2"."★", ${$v.'_list2'}, $tmpl);
   $tmpl = str_replace("★".$v."3"."★", ${$v.'_list3'}, $tmpl);
 }
+
 
 $tmpl = str_replace("★count_edit★", $_SESSION['count_edit'], $tmpl);
 
@@ -413,7 +437,6 @@ if ($start_page >= 2){
 for ($i = $start_page; $i <= $end_page; $i++) {
   $isActive = ($i == $current_page) ? " isActive" : "";
   $paging .= "<li class='Pagination-Item'><a class='Pagination-Item-Link{$isActive}' href='?page={$i}'><span>{$i}</span></a></li>";
-  // $paging .= "<li class='Pagination-Item'><a class='Pagination-Item-Link' href='?page={$i}'><span>{$i}</span></a></li>";
 }
 
 if ($total_pages-2 > $current_page ){

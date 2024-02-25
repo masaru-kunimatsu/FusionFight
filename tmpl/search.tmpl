@@ -1,0 +1,142 @@
+			<form action="search.php" method="get">
+				<p>キャラクター</p>
+					<select name="name_id" id='name_id'>
+						<option value="">選択してください</option>
+						★name★
+					</select><br>
+					<select name="name_id2" id='name_id2' ★name_id_hidden2★>
+						<option value="">選択してください</option>
+						★name2★
+					</select><br>
+					<select name="name_id3" id='name_id3' ★name_id_hidden3★>
+						<option value="">選択してください</option>
+						★name3★
+					</select>
+				<p>形態</p>
+					<select name="form" id='form'>
+						<option value="">選択してください</option>
+						★form★
+					</select><br>
+					<select name="form2" id='form2' ★form_hidden2★>
+						<option value="">選択してください</option>
+						★form2★
+					</select><br>
+					<select name="form3" id='form3' ★form_hidden3★>
+						<option value="">選択してください</option>
+						★form3★
+					</select>
+				<p>技</p>
+					<select name="climax" style="margin-bottom: 30px;">
+						<option value="">選択してください</option>
+						<option value="1">クライマックス技</option>
+					</select>
+				<p>分類</p>
+					<select name="type_id" id='type_id'>
+						<option value="">選択してください</option>
+						★type★
+					</select><br>
+					<select name="type_id2" id='type_id2' ★type_id_hidden2★>
+						<option value="">選択してください</option>
+						★type2★
+					</select><br>
+					<select name="type_id3" id='type_id3' ★type_id_hidden3★>
+						<option value="">選択してください</option>
+						★type3★
+					</select>
+				<p>作品</p>
+					<select name="prog_id" id='prog_id'>
+						<option value="">選択してください</option>
+						★prog★
+					</select><br>
+					<select name="prog_id2"  id='prog_id2' ★prog_id_hidden2★>
+						<option value="">選択してください</option>
+						★prog2★
+					</select><br>
+					<select name="prog_id3" id='prog_id3' ★prog_id_hidden3★>
+						<option value="">選択してください</option>
+						★prog3★
+					</select>
+				<p>レアリティ</p>
+					<select name="rare_id" id='rare_id'>
+						<option value="">選択してください</option>
+						★rare★
+					</select><br>
+					<select name="rare_id2" id='rare_id2' ★rare_id_hidden2★>
+						<option value="">選択してください</option>
+						★rare2★
+					</select><br>
+					<select name="rare_id3" id='rare_id3' ★rare_id_hidden3★>
+						<option value="">選択してください</option>
+						★rare3★
+					</select>
+				<p>フリーワード検索</p>
+					<input type="text" name="text" size="40" value="" placeholder="キーワードを入力してください" >
+				<br>
+				<input type="image" src="material/card_search.webp" alt="検索する" id="searchButton">
+			</form>
+		</aside>
+	</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var name_idSelect = document.getElementById('name_id');
+        var name_id2Select = document.getElementById('name_id2'); // name_id2のselect要素を取得
+        var name_id3Select = document.getElementById('name_id3'); // name_id3のselect要素を取得
+        if (name_idSelect && name_id2Select && name_id3Select) {
+            name_idSelect.addEventListener('change', function() {
+                // 選択した値を取得
+                var name_idValue = name_idSelect.value;
+                console.log('name_idSelect.value:', name_idValue);
+
+                // 選択した値に応じてname_id2の表示を切り替える
+                if (name_idSelect !== '') {
+                    name_id2Select.hidden = false; // name_id2を表示
+                }
+            });
+
+            name_id2Select.addEventListener('change', function() {
+                // 選択した値を取得
+                var name_id2Value = name_id2Select.value;
+                console.log('name_id2Select.value:', name_id2Value);
+
+                // 選択した値に応じてname_id3の表示を切り替える
+                if (name_id2Value !== '') {
+                    name_id3Select.hidden = false; // name_id3を表示
+                }
+            });
+        }
+    });
+</script>
+
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var formSelect = document.getElementById('form');
+        var form2Select = document.getElementById('form2'); // form2のselect要素を取得
+        var form3Select = document.getElementById('form3'); // form3のselect要素を取得
+        if (formSelect && form2Select && form3Select) {
+            formSelect.addEventListener('change', function() {
+                // 選択した値を取得
+                var formValue = formSelect.value;
+                console.log('formSelect.value:', formValue);
+
+                // 選択した値に応じてform2の表示を切り替える
+                if (formSelect !== '') {
+                    form2Select.hidden = false; // form2を表示
+                }
+            });
+
+            form2Select.addEventListener('change', function() {
+                // 選択した値を取得
+                var form2Value = form2Select.value;
+                console.log('form2Select.value:', form2Value);
+
+                // 選択した値に応じてform3の表示を切り替える
+                if (form2Value !== '') {
+                    form3Select.hidden = false; // form3を表示
+                }
+            });
+        }
+    });
+</script>
+
+

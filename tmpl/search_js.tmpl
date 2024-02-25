@@ -1,0 +1,30 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ★condition_name★Select = document.getElementById('★condition_name★');
+        var ★condition_name★2Select = document.getElementById('★condition_name★2'); // ★condition_name★2のselect要素を取得
+        var ★condition_name★3Select = document.getElementById('★condition_name★3'); // ★condition_name★3のselect要素を取得
+        if (★condition_name★Select && ★condition_name★2Select && ★condition_name★3Select) {
+            ★condition_name★Select.addEventListener('change', function() {
+                // 選択した値を取得
+                var ★condition_name★Value = ★condition_name★Select.value;
+                console.log('★condition_name★Select.value:', ★condition_name★Value);
+
+                // 選択した値に応じて★condition_name★2の表示を切り替える
+                if (★condition_name★Select !== '') {
+                    ★condition_name★2Select.hidden = false; // ★condition_name★2を表示
+                }
+            });
+
+            ★condition_name★2Select.addEventListener('change', function() {
+                // 選択した値を取得
+                var ★condition_name★2Value = ★condition_name★2Select.value;
+                console.log('★condition_name★2Select.value:', ★condition_name★2Value);
+
+                // 選択した値に応じて★condition_name★3の表示を切り替える
+                if (★condition_name★2Value !== '') {
+                    ★condition_name★3Select.hidden = false; // ★condition_name★3を表示
+                }
+            });
+        }
+    });
+</script>
