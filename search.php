@@ -175,12 +175,13 @@ try{
       $SQLlogo .= " ORDER BY m_card.card_id ";
       $_SESSION['sql'] = $SQLlogo;
 
-      if($_SESSION['image_view'] == 'detail'){
-        $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQLlogo);
-        $stmt_total = $dbh->query($sql_total);
-        $total_items = $stmt_total->fetchColumn();
-        $_SESSION['total_count'] = $total_items;
+      
+      $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQLlogo);
+      $stmt_total = $dbh->query($sql_total);
+      $total_items = $stmt_total->fetchColumn();
+      $_SESSION['total_count'] = $total_items;
 
+      if($_SESSION['image_view'] == 'detail'){
         $offset = ($current_page - 1) * $_SESSION['count_edit'] ; // オフセット計算
         $SQLlogo .= " LIMIT $offset , {$_SESSION['count_edit']} ;";
       }
@@ -199,13 +200,15 @@ try{
         $_SESSION['sql'] = $SQL;
       }
 
+
+      if($_SESSION['total_count'] == ""){
+        $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQLlist);
+        $stmt_total = $dbh->query($sql_total);
+        $total_items = $stmt_total->fetchColumn();
+        $_SESSION['total_count'] = $total_items;
+      }
+
       if($_SESSION['image_view'] == 'detail'){
-        if($_SESSION['total_count'] == ""){
-          $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQLlist);
-          $stmt_total = $dbh->query($sql_total);
-          $total_items = $stmt_total->fetchColumn();
-          $_SESSION['total_count'] = $total_items;
-        }
         $offset = ($current_page - 1) * $_SESSION['count_edit'] ; // オフセット計算
         $SQL .= " LIMIT $offset , {$_SESSION['count_edit']} ;";
       }
@@ -277,12 +280,13 @@ try{
       $SQL .= " ORDER BY m_card.card_id ";
       $_SESSION['sql'] = $SQL;
 
-      if($_SESSION['image_view'] == 'detail'){
-        $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQL);
-        $stmt_total = $dbh->query($sql_total);
-        $total_items = $stmt_total->fetchColumn();
-        $_SESSION['total_count'] = $total_items;
 
+      $sql_total = str_replace("SELECT *" , "SELECT COUNT(*)" , $SQL);
+      $stmt_total = $dbh->query($sql_total);
+      $total_items = $stmt_total->fetchColumn();
+      $_SESSION['total_count'] = $total_items;
+
+      if($_SESSION['image_view'] == 'detail'){
         $offset = ($current_page - 1) * $_SESSION['count_edit'] ; // オフセット計算
         $SQL .= " LIMIT $offset , {$_SESSION['count_edit']} ;";
       }
@@ -442,5 +446,12 @@ if ($_SESSION['image_view'] == 'detail'){
 }
 
 $html = HTML($tmpl);
+
+echo $current_page."<br>";
+echo $start_page."<br>";
+echo $total_pages."<br>";
+echo $_SESSION['total_count']."<br>";
+echo $_SESSION['count_edit']."<br>";
+echo $end_page."<br>";
 
 echo $html;
