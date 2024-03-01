@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-session_destroy();
+// session_destroy();
 
 include 'functions.php';
 
@@ -41,7 +41,7 @@ $html_top = <<< _aaa_
   <div class = "top_image3">
     <div class="text-overlay3">
       <div class="text-overlay3_top">
-        <img src="material/icon_z.webp" class='z-icon'>２枚のカードを選んでデッキに登録 !
+        <img src="material/icon_z.webp" class='z-icon'>2枚のカードを選んでデッキに登録 !
       </div>
       <div class="text-overlay3_bottom">
         <img src="img\UD1-001.webp" class="text-overlay3_bottom_img">

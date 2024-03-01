@@ -447,11 +447,4 @@ if ($_SESSION['image_view'] == 'detail'){
 
 $html = HTML($tmpl);
 
-echo $current_page."<br>";
-echo $start_page."<br>";
-echo $total_pages."<br>";
-echo $_SESSION['total_count']."<br>";
-echo $_SESSION['count_edit']."<br>";
-echo $end_page."<br>";
-
 echo $html;
