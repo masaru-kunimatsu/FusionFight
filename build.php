@@ -164,6 +164,12 @@ if ($edit_flag) {
   // 編集モードの処理を行う
   $tmpl = str_replace("★初期値★", $_GET['deck_name'], $tmpl);
   $bgm_list = str_replace("<option value={$_GET["bgm_id"]}>", "<option value={$_GET["bgm_id"]} selected>", $bgm_list);
+  $_SESSION['textbox_stay'] = $_GET['deck_name'];
+  $_SESSION['bgm_value_stay'] = $_GET["bgm_id"];
+}elseif (isset($_SESSION['stay_flag']) && ($_SESSION['stay_flag'])) {
+  $tmpl = str_replace("★初期値★", $_SESSION['textbox_stay'], $tmpl);
+  $bgm_list = str_replace("<option value={$_SESSION['bgm_value_stay']}>", "<option value={$_SESSION['bgm_value_stay']} selected>", $bgm_list);
+  $_SESSION['stay_flag'] =  false;
 }else{
 
   if(isset ($_SESSION['textbox'])){
@@ -171,10 +177,11 @@ if ($edit_flag) {
   }else{
     $tmpl = str_replace("★初期値★", "", $tmpl);
   }
-
+  
   if(isset ($_SESSION['bgm_value'])){
     $bgm_list = str_replace("<option value={$_SESSION['bgm_value']}>", "<option value={$_SESSION['bgm_value']} selected>", $bgm_list);
   }
+
 }
 
 
