@@ -500,6 +500,11 @@ table {
     margin-top: 10px; /* 上の余白を5px追加 */
     color: #fff;
   }
+
+  .search-form select{
+    width: 100%;
+  }
+
   .reset_condition {
     text-align: right; /* 右寄せにするためのスタイル */
     margin:5px 0px 10px 0px;
